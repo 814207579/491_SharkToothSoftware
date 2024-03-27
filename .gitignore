@@ -4,3 +4,4 @@ Project/restaurantSite/menuPage/__pycache__/*
 /.idea/*
 .idea
 .idea/*
+*.pyc
