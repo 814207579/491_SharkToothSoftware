@@ -1,3 +1,6 @@
-Project/restaurantSite/*/__pycache__/*
+Project/restaurantSite/restaurantSite/__pycache__/*
+Project/restaurantSite/menuPage/__pycache__/*
 *.pyc
-/.idea
+/.idea/*
+.idea
+.idea/*
