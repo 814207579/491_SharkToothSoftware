@@ -7,7 +7,7 @@ def index(request):
     print(request.path)
     #return HttpResponse("<head><title>" + HttpRequest.path[1:-1] + "</title></head><body><h1>test</h1></body>")
     #always include the header
-    myArr = [1,2,3]
+    myArr = ["One", "Two", "Three"]
     return render(request, "index.html", {"array": myArr})
 
 def restaurant_data_view(request):
