@@ -1,7 +1,7 @@
 from django import forms
-from .models import Person
+from .models import Restaurant
 
-class PersonForm(forms.ModelForm):
+class RestaurantForm(forms.ModelForm):
     class Meta:
-        model = Person
-        fields = ['name', 'age', 'email']
+        model = Restaurant
+        fields = ['name', 'address', 'phone_number', 'website'] #, 'menu_items', 'tables']
