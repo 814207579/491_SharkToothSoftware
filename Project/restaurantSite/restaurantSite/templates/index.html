@@ -16,7 +16,8 @@
     </style>
 </head>
 <body>
-    <img src="/Images/BeeseChurger.png" alt="Error: Image not showing" width="800" height="200">
+    {% load static  %}
+    <img src="{% static '/images/amongus.png' %}" alt="Error: Image not showing" width="800" height="200">
     
     <div class="top-right-button">
         <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>

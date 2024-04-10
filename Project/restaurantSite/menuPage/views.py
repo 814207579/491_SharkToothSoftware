@@ -8,8 +8,7 @@ def index(request):
     #return HttpResponse("<head><title>" + HttpRequest.path[1:-1] + "</title></head><body><h1>test</h1></body>")
     #always include the header
     myArr = ["One", "Two", "Three"]
-    baseUrl = "../../";
-    return render(request, "index.html", {"array": myArr, "baseUrl": baseUrl})
+    return render(request, "index.html", {"array": myArr})
 
 def restaurant_data_view(request):
     if request.method == 'POST':
