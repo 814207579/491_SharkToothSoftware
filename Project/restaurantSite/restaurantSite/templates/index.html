@@ -18,10 +18,14 @@
 <body>
     {% load static  %}
     <img id="amongus" src="{% static '/images/amongus.png' %}" alt="Error: Image not showing" width="{{imageSizes.0}}" height="{{imageSizes.1}}">
-    
-    <div class="top-right-button">
-        <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
+
+    <div class="top">
+        <div class="top-right-button">
+            <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
+            <button type="button" class="btn btn-primary">View Cart</button>
+        </div>
     </div>
+
 
     <h1>Menu Items</h1>
     {% for item in array %}
@@ -35,8 +39,12 @@
             <div id="panelsStayOpen-collapse{{ item }}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{ item }}">
                 <div class="accordion-body">
                     <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                <button type="button" id="AddToCartButton" class="btn btn-primary">
+                    Add To Cart
+                </button>
                 </div>
             </div>
+
         </div>
     </div>
     {% endfor %}

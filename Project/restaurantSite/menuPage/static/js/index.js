@@ -1,7 +1,7 @@
 function changeAmongusSize() {
    let amongus = document.getElementById("amongus");
-   amongus.width = Math.random()*2000;
-   amongus.height = Math.random()*2000;
+   amongus.width = Math.random();
+   amongus.height = Math.random();
 }
 
-setInterval(changeAmongusSize, 10)
+changeAmongusSize()
