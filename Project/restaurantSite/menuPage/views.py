@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import RestaurantForm
 from django.http import HttpResponse
+import random
 
 # Create your views here.
 def index(request):
@@ -8,7 +9,8 @@ def index(request):
     #return HttpResponse("<head><title>" + HttpRequest.path[1:-1] + "</title></head><body><h1>test</h1></body>")
     #always include the header
     myArr = ["One", "Two", "Three"]
-    return render(request, "index.html", {"array": myArr})
+    imageResolution = [random.random()*800, random.random()*800]
+    return render(request, "index.html", {"array": myArr, "imageSizes": imageResolution})
 
 def restaurant_data_view(request):
     if request.method == 'POST':
