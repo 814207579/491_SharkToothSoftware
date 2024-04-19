@@ -9,10 +9,14 @@ class Person(models.Model):
     email = models.TextField()
 
 class FoodItem(models.Model):
+    name = models.CharField(max_length=100)
     food_type = models.CharField(max_length=100)
-    food_name = models.CharField(max_length=100)
     food_description = models.TextField(blank=True, null=True)
     food_price = models.DecimalField(max_digits=10, decimal_places=2)
+    food_thumbnail = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)

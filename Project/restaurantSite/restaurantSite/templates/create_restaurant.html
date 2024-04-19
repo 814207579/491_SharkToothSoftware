@@ -31,9 +31,21 @@
     <h1>Enter Your Data</h1>
     <div class="form">
         <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
+            {% csrf_token %}
+            <!-- Manually render each form field... -->
+            <p>{{ form.name.label_tag }} {{ form.name }}</p>
+            <p>{{ form.address.label_tag }} {{ form.address }}</p>
+            <p>{{ form.phone_number.label_tag }} {{ form.phone_number }}</p>
+            <p>{{ form.website.label_tag }} {{ form.website }}</p>
+            <!-- Manually render menu_items as checkboxes -->
+            <p>{{ form.menu_items.label_tag }}</p>
+            {% for choice in form.menu_items.field.queryset %}
+                <label>
+                    <input type="checkbox" name="{{ form.menu_items.html_name }}" value="{{ choice.pk }}">
+                    {{ choice }}
+                </label><br>
+            {% endfor %}
+            <button type="submit">Submit</button>
     </form>
     </div>
 </body>
