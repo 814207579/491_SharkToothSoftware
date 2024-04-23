@@ -52,33 +52,23 @@
         .container{
             width: 900px;
             height: 550px;
-            /*background-size: 100% 100%;*/
             background-position: center;
             border: 5px solid black;
+            /*border-radius: 10px;*/
             overflow: hidden;
-            margin: 0 10px;
+            margin: 0 auto;
             padding: 5px;
-
-            /*background-image: url("/Images/");*/
-            background-size: cover;
-            text-align: center;
+            position: relative;
         }
 
-        .container:hover {
+        .container img{
+            width: auto;
+            height: 500px;
+        }
+
+        .container img:hover {
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-
-        /*.container:nth-child(1) {*/
-        /*    background-image: url('/images/AppetizerBackground.jpg');*/
-        /*}*/
-
-        /*.container:nth-child(2) {*/
-        /*    background-image: url('/Images/Carbonara.png');*/
-        /*}*/
-
-        /*.container:nth-child(3) {*/
-        /*    !*background-image: url('drinks.jpg');*!*/
-        /*}*/
 
         .menu-item {
             background-color: #ffffff;
@@ -87,12 +77,12 @@
             margin-bottom: 20px;
         }
 
-        .accordion-button{
-            background-color: #007bff;
-            color: #ffffff;
-            border-radius: 8px;
-            border: none;
-        }
+        /*.accordion-button{*/
+        /*    background-color: #007bff;*/
+        /*    color: #ffffff;*/
+        /*    border-radius: 8px;*/
+        /*    border: none;*/
+        /*}*/
 
         .content {
             display: flex;
@@ -115,8 +105,10 @@
             color: #ffffff;
             font-size: 28px;
             font-weight: bold;
-            text-align: center;
-            display: flex;
+            position:absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .accordion-button:hover{
@@ -143,19 +135,21 @@
     <div id="appetizers" class="container">
         <div class="content">
             <a href="appetizers.html">Appetizers</a>
-<!--            <img src="{% static '/images/AppetizerBackground.jpg' %}" alt="Error: Image not showing">-->
+            <img src="{% static '/images/AppetizerBackground.jpg' %}" alt="Error: Image not showing">
         </div>
     </div>>
 
     <div id="food" class="container">
         <div class="content">
             <a href="food.html">Food</a>
+            <img src="{% static '/images/BeeseChurger.png' %}" alt="Error: Image not showing">
         </div>
     </div>
 
     <div id="drinks" class="container">
         <div class="content">
             <a href="drinks.html">Drinks</a>
+            <img src="{% static '/images/amongus.png' %}" alt="Error: Image not showing">
         </div>
 <!--    </div>-->
 <!--        <div id="games" class="container">-->
