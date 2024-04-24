@@ -5,7 +5,7 @@ import random
 from .models import Person
 
 def getPerson():
-    person = Person.name
+    person = Person.objects.all()
     return person
 
 # Create your views here.
@@ -14,8 +14,7 @@ def index(request):
     #return HttpResponse("<head><title>" + HttpRequest.path[1:-1] + "</title></head><body><h1>test</h1></body>")
     #always include the header
     myArr = ["One", "Two", "Three"]
-    personArr = ["test1"]
-    personArr.append(getPerson())
+    personArr = getPerson()
     imageResolution = [random.random()*800, random.random()*800]
     return render(request, "index.html", {"array": myArr, "imageSizes": imageResolution, "person": personArr})
 
