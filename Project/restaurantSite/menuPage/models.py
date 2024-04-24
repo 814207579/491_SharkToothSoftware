@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
+from djongo import models
 
 class Person(models.Model):
     name = models.CharField(max_length=100)
@@ -37,5 +37,5 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20)
     website = models.URLField(blank=True, null=True)
-    menu_items = models.ManyToManyField(FoodItem, related_name='restaurants')
-    tables = models.ManyToManyField(Table, related_name='restaurants')
+    food_items = models.ManyToManyField(FoodItem)
+    tables = models.ManyToManyField(Table)

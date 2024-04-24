@@ -23,6 +23,7 @@ def restaurant_data_view(request):
     return render(request, 'create_restaurant.html', {'form': form})
 
 def fooditem_data_view(request):
+    print("Request made!")
     if request.method == 'POST':
         form = FoodItemForm(request.POST)
         if form.is_valid():
