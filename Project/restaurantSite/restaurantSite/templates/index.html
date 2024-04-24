@@ -60,6 +60,7 @@
             overflow: hidden;*/
             margin: 0 auto;
             /*padding: 5px;*/
+
             position: relative;
             align-items: stretch;
         }
@@ -68,6 +69,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+
             transition: opacity 0.3s ease;
             display: block;
         }
@@ -104,8 +106,6 @@
             z-index: 1;
         }
 
-
-
         .content:hover {
             background-color: rgba(0, 0, 0, 0.7);
         }
@@ -139,19 +139,25 @@
         height: 100%;
         object-fit: cover;
         }
+        #logo{
+            position: absolute;
+            top: 23px;
+            left: 30px;
+            z-index: 1001; /* Ensure the logo is above other elements*/
+        }
+
     </style>
 </head>
 <body>
     <div id="top-bar">
         <a href="#drinks">Drinks</a>
         <a href="#food">Food</a>
-        <a href="#games">Games</a>
+<!--        <a href="#games">Games</a>-->
         <a href="#rewards">Rewards</a>
-        <a href="#apps">Apps</a>
+<!--        <a href="#apps">Apps</a>-->
     </div>
     {% load static  %}
-<!--    <img src="{% static '/images/amongus.png' %}" alt="Error: Image not showing" width="800" height="200">-->
-    
+
     <div class="top-right-button">
         <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
     </div>
@@ -174,6 +180,16 @@
         </div>
     </div>
 
+    <div id="logo">
+        <div class="content">
+            <a href="#"><img
+                    src="{% static '/images/amongus.png' %}"
+                    alt="Error: Image not showing"
+                    width="50"
+                    height="45"></a>
+        </div>
+    </div>
+
     <div id="drinks" class="container">
         <div class="content">
             <div class="image-wrapper">
@@ -181,6 +197,7 @@
                 <img src="{% static '/images/drinkbackground.jpg' %}" alt="Error: Image not showing">
             </div>
         </div>
+    </div>
 <!--    </div>-->
 <!--        <div id="games" class="container">-->
 <!--        <div class="content">-->
