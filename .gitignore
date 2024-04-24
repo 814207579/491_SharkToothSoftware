@@ -1,7 +1,5 @@
-Project/restaurantSite/restaurantSite/__pycache__/*
-Project/restaurantSite/menuPage/__pycache__/*
-*.pyc
-/.idea/*
-.idea
-.idea/*
-**/*.pyc
+
+.idea/491_SharkToothSoftware.iml
+.idea/491_SharkToothSoftware.iml
+.idea/misc.xml
+.idea/491_SharkToothSoftware.iml
