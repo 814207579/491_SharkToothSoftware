@@ -10,7 +10,7 @@ How to run:
 
 - Make sure you have python installed and working
 - (python --version)
-- pip install pymongo==3.12.3
+- pip install pymongo==3.12.1 (This version is required)
 - pip install pytz
 - pip install django
 - pip install djongo
@@ -26,7 +26,7 @@ Run the server:
 
 **Other Commands:**
 
-Migrate the database
+Migrate the database (Needs to be done anytime a model change is made)
 - python manage.py makemigrations, python manage.py migrate
 
 Create admin user
