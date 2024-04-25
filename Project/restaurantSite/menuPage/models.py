@@ -11,10 +11,14 @@ class Person(models.Model):
 
 class FoodItem(models.Model):
     _id = models.ObjectIdField()
+    name = models.CharField(max_length=100)
     food_type = models.CharField(max_length=100)
-    food_name = models.CharField(max_length=100)
     food_description = models.TextField(blank=True, null=True)
     food_price = models.DecimalField(max_digits=10, decimal_places=2)
+    food_thumbnail = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     _id = models.ObjectIdField()
@@ -39,5 +43,5 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20)
     website = models.URLField(blank=True, null=True)
-    menu_items = models.ManyToManyField(FoodItem, related_name='restaurants')
-    tables = models.ManyToManyField(Table, related_name='restaurants')
+    food_items = models.ManyToManyField(FoodItem)
+    tables = models.ManyToManyField(Table)
