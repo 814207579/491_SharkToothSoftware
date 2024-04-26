@@ -14,7 +14,6 @@ How to run:
 - pip install pytz
 - pip install django
 - pip install djongo
-- pip install "pymongo[srv]"
 
 
 Run the server: 
