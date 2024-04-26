@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from .forms import RestaurantForm, FoodItemForm
 from django.http import HttpResponse
 import random
-from .models import Person
+from .models import Person, FoodItem
 
 def getPerson():
     person = Person.objects.all()
     return person
+
+def getFoodItems():
+    foodItems = FoodItem.objects.all()
+    return foodItems
 
 # Create your views here.
 def index(request):
@@ -14,9 +18,9 @@ def index(request):
     #return HttpResponse("<head><title>" + HttpRequest.path[1:-1] + "</title></head><body><h1>test</h1></body>")
     #always include the header
     myArr = ["One", "Two", "Three"]
-    personArr = getPerson()
+    foodArr = getFoodItems()
     imageResolution = [random.random()*800, random.random()*800]
-    return render(request, "index.html", {"array": myArr, "imageSizes": imageResolution, "person": personArr})
+    return render(request, "index.html", {"array": myArr, "imageSizes": imageResolution, "foodItems": foodArr})
 
 def restaurant_data_view(request):
     if request.method == 'POST':
