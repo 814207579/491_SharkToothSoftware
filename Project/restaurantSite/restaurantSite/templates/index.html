@@ -161,11 +161,12 @@
 </head>
 <body>
     <div id="top-bar">
-        <a href="#drinks">Drinks</a>
-        <a href="#food">Food</a>
+        <a href="{% url 'index' %}" class="btn btn-primary">Drinks</a>
+        <a href="{% url 'index' %}" class="btn btn-primary">Food</a>
 <!--        <a href="#games">Games</a>-->
-        <a href="#rewards">Rewards</a>
+        <a href="{% url 'index' %}" class="btn btn-primary">Rewards</a>
 <!--        <a href="#apps">Apps</a>-->
+        <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
     </div>
     {% load static  %}
 
