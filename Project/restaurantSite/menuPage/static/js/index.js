@@ -1,58 +1,153 @@
-let cart = [];
+    let iconCart = document.querySelector('.icon-cart');
+    let closeCart = document.querySelector('.close');
+    let body = document.querySelector('body');
+    let listCartHTML = document.querySelector('.listCart');
+    let iconCartSpan = document.querySelector('.icon-cart span');
+    let clearCart = document.querySelector('.clearCart');
+    let listProducts = [];
+    let carts = [];
 
-function changeAmongusSize() {
-   let amongus = document.getElementById("amongus");
-   amongus.width = Math.random();
-   amongus.height = Math.random();
-}
+    iconCart.addEventListener('click', () => {
+        body.classList.toggle('showCart')
+    })
+    closeCart.addEventListener('click', () => {
+        body.classList.toggle('showCart')
+    })
+    clearCart.addEventListener('click', () => {
+        clearItemsInCart();
+    })
 
-$(".AddToCartButton").each(function() {
-   $(this).click(addItemToCart);
-})
+    //init for filling listProduct objects based on database
+    function fillProducts() {
+        let productArr = [];
+        //get all products from div
+        let foodList = $(".listProduct").find("div.item");
 
-function updateCart(item) {
-    let foodItems = $("#foodItems");
-    foodItems.append(item);
-}
+        for (let i = 0; i < foodList.length; i++) {
+            let currObject = {};
+            //set ID
+            currObject.id = $(foodList[i]).find(".idField").val().trim();
+            //set name
+            currObject.name = $(foodList[i]).find('.foodName').text().trim();
+            //set price
+            currObject.price = $(foodList[i]).find('.foodPrice').text().trim().replace("$","");
+            //set image link
+            currObject.image = $(foodList[i]).find('img.image.foodImage').attr('src');
+            productArr.push(currObject);
+        }
 
-function addItemToCart() {
-    let foodItemValue = $(this).attr('value');
-    cart.push(foodItemValue);
-    console.log(foodItemValue);
-    updateCart(foodItemValue)
-}
-
-function logVal() {
-      console.log($(this).attr('value'));
-}
-
-
-//get the modal
-let modal = document.getElementById("myModal");
-
-//get the button
-let btn = document.getElementById("viewCartButton");
-
-// Get the <span> element that closes the modal
-let span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal
-btn.onclick = function() {
-    if (cart.length > 0) {
-        modal.style.display = "block";
+        return productArr;
     }
-}
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
+    //add To Cart Function
+    $(".addCart").on("click", function() {
+        let product_id = $(this).closest('.item').find('.idField').val().trim();
+        addToCart(product_id);
+    });
 
-// When the user clicks anywhere outside the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+    const addToCart = (product_id) => {
+        let positionThisProductInCart = carts.findIndex((value) => value.product_id === product_id);
+        if(carts.length <= 0){
+            carts = [{
+                product_id: product_id,
+                quantity: 1
+            }]
+        }else if(positionThisProductInCart < 0){
+            carts.push({
+                product_id: product_id,
+                quantity: 1
+            });
+        }else{
+            carts[positionThisProductInCart].quantity += 1;
+        }
+        addCartToHTML();
+        addCartToMemory();
+    }
 
-changeAmongusSize()
+    const addCartToMemory = () => {
+        localStorage.setItem('cart', JSON.stringify(carts));
+    }
+
+    const addCartToHTML = () => {
+        listCartHTML.innerHTML = '';
+        let totalQuantity = 0;
+        if(carts.length > 0){
+            carts.forEach(cart => {
+                totalQuantity = totalQuantity + cart.quantity;
+                let newCart = document.createElement('div');
+                newCart.classList.add('item');
+                newCart.dataset.id = cart.product_id;
+                let positionProduct = listProducts.findIndex(value => value.id === cart.product_id);
+                let info = listProducts[positionProduct];
+                newCart.innerHTML =
+                    `<div class="image">
+                        <img src="${info.image}" alt="Error: Image Not Found">
+                    </div>
+                    <div class="name">
+                        ${info.name}
+                    </div>
+                    <div class="totalPrice">$
+                        ${info.price * cart.quantity}
+                    </div>
+                    <div class="quantity">
+                        <span class="minus"><</span>
+                        <span>${cart.quantity}</span>
+                        <span class="plus">></span>
+                    </div>`;
+                listCartHTML.appendChild(newCart);
+            })
+        }
+        iconCartSpan.textContent = totalQuantity;
+    }
+
+    listCartHTML.addEventListener('click', (event) => {
+        let positionClick = event.target;
+        if(positionClick.classList.contains('minus') || positionClick.classList.contains('plus')){
+            let product_id = positionClick.parentElement.parentElement.dataset.id;
+            let type = 'minus';
+            if(positionClick.classList.contains('plus')){
+                type = 'plus';
+            }
+            changeQuantity(product_id, type);
+        }
+    })
+
+    const changeQuantity = (product_id, type) => {
+        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id)
+        if(positionItemInCart >= 0){
+            switch(type){
+                case 'plus':
+                    carts[positionItemInCart].quantity += 1;
+                    break;
+
+                default:
+                    let valueChange = carts[positionItemInCart].quantity - 1;
+                    if(valueChange > 0){
+                        carts[positionItemInCart].quantity = valueChange;
+                    } else{
+                        carts.splice(positionItemInCart, 1);
+                    }
+                    break;
+            }
+        }
+        addCartToMemory();
+        addCartToHTML();
+    }
+
+    const clearItemsInCart = () => {
+        carts = [];
+        addCartToHTML();
+        addCartToMemory()
+    }
+
+    const initApp = () => {
+        //fill productsList
+        listProducts = fillProducts();
+
+        // get cart from memory
+        if(localStorage.getItem('cart')){
+            carts = JSON.parse(localStorage.getItem('cart'));
+            addCartToHTML();
+        }
+    }
+    initApp();
