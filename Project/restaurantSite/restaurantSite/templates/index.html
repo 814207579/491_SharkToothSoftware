@@ -15,24 +15,26 @@
 
     <nav class="navbar">
         <ul>
-            <li><a href="#appetizers">Appetizers</a></li>
-            <li><a href="#food">Food</a></li>
-            <li><a href="#drinks">Drinks</a></li>
-        </ul>
-    </nav>
-
-    <div class="top-right-button">
-        <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
-    </div>
-
-    <div class="logo">
-        <div class="content">
-            <a href="index.html"><img
+            <li>
+                <a href="index.html"><img
                     src="{% static '/images/amongus.png' %}"
                     alt="Error: Image not showing"
                     width="50"
                     height="45"></a>
-        </div>
+            </li>
+            <li><a href="#appetizers">Appetizers</a></li>
+            <li><a href="#food">Food</a></li>
+            <li><a href="#drinks">Drinks</a></li>
+            <li>
+                 <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    <div class="top-right-button">
+
     </div>
 
     <div class="container">
@@ -47,14 +49,19 @@
         </header>
 
         <div class="listProduct">
-            <div class="item">
-                <img src="{% static '/images/amongus.png' %}" alt="Error: Image Not Showing">
-                <h2>NAME PRODUCT</h2>
-                <div class="price">$ITEM PRICE</div>
-                <button class="addCart">
-                    Add To Cart
-                </button>
-            </div>
+            {% for item in foodItems %}
+                <div class="item">
+                    <input type="hidden" class="idField" value="{{item.pk}}"/>
+                    {% with test=item.food_thumbnail %}
+                     <img class="image foodImage" src="{% static test %}" alt="Food Thumbnail">
+                    {% endwith %}
+                    <h2 class="foodName">{{item.name}}</h2>
+                    <div class="foodPrice">${{item.food_price}}</div>
+                    <button class="addCart">
+                        Add To Cart
+                    </button>
+                </div>
+            {% endfor %}
         </div>
     </div>
 

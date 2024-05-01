@@ -1,11 +1,9 @@
     let iconCart = document.querySelector('.icon-cart');
     let closeCart = document.querySelector('.close');
     let body = document.querySelector('body');
-    let listProduct = document.querySelector('.listProduct');
     let listCartHTML = document.querySelector('.listCart');
     let iconCartSpan = document.querySelector('.icon-cart span');
     let clearCart = document.querySelector('.clearCart');
-
     let listProducts = [];
     let carts = [];
 
@@ -19,35 +17,36 @@
         clearItemsInCart();
     })
 
-    const addDataToHTML = () => {
-        listProduct.innerHTML = '';
-        if(listProducts.length > 0){
-            listProducts.forEach(product => {
-                let newProduct = document.createElement('div');
-                newProduct.classList.add('item');
-                newProduct.dataset.id = product.id;
-                newProduct.innerHTML = `<img src="${product.image}" alt="Error: Image Not Showing">
-                                        <h2>${product.name}</h2>
-                                        <div class="price">$${product.price}</div>
-                                        <button class="addCart">
-                                            Add To Cart
-                                        </button>`;
-                listProduct.appendChild(newProduct);
-            })
+    //init for filling listProduct objects based on database
+    function fillProducts() {
+        let productArr = [];
+        //get all products from div
+        let foodList = $(".listProduct").find("div.item");
+
+        for (let i = 0; i < foodList.length; i++) {
+            let currObject = {};
+            //set ID
+            currObject.id = $(foodList[i]).find(".idField").val().trim();
+            //set name
+            currObject.name = $(foodList[i]).find('.foodName').text().trim();
+            //set price
+            currObject.price = $(foodList[i]).find('.foodPrice').text().trim().replace("$","");
+            //set image link
+            currObject.image = $(foodList[i]).find('img.image.foodImage').attr('src');
+            productArr.push(currObject);
         }
+
+        return productArr;
     }
 
-    // Add To Cart Function
-    listProduct.addEventListener('click', (event) =>{
-        let positionClick = event.target;
-        if(positionClick.classList.contains('addCart')){
-            let product_id = positionClick.parentElement.dataset.id;
-            addToCart(product_id);
-        }
-    })
+    //add To Cart Function
+    $(".addCart").on("click", function() {
+        let product_id = $(this).closest('.item').find('.idField').val().trim();
+        addToCart(product_id);
+    });
 
     const addToCart = (product_id) => {
-        let positionThisProductInCart = carts.findIndex((value) => value.product_id == product_id);
+        let positionThisProductInCart = carts.findIndex((value) => value.product_id === product_id);
         if(carts.length <= 0){
             carts = [{
                 product_id: product_id,
@@ -78,7 +77,7 @@
                 let newCart = document.createElement('div');
                 newCart.classList.add('item');
                 newCart.dataset.id = cart.product_id;
-                let positionProduct = listProducts.findIndex((value) => value.id == cart.product_id);
+                let positionProduct = listProducts.findIndex(value => value.id === cart.product_id);
                 let info = listProducts[positionProduct];
                 newCart.innerHTML =
                     `<div class="image">
@@ -114,7 +113,7 @@
     })
 
     const changeQuantity = (product_id, type) => {
-        let positionItemInCart = carts.findIndex((value) => value.product_id == product_id)
+        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id)
         if(positionItemInCart >= 0){
             switch(type){
                 case 'plus':
@@ -142,32 +141,8 @@
     }
 
     const initApp = () => {
-        //get data from json
-        listProducts = [
-            {
-                "id": 1,
-                "name": "Classic Mojito",
-                "price": 10,
-                // "image": "{% static '/images/BeeseChurger.png' %}"
-            },
-            {
-                "id": 2,
-                "name": "Strawberry Daiquiri",
-                "price": 12,
-                // "image": "{% static '/images/Carbonara.png' %}"
-            },
-            {
-                "id": 3,
-                "name": "Old Fashioned",
-                "price": 13,
-                // "image": "{% static '/images/amongus.png' %}"
-            },
-
-        ];
-            // .then(response => response.json())
-            // .then(data => {
-            //     listProducts = data;
-        addDataToHTML();
+        //fill productsList
+        listProducts = fillProducts();
 
         // get cart from memory
         if(localStorage.getItem('cart')){
