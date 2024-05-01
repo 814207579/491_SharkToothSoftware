@@ -14,11 +14,26 @@
         }
 
         body{
-            background-color: dimgrey;
+            background-color: red;
             font-family: Helvetica, Arial, sans-serif;
         }
 
-        .row:after {
+        .header {
+            width: 100%;
+            height: 50px;
+            background-color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom: 2px solid #000000;
+            z-index: 1000;
+            font-size: 35px
+        }
+
+        .body:after {
             content: "";
             display: table;
             clear: both;
@@ -30,7 +45,11 @@
             padding: 10px;
         }
 
-        .form {
+        #advert {
+
+        }
+
+        #form {
             background-color: white;
             border-style: solid;
             border-width: medium;
@@ -40,24 +59,42 @@
         }
 
         .footer {
+            background-color: white;
+            padding: 10px;
             position: fixed;
-            left: 0;
             bottom: 0;
-            width: 100%
-            color: white;
+            left: 0;
+            display: flex;
+            justify-content: space-around;
+            border-top: 2px solid #000000;
+            z-index: 1000;
         }
 
         @media (max-width: 600px) {
             .column {
-                width: 100%
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="root">
+        <div class="header">
+            <div>
+                <a href="{% url 'index' %}">Drinks</a>
+            </div>
+            <div>
+                <a href="{% url 'index' %}">Food</a>
+            </div>
+            <div>
+                <a href="{% url 'index' %}">Rewards</a>
+            </div>
+            <div class="btn btn-primary">
+                <a href="{% url 'create_restaurant' %}">Create Restaurant</a>
+            </div>
+        </div>
         <div class="body">
-            <div class="advert">
+            <div id="advert" class="column">
                 <h1 style="color: darkred; text-align: center;">Create Restaraunt</h1>
                 <ul>
                     <li>Track customer orders</li>
@@ -65,11 +102,11 @@
                     <li>Add and delete options</li>
                 </ul>
             </div>
-            <div class="form">
+            <div id="form" class="column">
                 <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" style="width: 300px; height: 200px;">Submit</button>
+                <button type="submit">Submit</button>
                 </form>
             </div>
         </div>
