@@ -149,11 +149,20 @@ header .icon-cart span{
     background-color: #eeeee6;
     padding: 20px;
     border-radius: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .listProduct .item h2{
     font-weight: 500;
     font-size: large;
+}
+
+.listProduct .item .foodDescription{
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .listProduct .item .price{
@@ -166,9 +175,10 @@ header .icon-cart span{
     color: #eee;
     padding: 5px 10px;
     border-radius: 20px;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     border: none;
     cursor: pointer;
+    align-self: center;
 }
 
 .listProduct .item button:hover{

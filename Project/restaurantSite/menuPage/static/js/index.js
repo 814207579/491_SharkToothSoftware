@@ -31,6 +31,8 @@
             currObject.name = $(foodList[i]).find('.foodName').text().trim();
             //set price
             currObject.price = $(foodList[i]).find('.foodPrice').text().trim().replace("$","");
+            //set description
+            currObject.description = $(foodList[i]).find('.foodDescription').text().trim();
             //set image link
             currObject.image = $(foodList[i]).find('img.image.foodImage').attr('src');
             productArr.push(currObject);
