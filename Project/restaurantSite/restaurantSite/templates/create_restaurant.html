@@ -6,93 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Submit a new Restaurant</title>
     <link rel="icon" href="/static/Images/amongus.png" type="image/x-icon">
-    <!--FIXME: External CSS file not working-->
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body{
-            background-color: red;
-            font-family: Helvetica, Arial, sans-serif;
-        }
-
-        .header {
-            width: 100%;
-            height: 50px;
-            background-color: white;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-bottom: 2px solid #000000;
-            z-index: 1000;
-            font-size: 35px
-        }
-
-        .body:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .column {
-            float: left;
-            width: 50%;
-            padding: 10px;
-        }
-
-        #advert {
-
-        }
-
-        #form {
-            background-color: white;
-            border-style: solid;
-            border-width: medium;
-            border-color: black;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .footer {
-            background-color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            display: flex;
-            justify-content: space-around;
-            border-top: 2px solid #000000;
-            z-index: 1000;
-        }
-
-        @media (max-width: 600px) {
-            .column {
-                width: 100%;
-            }
-        }
-    </style>
+    {% load static %}
+    <link href="{% static '/css/index.css' %}" rel="stylesheet">
+    <link href="{% static '/css/createRestaurant.css' %}" rel="stylesheet">
 </head>
 <body>
     <div class="root">
-        <div class="header">
-            <div>
-                <a href="{% url 'index' %}">Drinks</a>
-            </div>
-            <div>
-                <a href="{% url 'index' %}">Food</a>
-            </div>
-            <div>
-                <a href="{% url 'index' %}">Rewards</a>
-            </div>
-            <div class="btn btn-primary">
-                <a href="{% url 'create_restaurant' %}">Create Restaurant</a>
-            </div>
-        </div>
+        <nav class="navbar">
+            <ul>
+                <li>
+                    <a href="{% url 'index' %}"><img
+                        src="{% static '/images/amongus.png' %}"
+                        alt="Error: Image not showing"
+                        width="50"
+                        height="45"></a>
+                </li>
+                <li><a href="{% url 'index' %}">Appetizers</a></li>
+                <li><a href="{% url 'index' %}">Food</a></li>
+                <li><a href="{% url 'index' %}">Drinks</a></li>
+                <li>
+                     <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
+                </li>
+            </ul>
+        </nav>
         <div class="body">
             <div id="advert" class="column">
                 <h1 style="color: darkred; text-align: center;">Create Restaraunt</h1>
