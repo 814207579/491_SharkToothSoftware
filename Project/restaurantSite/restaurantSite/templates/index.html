@@ -13,179 +13,10 @@
 <body class="">
     {% load static %}
 
-<<<<<<< HEAD
-        #top-bar a {
-            text-decoration: none;
-            color: #000000;
-            font-weight: bold;
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-        }
-
-        #top-bar a:hover {
-            background-color: #dddddd;
-        }
-
-        .container{
-            width: 900px;
-            height: 550px;
-            background-position: center;
-            border: 5px solid black;
-            /*border-radius: 10px;
-            overflow: hidden;*/
-            margin: 0 auto;
-            /*padding: 5px;*/
-
-            position: relative;
-            align-items: stretch;
-        }
-
-        /*.accordion-button{*/
-        /*    background-color: #007bff;*/
-        /*    color: #ffffff;*/
-        /*    border-radius: 8px;*/
-        /*    border: none;*/
-        /*}*/
-        
-        .container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-
-            transition: opacity 0.3s ease;
-            display: block;
-        }
-
-        .container img:hover {
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            opacity: 0.7;
-        }
-
-         .image-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        }
-
-        .image-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        }
-
-        .image-wrapper:hover img {
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        opacity: 0.7;
-        }
-
-        .content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #ffffff;
-            text-align: center;
-            transition: background-color 0.3s ease;
-            z-index: 1;
-        }
-
-        .content:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .content a {
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: bold;
-            position:absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .accordion-button:hover{
-            background-color: green;
-        }
-
-
-        #logo{
-            position: absolute;
-            top: 23px;
-            left: 30px;
-            z-index: 1001; /* Ensure the logo is above other elements*/
-        }
-
-        #menu-items {
-            position: absolute;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 34px;
-            font-weight: bolder;
-            z-index: 1001;
-        }
-
-    </style>
-</head>
-<body>
-    <div id="top-bar">
-        <a href="#drinks">Drinks</a>
-        <a href="#food">Food</a>
-<!--        <a href="#games">Games</a>-->
-        <a href="#rewards">Rewards</a>
-<!--        <a href="#apps">Apps</a>-->
-    </div>
-    {% load static  %}
-
-    <div class="top-right-button">
-        <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
-    </div>
-
-    <div id="menu-items">Menu Items</div>
-
-    <div id="appetizers" class="container">
-        <div class="image-wrapper">
-            <div class="content">
-                <a href="appetizers.html">Appetizers</a>
-                    <img src="{% static '/images/AppetizerBackground.jpg' %}" alt="Error: Image not showing">
-            </div>
-        </div>
-    </div>
-
-    <div id="food" class="container">
-        <div class="image-wrapper">
-            <div class="content">
-                <a href="food.html">Food</a>
-                    <img src="{% static '/images/BeeseChurger.png' %}" alt="Error: Image not showing">
-            </div>
-        </div>
-    </div>
-
-    <div id="drinks" class="container">
-        <div class="image-wrapper">
-            <div class="content">
-                <a href="drinks.html">Drinks</a>
-                    <img src="{% static '/images/drinkbackground.jpg' %}" alt="Error: Image not showing">
-            </div>
-        </div>
-    </div>
-
-    <div id="logo">
-        <div class="content">
-            <a href="#"><img
-=======
     <nav class="navbar">
         <ul>
             <li>
                 <a href="index.html"><img
->>>>>>> main
                     src="{% static '/images/amongus.png' %}"
                     alt="Error: Image not showing"
                     width="50"
@@ -233,24 +64,6 @@
             {% endfor %}
         </div>
     </div>
-<<<<<<< HEAD
-<!--    </div>-->
-<!--        <div id="games" class="container">-->
-<!--        <div class="content">-->
-<!--            <a href="games.html">Games</a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div id="rewards" class="container">-->
-<!--        <div class="content">-->
-<!--            <a href="rewards.html">Rewards</a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div id="apps" class="container">-->
-<!--        <div class="content">-->
-<!--            <a href="apps.html">Apps</a>-->
-<!--        </div>-->
-<!--    </div>-->
-=======
 
     <div class="cartTab">
         <h1>Shopping Cart</h1>
@@ -278,7 +91,6 @@
             <button id="clearCart" class="clearCart">CLEAR CART</button>
         </div>
     </div>
->>>>>>> main
 
 <!--    {% for item in array %}-->
 <!--    <div class="accordion" id="accordionPanelsStayOpenExample">-->
