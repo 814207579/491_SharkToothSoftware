@@ -16,15 +16,15 @@
     <nav class="navbar">
         <ul>
             <li>
-                <a href="index.html"><img
+                <a href="{% url 'index' %}"><img
                     src="{% static '/images/amongus.png' %}"
                     alt="Error: Image not showing"
                     width="50"
                     height="45"></a>
             </li>
-            <li><a href="#appetizers">Appetizers</a></li>
-            <li><a href="#food">Food</a></li>
-            <li><a href="#drinks">Drinks</a></li>
+            <li><a href="{% url 'index' %}">Appetizers</a></li>
+            <li><a href="{% url 'index' %}">Food</a></li>
+            <li><a href="{% url 'index' %}">Drinks</a></li>
             <li>
                  <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
             </li>
