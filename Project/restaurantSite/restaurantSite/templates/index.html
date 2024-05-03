@@ -13,18 +13,18 @@
 <body class="">
     {% load static %}
 
-    <nav class="navbar">
+    <nav class="navbar" id="navBarUl">
         <ul>
             <li>
                 <a href="{% url 'index' %}"><img
-                    src="{% static '/images/amongus.png' %}"
+                    src="{% static '/images/among-us-shark-skin-pack.png' %}"
                     alt="Error: Image not showing"
-                    width="50"
-                    height="45"></a>
+                    width="100"
+                    height="50"></a>
             </li>
-            <li><a href="{% url 'index' %}">Appetizers</a></li>
-            <li><a href="{% url 'index' %}">Food</a></li>
-            <li><a href="{% url 'index' %}">Drinks</a></li>
+            <li><a href="#appetizers">Dessert</a></li>
+            <li><a href="#food">Food</a></li>
+            <li><a href="#drinks">Drinks</a></li>
             <li>
                  <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
             </li>
@@ -57,9 +57,11 @@
                     {% endwith %}
                     <h2 class="foodName">{{item.name}}</h2>
                     <div class="foodPrice">${{item.food_price}}</div>
+                    <div class="foodDescription">{{item.food_description}}</div>
                     <button class="addCart">
                         Add To Cart
                     </button>
+                    <input type="hidden" class="foodType" value="{{item.food_type}}"/>
                 </div>
             {% endfor %}
         </div>
@@ -85,6 +87,7 @@
                 </div>
             </div>
         </div>
+        <div class="totalPriceAllItems">Total: $0</div>
         <div class="btn">
             <button class="close">CLOSE</button>
             <button class="checkOut">CHECKOUT</button>
