@@ -4,6 +4,7 @@
     let listCartHTML = document.querySelector('.listCart');
     let iconCartSpan = document.querySelector('.icon-cart span');
     let clearCart = document.querySelector('.clearCart');
+    let navBarUl = document.getElementById("navBarUl");
     let listProducts = [];
     let carts = [];
 
@@ -140,6 +141,42 @@
         addCartToMemory()
     }
 
+    function filterItems(event) {
+        // prevent default behavior of the anchor tag
+        event.preventDefault();
+        // get clicked item
+        let clickedItem = $(event.target).text();
+        //find all products
+        let foodList = $(".listProduct").find("div.item");
+        for (let i = 0; i < foodList.length; i++) {
+            let foodType = $(foodList[i]).find('.foodType').val().trim()
+            if (clickedItem === "Drinks") {
+                if (foodType !== "Drink") {
+                    $(foodList[i]).hide();
+                }
+                else {
+                    $(foodList[i]).show()
+                }
+            }
+            else if (clickedItem === "Dessert") {
+                if (foodType !== "Dessert") {
+                    $(foodList[i]).hide();
+                }
+                else {
+                    $(foodList[i]).show()
+                }
+            }
+            else if (clickedItem === "Food"){
+                if (foodType !== "Food") {
+                    $(foodList[i]).hide();
+                }
+                else {
+                    $(foodList[i]).show();
+                }
+            }
+        }
+    }
+
     const initApp = () => {
         //fill productsList
         listProducts = fillProducts();
@@ -149,5 +186,8 @@
             carts = JSON.parse(localStorage.getItem('cart'));
             addCartToHTML();
         }
+        
+        navBarUl.onclick = filterItems;
+
     }
     initApp();
