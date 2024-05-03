@@ -32,6 +32,8 @@
             currObject.name = $(foodList[i]).find('.foodName').text().trim();
             //set price
             currObject.price = $(foodList[i]).find('.foodPrice').text().trim().replace("$","");
+            //set description
+            currObject.description = $(foodList[i]).find('.foodDescription').text().trim();
             //set image link
             currObject.image = $(foodList[i]).find('img.image.foodImage').attr('src');
             productArr.push(currObject);
@@ -72,6 +74,8 @@
     const addCartToHTML = () => {
         listCartHTML.innerHTML = '';
         let totalQuantity = 0;
+        let totalPrice = 0;
+
         if(carts.length > 0){
             carts.forEach(cart => {
                 totalQuantity = totalQuantity + cart.quantity;
@@ -80,6 +84,10 @@
                 newCart.dataset.id = cart.product_id;
                 let positionProduct = listProducts.findIndex(value => value.id === cart.product_id);
                 let info = listProducts[positionProduct];
+
+                let itemTotalPrice = info.price * cart.quantity;
+                totalPrice += itemTotalPrice;
+
                 newCart.innerHTML =
                     `<div class="image">
                         <img src="${info.image}" alt="Error: Image Not Found">
@@ -90,6 +98,7 @@
                     <div class="totalPrice">$
                         ${info.price * cart.quantity}
                     </div>
+                    <div class="totalPrice">$${itemTotalPrice}</div>
                     <div class="quantity">
                         <span class="minus"><</span>
                         <span>${cart.quantity}</span>
@@ -99,6 +108,8 @@
             })
         }
         iconCartSpan.textContent = totalQuantity;
+
+        document.querySelector('.totalPriceAllItems').textContent = `$${totalPrice}`;
     }
 
     listCartHTML.addEventListener('click', (event) => {
