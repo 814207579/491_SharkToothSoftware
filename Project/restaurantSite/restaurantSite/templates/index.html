@@ -15,9 +15,6 @@
 
     <nav class="navbar" id="navBarUl">
         <ul>
-            <li><a href="#appetizers">Dessert</a></li>
-            <li><a href="#food">Food</a></li>
-            <li><a href="#drinks">Drinks</a></li>
             <li>
                 <a href="{% url 'index' %}"><img
                     src="{% static '/images/amongus.png' %}"
@@ -25,6 +22,9 @@
                     width="50"
                     height="45"></a>
             </li>
+            <li><a href="#appetizers">Dessert</a></li>
+            <li><a href="#food">Food</a></li>
+            <li><a href="#drinks">Drinks</a></li>
             <li>
                  <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
             </li>
@@ -52,6 +52,9 @@
             {% for item in foodItems %}
                 <div class="item">
                     <input type="hidden" class="idField" value="{{item.pk}}"/>
+                    {% with test=item.food_thumbnail %}
+                     <img class="image foodImage" src="{% static test %}" alt="Food Thumbnail">
+                    {% endwith %}
                     <h2 class="foodName">{{item.name}}</h2>
                     <div class="foodPrice">${{item.food_price}}</div>
                     <button class="addCart">
