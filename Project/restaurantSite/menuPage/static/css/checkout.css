@@ -1,0 +1,15 @@
+/* Basic styling for the checkout page */
+.order-summary {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.checkout-form {
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
