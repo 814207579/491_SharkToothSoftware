@@ -6,51 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Submit a new Restaurant</title>
     <link rel="icon" href="/static/Images/amongus.png" type="image/x-icon">
-    <!--FIXME: External CSS file not working-->
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body{
-            background-color: dimgrey;
-            font-family: Helvetica, Arial, sans-serif;
-        }
-
-        .row:after {
-
-        }
-
-        .column {
-            float: left;
-            width: 50%;
-            padding: 10px;
-            height: 300px;
-        }
-
-        .form {
-            background-color: white;
-            border-style: solid;
-            border-width: medium;
-            border-color: black;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%
-            color: white;
-        }
-    </style>
+    {% load static %}
+    <link href="{% static '/css/index.css' %}" rel="stylesheet">
+    <link href="{% static '/css/createRestaurant.css' %}" rel="stylesheet">
 </head>
 <body>
     <div class="root">
+        <nav class="navbar">
+            <ul>
+                <li>
+                    <a href="{% url 'index' %}"><img
+                        src="{% static '/images/amongus.png' %}"
+                        alt="Error: Image not showing"
+                        width="50"
+                        height="45"></a>
+                </li>
+                <li><a href="{% url 'index' %}">Appetizers</a></li>
+                <li><a href="{% url 'index' %}">Food</a></li>
+                <li><a href="{% url 'index' %}">Drinks</a></li>
+                <li>
+                     <a href="{% url 'create_restaurant' %}" class="btn btn-primary">Create Restaurant</a>
+                </li>
+            </ul>
+        </nav>
         <div class="body">
-            <div class="advert">
+            <div id="advert" class="column">
                 <h1 style="color: darkred; text-align: center;">Create Restaraunt</h1>
                 <ul>
                     <li>Track customer orders</li>
@@ -58,11 +38,11 @@
                     <li>Add and delete options</li>
                 </ul>
             </div>
-            <div class="form">
+            <div id="form" class="column">
                 <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" style="width: 300px; height: 200px;">Submit</button>
+                <button type="submit">Submit</button>
                 </form>
             </div>
         </div>
