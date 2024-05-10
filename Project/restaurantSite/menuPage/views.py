@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import RestaurantForm, FoodItemForm
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import random
-from .models import Person, FoodItem
+from .models import Person, FoodItem, Order, OrderItem
 
 def getPerson():
     person = Person.objects.all()
@@ -45,3 +45,30 @@ def fooditem_data_view(request):
 
 def success(request):
     return render(request, 'success.html')
+
+def process_order(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # Process order data
+        name = data.get('name')
+        email = data.get('email')
+        # ... (get other customer information and cart items)
+
+        # Create Order object
+        order = Order.objects.create(name=name, email=email,  # ... add other fields
+                                     total_price=data.get('totalPrice'))
+
+        # Create OrderItem objects
+        for item in data.get('items'):
+            OrderItem.objects.create(order=order,
+                                     food_name=item.get('name'),
+                                     food_price=item.get('price'),
+                                     quantity=item.get('quantity'))
+
+        # Handle payment processing (if applicable)
+        # ...
+
+        return JsonResponse({"message": "Order placed successfully!"})
+    else:
+        return JsonResponse({"error": "Invalid request method."}, status=400)
+
