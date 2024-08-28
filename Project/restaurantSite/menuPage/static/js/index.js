@@ -48,6 +48,12 @@
         addToCart(product_id);
     });
 
+    function getProductByID(product_id) {
+        //console.log("ID:", product_id);
+        //console.log(listProducts)
+        return listProducts.find(obj => obj.id === product_id);
+    }
+
     const addToCart = (product_id) => {
         let positionThisProductInCart = carts.findIndex((value) => value.product_id === product_id);
         if(carts.length <= 0){
@@ -152,6 +158,19 @@
         addCartToMemory()
     }
 
+    function getCheckoutItems(event) {
+        //console.log(carts);
+        event.preventDefault()
+
+        //loop over each cart item
+        for(let i = 0; i < carts.length; i++) {
+            carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
+        }
+
+        console.log(carts);
+    }
+
+
     function filterItems(event) {
         // prevent default behavior of the anchor tag
         event.preventDefault();
@@ -199,6 +218,7 @@
         }
         
         navBarUl.onclick = filterItems;
+        document.getElementById("checkoutBtn").onclick = getCheckoutItems;
 
     }
     initApp();
