@@ -5,6 +5,7 @@
     let iconCartSpan = document.querySelector('.icon-cart span');
     let clearCart = document.querySelector('.clearCart');
     let navBarUl = document.getElementById("navBarUl");
+    let checkOut = document.querySelector('.checkOut');
     let listProducts = [];
     let carts = [];
 
@@ -17,6 +18,12 @@
     clearCart.addEventListener('click', () => {
         clearItemsInCart();
     })
+    checkOut.addEventListener('click', () => {
+        //Add your checkout link here
+        clearItemsInCart();
+        alert('Thank you for your purchase');
+    })
+
 
     //init for filling listProduct objects based on database
     function fillProducts() {
