@@ -28,7 +28,7 @@ Run the server:
 Migrate the database (Needs to be done anytime a model change is made)
 - python manage.py makemigrations, python manage.py migrate
 
-Create admin user
+Create admin user (Only if there doesn't already exist one)
 - python manage.py createsuperuser
 This will allow you to create a local admin user
 
