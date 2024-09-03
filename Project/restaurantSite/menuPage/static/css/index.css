@@ -231,7 +231,7 @@ body.showCart .container{
 }
 
 .cartTab .btn button{
-    background-color: green;
+    background-color: yellow;
     border: none;
     /*font-family:;*/
     font-weight: 500;
