@@ -53,3 +53,4 @@ class MenuPageAdministration(models.Model):
                                                                                  ("green", "Green"),
                                                                                  ("purple", "Purple"),
                                                                                  ("orange", "Orange")])
+    bg_image = models.CharField(max_length=255, null=True, default="None")
