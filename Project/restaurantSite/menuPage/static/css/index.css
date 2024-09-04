@@ -9,12 +9,6 @@ body{
     /*overflow: hidden;*/
     margin: 0;
 }
-.top-right-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-}
 
 .navbar{
     width: 100%; /* Occupy full width */
@@ -244,6 +238,14 @@ body.showCart .container{
 
 .cartTab .listCart .item img{
     width: 100%;
+}
+
+.totalPriceAllItems {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    color: #ffffff;
+    font-size: 28px;
 }
 
 .cartTab .listCart .item{
