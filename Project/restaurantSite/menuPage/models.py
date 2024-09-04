@@ -36,7 +36,6 @@ class OrderItem(models.Model):
     food_id = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
-    # order_status = models.BooleanField(default=False)
 
 class Restaurant(models.Model):
     _id = models.ObjectIdField()
