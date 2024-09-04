@@ -144,8 +144,10 @@ header .icon-cart span{
 .listProduct .item img{
     margin: auto;
     width: 90%;
-    filter: drop-shadow(0 -10px 15px #0009);
-    border-radius: 50%;
+    border-radius: 10%;
+    width: 170px; /* Set your desired width */
+    height: 170px; /* Set your desired height */
+    object-fit: cover;
 }
 
 .listProduct{
@@ -155,7 +157,7 @@ header .icon-cart span{
 }
 
 .listProduct .item{
-    background-color: cornflowerblue;
+    background-color: whitesmoke;
     padding: 20px;
     border-radius: 20px;
     position: relative;
@@ -180,7 +182,7 @@ header .icon-cart span{
 }
 
 .listProduct .item button{
-    background-color: #335432;
+    background-color: goldenrod;
     color: #eee;
     padding: 5px 10px;
     border-radius: 20px;
@@ -231,7 +233,7 @@ body.showCart .container{
 }
 
 .cartTab .btn button{
-    background-color: yellow;
+    background-color: green;
     border: none;
     /*font-family:;*/
     font-weight: 500;
