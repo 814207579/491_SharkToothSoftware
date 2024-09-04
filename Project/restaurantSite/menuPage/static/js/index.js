@@ -19,9 +19,13 @@
         clearItemsInCart();
     })
     checkOut.addEventListener('click', () => {
-        //Add your checkout link here
-        clearItemsInCart();
-        alert('Thank you for your purchase');
+        //CHeck if items are in cart
+        if(carts.length <= 0){
+            alert('No items in cart');
+        } else {
+            clearItemsInCart();
+            alert('Thank you for your purchase');
+        }
     })
 
 
