@@ -189,7 +189,12 @@
             let foodType = $(foodList[i]).find('.foodType').val().trim()
             if (clickedItem === "Drinks") {
                 if (foodType !== "Drink") {
-                    $(foodList[i]).hide();
+                    if ($(foodList[i]).is(":hidden")) {
+                        $(foodList[i]).show()
+                    }
+                    else {
+                        $(foodList[i]).hide();
+                    }
                 }
                 else {
                     $(foodList[i]).show()
@@ -197,7 +202,12 @@
             }
             else if (clickedItem === "Dessert") {
                 if (foodType !== "Dessert") {
-                    $(foodList[i]).hide();
+                    if ($(foodList[i]).is(":hidden")) {
+                        $(foodList[i]).show()
+                    }
+                    else {
+                        $(foodList[i]).hide();
+                    }
                 }
                 else {
                     $(foodList[i]).show()
@@ -205,7 +215,12 @@
             }
             else if (clickedItem === "Food"){
                 if (foodType !== "Food") {
-                    $(foodList[i]).hide();
+                    if ($(foodList[i]).is(":hidden")) {
+                        $(foodList[i]).show()
+                    }
+                    else {
+                        $(foodList[i]).hide();
+                    }
                 }
                 else {
                     $(foodList[i]).show();
