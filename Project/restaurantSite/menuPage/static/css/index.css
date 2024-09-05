@@ -8,6 +8,8 @@ body{
     /*margin: 0;*/
     /*overflow: hidden;*/
     margin: 0;
+    font-family: Arial, sans-serif; /* Add a modern, clean font */
+
 }
 .top-right-button {
     position: absolute;
@@ -202,14 +204,17 @@ svg{
 
 .cartTab{
     width: 400px;
-    padding-top: 50px;
-    background-color: #353432;
-    color: #eee;
+    padding-top: 20px;
+    background-color: #fff; /* Lighter background for better contrast */
+    color: #333; /* Darker text for readability */
     position: fixed;
     inset: 0 -400px 0 auto;
-    display: grid;
-    grid-template-rows: 70px 1fr 70px;
-    transition: transform .20s;
+    display: flex;
+    flex-direction: column; /* Simplify layout with flexbox */
+    transition: transform .2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    border-left: 1px solid #ddd; /* Add border for better separation */
+    z-index: 1000; /* Ensure it stays above other elements */
 }
 
 
@@ -222,26 +227,45 @@ body.showCart .container{
 }
 
 .cartTab h1{
-    padding: 20px;
+    padding: 15px 20px;
     margin: 0;
-    font-weight: 300;
+    font-weight: bold; /* Bolder font for visibility */
+    font-size: 18px; /* Increase font size */
+    background-color: #f5f5f5; /* Light background for header */
+    border-bottom: 1px solid #ddd; /* Add border for separation */
 }
 
 .cartTab .btn{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: space-between; /* Better alignment */
+    padding: 15px 20px;
+    border-top: 1px solid #ddd; /* Add top border for separation */
 }
 
 .cartTab .btn button{
-    background-color: green;
+    background-color: #28a745; /* Distinct color for buttons */
+    color: #fff;
+    padding: 10px 15px;
     border: none;
-    /*font-family:;*/
+    border-radius: 4px;
     font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cartTab .btn button:hover {
+    background-color: #218838; /* Slightly darker green on hover */
 }
 
 .cartTab .btn .close{
-    background-color: #eee;
+    background-color: #f8f9fa; /* Light background for contrast */
+    color: #333; /* Darker text for readability */
+}
+
+.cartTab .listCart {
+    overflow-y: auto; /* Allow scrolling for long lists */
+    padding: 20px;
+    flex-grow: 1; /* Take up remaining space */
 }
 
 .cartTab .listCart .item img{
@@ -249,21 +273,29 @@ body.showCart .container{
 }
 
 .cartTab .listCart .item{
-    display: grid;
-    grid-template-columns: 70px 150px 50px 1fr;
-    gap: 10px;
-    text-align: center;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd; /* Add bottom border for separation */
+    margin-bottom: 10px;
 }
 
 .listCart .quantity span{
     display: inline-block;
-    width: 25px;
-    height: 25px;
-    background-color: #eee;
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0; /* Neutral background for buttons */
     color: #555;
     border-radius: 50%;
     cursor: pointer;
+    line-height: 30px; /* Center text vertically */
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.listCart .quantity span:hover {
+    background-color: #e0e0e0; /* Slightly darker on hover */
 }
 
 .listCart .item:nth-child(even){
