@@ -7,9 +7,8 @@ body{
     /*height: 100vh;*/
     /*margin: 0;*/
     /*overflow: hidden;*/
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    font-family: Arial, sans-serif; /* Add a modern, clean font */
-
 }
 .top-right-button {
     position: absolute;
@@ -227,23 +226,33 @@ body.showCart .container{
 }
 
 .cartTab h1{
-    padding: 15px 20px;
+    /* padding: 20px;
+    margin: 0;
+    font-weight: 300; */
+    padding: 20px;
     margin: 0;
     font-weight: bold; /* Bolder font for visibility */
     font-size: 18px; /* Increase font size */
-    background-color: #f5f5f5; /* Light background for header */
+    background-color: #747373; /* Light background for header */
     border-bottom: 1px solid #ddd; /* Add border for separation */
 }
 
 .cartTab .btn{
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
     display: flex;
     justify-content: space-between; /* Better alignment */
     padding: 15px 20px;
-    border-top: 1px solid #ddd; /* Add top border for separation */
+    border: 1px solid #ddd; /* Add top border for separation */
 }
 
 .cartTab .btn button{
-    background-color: #28a745; /* Distinct color for buttons */
+    /* background-color: green;
+    border: none;
+    /*font-family:;*/
+    /* font-weight: 500;
+    cursor: pointer; */
+    background-color: goldenrod; /* Distinct color for buttons */
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -253,13 +262,27 @@ body.showCart .container{
     transition: background-color 0.2s ease;
 }
 
-.cartTab .btn button:hover {
-    background-color: #218838; /* Slightly darker green on hover */
+.cartTab .btn button:hover{
+    background-color: rgb(246, 176, 0); /* Distinct color for buttons */
+}
+
+
+.cartTab .btn .checkOut {
+    background-color: rgb(34, 179, 34);
+}
+
+.cartTab .btn .checkOut:hover{
+    background-color: rgb(39, 227, 26); /* Distinct color for buttons */
 }
 
 .cartTab .btn .close{
-    background-color: #f8f9fa; /* Light background for contrast */
+    /* background-color: #eee; */
+    background-color: rgba(187, 51, 51, 0.692); /* Light background for contrast */
     color: #333; /* Darker text for readability */
+}
+
+.cartTab .btn .close:hover{
+    background-color: rgb(233, 31, 31); /* Distinct color for buttons */
 }
 
 .cartTab .listCart {
@@ -270,36 +293,94 @@ body.showCart .container{
 
 .cartTab .listCart .item img{
     width: 100%;
+    height: 100%;
+    /* width: 100px; */
+    /* height: 100px; */
+    border-radius: 5px; /* Rounded corners for images */
+    object-fit: cover; /* Maintain aspect ratio */
 }
 
 .cartTab .listCart .item{
-    display: flex;
+    /* display: grid;
+    grid-template-columns: 70px 150px 50px 1fr;
+    gap: 10px;
+    text-align: center;
+    align-items: center; */
+    grid-template-columns: 70px 150px 50px 1fr;
+    display: grid;
     align-items: center;
     justify-content: space-between;
     padding: 10px 0;
+    gap: 10px;
     border-bottom: 1px solid #ddd; /* Add bottom border for separation */
     margin-bottom: 10px;
 }
 
+.totalPriceAllItems {
+    background-color: #f5f5f5; /* Light gray background */
+    border-top: 1px solid #ddd; /* Border at the top */
+    padding: 15px 20px; /* Padding around the section */
+    text-align: center; /* Center-align text */
+    margin-top: 10px; /* Space above the section */
+}
+
+/* VERIFY THIS ONE BECAUSE IT'S NOT SHOWING UP */
+.totalPriceAllItems h3 {
+    margin: 0; 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    color: #333;
+}
+
+/* Styling for Quantity Buttons */
 .listCart .quantity span{
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    background-color: #f0f0f0; /* Neutral background for buttons */
+    /* display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-color: #eee;
     color: #555;
     border-radius: 50%;
+    cursor: pointer; */
+    display: inline-block;
+    width: 100%;
+    height: 20px;
+    background-color: #545454; /* Neutral background for buttons */
+    color: #f5f5f5;
+    /* border-radius: 50%; */
     cursor: pointer;
-    line-height: 30px; /* Center text vertically */
+    /* line-height: 50px; Center text vertically */
     text-align: center;
     transition: background-color 0.2s ease;
 }
 
-.listCart .quantity span:hover {
-    background-color: #e0e0e0; /* Slightly darker on hover */
+
+.listCart .quantity {
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    margin-top: 10px; /* Space above quantity section */
 }
 
-.listCart .item:nth-child(even){
-    background-color: #eee1;
+.listCart .quantity-btn {
+    background-color: #007bff; /* Bootstrap primary color */
+    border: none; /* Remove default border */
+    color: #fff; /* White text color */
+    padding: 5px 15px; /* Padding inside buttons */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1.2rem; /* Larger font size for visibility */
+    margin: 0 5px; /* Margin between buttons */
+    transition: background-color 0.2s ease; /* Smooth hover transition */
+}
+
+.listCart .quantity-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.listCart .quantity-value {
+    font-size: 1.2rem; /* Larger font for value */
+    margin: 0 10px; /* Space between buttons */
+    font-weight: bold; /* Bold for emphasis */
 }
 
 .listCart{
