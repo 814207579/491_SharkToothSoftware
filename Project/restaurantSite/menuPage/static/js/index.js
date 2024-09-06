@@ -112,14 +112,11 @@
                     <div class="name">
                         ${info.name}
                     </div>
-                    <div class="totalPrice">$
-                        ${info.price * cart.quantity}
-                    </div>
                     <div class="totalPrice">$${itemTotalPrice}</div>
                     <div class="quantity">
-                        <span class="minus"><</span>
+                        <span class="minus">-</span>
                         <span>${cart.quantity}</span>
-                        <span class="plus">></span>
+                        <span class="plus">+</span>
                     </div>`;
                 listCartHTML.appendChild(newCart);
             })
