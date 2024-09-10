@@ -245,3 +245,47 @@
 
     }
     initApp();
+    document.addEventListener("DOMContentLoaded", function () {
+    // Get all item cards
+    const items = document.querySelectorAll(".listProduct .item");
+
+    // Get the modal and elements inside it
+    const modal = document.getElementById("itemModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const closeModal = document.getElementsByClassName("close")[0];
+
+    // Function to open the modal
+    function openModal(itemName, itemDescription) {
+        modalTitle.textContent = itemName;
+        modalDescription.textContent = itemDescription;
+        modal.style.display = "block";
+    }
+
+    // Add click event listener to each card item
+    items.forEach(function (item) {
+        item.addEventListener("click", function (e) {
+            // Prevent the click event if it is on the "Add To Cart" button
+            if (e.target.classList.contains("addCart")) {
+                return;
+            }
+
+            const itemName = item.querySelector(".foodName").textContent;
+            const itemDescription = item.querySelector(".foodDescription").textContent;
+
+            openModal(itemName, itemDescription);
+        });
+    });
+
+    // Close the modal when clicking the 'x' button
+    closeModal.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // Close the modal when clicking anywhere outside the modal
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+});
