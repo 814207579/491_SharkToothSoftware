@@ -192,7 +192,8 @@
         // prevent default behavior of the anchor tag
         event.preventDefault();
         //Only do this if the <a> tags are clicked
-        if (!$(event.target).is("a")) {
+        console.log($(event.target).hasClass("navBarSort"))
+        if ($(event.target).hasClass("navBarSort") || !$(event.target).is("a")) {
             return
         }
         //Get clicked item
