@@ -25,18 +25,6 @@ class Table(models.Model):
     table_number = models.IntegerField(unique=True)
     table_status = models.BooleanField(default=False)
 
-class Order(models.Model):
-    _id = models.ObjectIdField()
-    order_date = models.DateTimeField(auto_now_add=True)
-    order_status = models.BooleanField(default=False)
-    table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name='orders')
-
-class OrderItem(models.Model):
-    _id = models.ObjectIdField()
-    food_id = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
-
 class Restaurant(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=255)
@@ -45,6 +33,19 @@ class Restaurant(models.Model):
     website = models.URLField(blank=True, null=True)
     food_items = models.ManyToManyField(FoodItem)
     tables = models.ManyToManyField(Table)
+
+class Order(models.Model):
+    _id = models.ObjectIdField()
+    order_date = models.DateTimeField(auto_now_add=True)
+    order_status = models.BooleanField(default=False)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name='orders')
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='orders')
+
+class OrderItem(models.Model):
+    _id = models.ObjectIdField()
+    food_id = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
 
 class MenuPageAdministration(models.Model):
     _id = models.ObjectIdField()
