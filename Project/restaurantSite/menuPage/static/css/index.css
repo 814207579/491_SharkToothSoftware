@@ -7,6 +7,7 @@ body{
     /*height: 100vh;*/
     /*margin: 0;*/
     /*overflow: hidden;*/
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
 
@@ -139,8 +140,11 @@ header .icon-cart span{
 .listProduct .item img{
     margin: auto;
     width: 90%;
-    filter: drop-shadow(0 -10px 15px #0009);
-    border-radius: 50%;
+    border-radius: 10%;
+    width: 170px; /* Set your desired width */
+    height: 170px; /* Set your desired height */
+    object-fit: cover;
+    background-color: #9b9999cc;
 }
 
 .listProduct{
@@ -150,13 +154,18 @@ header .icon-cart span{
 }
 
 .listProduct .item{
-    background-color: cornflowerblue;
+    background-color: whitesmoke;
     padding: 20px;
     border-radius: 20px;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+}
+
+.listProduct .item:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .listProduct .item h2{
@@ -175,7 +184,7 @@ header .icon-cart span{
 }
 
 .listProduct .item button{
-    background-color: #335432;
+    background-color: goldenrod;
     color: #eee;
     padding: 5px 10px;
     border-radius: 20px;
@@ -195,15 +204,18 @@ svg{
 
 .cartTab{
     width: 400px;
-    padding-top: 50px;
-    background-color: #353432;
-    color: #eee;
+    background-color: #fff; /* Lighter background for better contrast */
+    color: #333; /* Darker text for readability */
     position: fixed;
     inset: 0 -400px 0 auto;
-    display: grid;
-    grid-template-rows: 70px 1fr 70px;
-    transition: transform .20s;
+    display: flex;
+    flex-direction: column; /* Simplify layout with flexbox */
+    transition: transform .2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    border-left: 1px solid #ddd; /* Add border for better separation */
+    z-index: 1000; /* Ensure it stays above other elements */
 }
+
 
 body.showCart .cartTab{
     inset: 0 0 0 auto;
@@ -216,28 +228,72 @@ body.showCart .container{
 .cartTab h1{
     padding: 20px;
     margin: 0;
-    font-weight: 300;
+    font-weight: bold;
+    background-color: #9b9999cc;
+    border-bottom: 5px solid black;
 }
 
 .cartTab .btn{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
+    display: flex;
+    justify-content: space-between; /* Better alignment */
+    padding: 15px 20px;
+    border: 1px solid #ddd; /* Add top border for separation */
 }
 
 .cartTab .btn button{
-    background-color: yellow;
+    /* background-color: green;
     border: none;
     /*font-family:;*/
+    /* font-weight: 500;
+    cursor: pointer; */
+    background-color: goldenrod; /* Distinct color for buttons */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
     font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cartTab .btn button:hover{
+    background-color: rgb(246, 176, 0); /* Distinct color for buttons */
+}
+
+
+.cartTab .btn .checkOut {
+    background-color: rgb(34, 179, 34);
+}
+
+.cartTab .btn .checkOut:hover{
+    background-color: rgb(39, 227, 26); /* Distinct color for buttons */
 }
 
 .cartTab .btn .close{
-    background-color: #eee;
+    /* background-color: #eee; */
+    background-color: rgba(187, 51, 51, 0.692); /* Light background for contrast */
+    color: #fff; /* Darker text for readability */
+}
+
+.cartTab .btn .close:hover{
+    background-color: rgb(233, 31, 31); /* Distinct color for buttons */
+}
+
+.cartTab .listCart {
+    overflow-y: auto; /* Allow scrolling for long lists */
+    padding: 20px;
+    flex-grow: 1; /* Take up remaining space */
 }
 
 .cartTab .listCart .item img{
     width: 100%;
+    height: 100%;
+    /* width: 100px; */
+    /* height: 100px; */
+    border-radius: 5px; /* Rounded corners for images */
+    object-fit: cover; /* Maintain aspect ratio */
 }
 
 .totalPriceAllItems {
@@ -249,26 +305,81 @@ body.showCart .container{
 }
 
 .cartTab .listCart .item{
-    display: grid;
+    /* display: grid;
     grid-template-columns: 70px 150px 50px 1fr;
     gap: 10px;
     text-align: center;
+    align-items: center; */
+    grid-template-columns: 70px 150px 50px 1fr;
+    display: grid;
     align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    gap: 10px;
+    border-bottom: 1px solid #ddd; /* Add bottom border for separation */
+    margin-bottom: 10px;
 }
 
 .listCart .quantity span{
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    background-color: #eee;
-    color: #555;
-    border-radius: 50%;
+    width: auto;
+    height: auto;
+    color: goldenrod;
     cursor: pointer;
+    display: block;
+    background-color: goldenrod;
+    color: #f5f5f5;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.listCart .quantity .minus{
+    background-color: red;
+}
+
+.listCart .quantity span:hover{
+    background-color: #e0e0e0; 
 }
 
 .listCart .item:nth-child(even){
     background-color: #eee1;
 }
+ 
+.totalPriceAllItems{
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd; 
+    padding: 15px 20px; 
+    text-align: center;
+    margin-top: 10px; 
+} 
+
+/* VERIFY THIS ONE BECAUSE IT'S NOT SHOWING UP */
+
+/* Styling for Quantity Buttons */
+/* .listCart .quantity span{ */
+    /* display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-color: #eee;
+    color: #555;
+    border-radius: 50%;
+    cursor: pointer; 
+    display: inline-block;
+    width: 100%;
+    height: 20px;
+    background-color: #545454;
+    color: #f5f5f5;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}*/
+
+/* .listCart .quantity {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 10px; 
+} */
 
 .listCart{
     overflow: auto;
@@ -345,6 +456,43 @@ overflow: hidden;
     left: 1%;
     z-index: 1001; /* Ensure the logo is above other elements*/
 }
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 992px){
     .listProduct{

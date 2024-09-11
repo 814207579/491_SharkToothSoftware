@@ -112,14 +112,11 @@
                     <div class="name">
                         ${info.name}
                     </div>
-                    <div class="totalPrice">$
-                        ${info.price * cart.quantity}
-                    </div>
                     <div class="totalPrice">$${itemTotalPrice}</div>
                     <div class="quantity">
-                        <span class="minus"><</span>
+                        <span class="minus">-</span>
                         <span>${cart.quantity}</span>
-                        <span class="plus">></span>
+                        <span class="plus">+</span>
                     </div>`;
                 listCartHTML.appendChild(newCart);
             })
@@ -181,55 +178,64 @@
         console.log(carts);
     }
 
+    function clearFoodItemsFiler() {
+        let foodList = $(".listProduct").find("div.item");
+        for (let i = 0; i < foodList.length; i++) {
+            $(foodList[i]).show()
+        }
+        for (let i = 0; i < $(navBarUl).children().children().length; i++) {
+            $($(navBarUl).children().children()[i]).css("box-shadow", "none")
+        }
+    }
 
     function filterItems(event) {
         // prevent default behavior of the anchor tag
         event.preventDefault();
-        // get clicked item
+        //Only do this if the <a> tags are clicked
+        if (!$(event.target).is("a")) {
+            return
+        }
+        //Get clicked item
         let clickedItem = $(event.target).text();
+        //Navbar sort items
+        let navBarSortItems = $(".navBarSort");
+        //If the clickedItem ends with s we need to remove it
+        if (clickedItem.toLowerCase().endsWith("s")) {
+            clickedItem = clickedItem.slice(0, -1)
+        }
         //find all products
         let foodList = $(".listProduct").find("div.item");
+
+        //Var to know if we need to show or hide them
+        let show = false;
+        //Fix the show
+        if ($(event.target).hasClass("Selected")) {
+            show = true;
+            // Remove all selected
+            navBarSortItems.removeClass("Selected")
+            navBarSortItems.attr('style', '');
+        }
+
+        //Functionality of showing/hiding
         for (let i = 0; i < foodList.length; i++) {
             let foodType = $(foodList[i]).find('.foodType').val().trim()
-            if (clickedItem === "Drinks") {
-                if (foodType !== "Drink") {
-                    if ($(foodList[i]).is(":hidden")) {
-                        $(foodList[i]).show()
-                    }
-                    else {
-                        $(foodList[i]).hide();
-                    }
-                }
-                else {
+            if (show) {
+                $(foodList[i]).show()
+            }
+            else {
+                if (foodType === clickedItem) {
                     $(foodList[i]).show()
                 }
-            }
-            else if (clickedItem === "Dessert") {
-                if (foodType !== "Dessert") {
-                    if ($(foodList[i]).is(":hidden")) {
-                        $(foodList[i]).show()
-                    }
-                    else {
-                        $(foodList[i]).hide();
-                    }
-                }
                 else {
-                    $(foodList[i]).show()
+                    $(foodList[i]).hide()
                 }
             }
-            else if (clickedItem === "Food"){
-                if (foodType !== "Food") {
-                    if ($(foodList[i]).is(":hidden")) {
-                        $(foodList[i]).show()
-                    }
-                    else {
-                        $(foodList[i]).hide();
-                    }
-                }
-                else {
-                    $(foodList[i]).show();
-                }
-            }
+        }
+        if (!show) {
+            navBarSortItems.removeClass("Selected")
+            navBarSortItems.attr('style', '');
+            $(event.target).addClass("Selected")
+            $(event.target).css("box-shadow", "0px 10px 0px green");
         }
     }
 
@@ -248,3 +254,47 @@
 
     }
     initApp();
+    document.addEventListener("DOMContentLoaded", function () {
+    // Get all item cards
+    const items = document.querySelectorAll(".listProduct .item");
+
+    // Get the modal and elements inside it
+    const modal = document.getElementById("itemModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const closeModal = document.getElementsByClassName("close")[0];
+
+    // Function to open the modal
+    function openModal(itemName, itemDescription) {
+        modalTitle.textContent = itemName;
+        modalDescription.textContent = itemDescription;
+        modal.style.display = "block";
+    }
+
+    // Add click event listener to each card item
+    items.forEach(function (item) {
+        item.addEventListener("click", function (e) {
+            // Prevent the click event if it is on the "Add To Cart" button
+            if (e.target.classList.contains("addCart")) {
+                return;
+            }
+
+            const itemName = item.querySelector(".foodName").textContent;
+            const itemDescription = item.querySelector(".foodDescription").textContent;
+
+            openModal(itemName, itemDescription);
+        });
+    });
+
+    // Close the modal when clicking the 'x' button
+    closeModal.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // Close the modal when clicking anywhere outside the modal
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+});
