@@ -240,6 +240,11 @@ header .icon-cart span{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+}
+
+.listProduct .item:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .listProduct .item h2{
@@ -530,6 +535,43 @@ overflow: hidden;
     left: 1%;
     z-index: 1001; /* Ensure the logo is above other elements*/
 }
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 992px){
     .listProduct{
