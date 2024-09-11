@@ -18,15 +18,15 @@
     clearCart.addEventListener('click', () => {
         clearItemsInCart();
     })
-    checkOut.addEventListener('click', () => {
-        //CHeck if items are in cart
-        if(carts.length <= 0){
-            alert('No items in cart');
-        } else {
-            clearItemsInCart();
-            alert('Thank you for your purchase');
-        }
-    })
+    // checkOut.addEventListener('click', () => {
+    //     //CHeck if items are in cart
+    //     if(carts.length <= 0){
+    //         alert('No items in cart');
+    //     } else {
+    //         clearItemsInCart();
+    //         alert('Thank you for your purchase');
+    //     }
+    // })
 
 
     //init for filling listProduct objects based on database
@@ -297,4 +297,69 @@
             modal.style.display = "none";
         }
     };
+
+    // Modal Elements
+    const checkoutModal = document.getElementById('checkoutModal');
+    const closeModalButton = document.querySelector('.close-modal');
+    const zebraListContainer = document.querySelector('.zebra-list');
+    const totalPriceElement = document.getElementById('totalPrice');
+    const payNowButton = document.querySelector('.pay-now');
+    const goBackButton = document.querySelector('.go-back');
+
+    // Checkout Button Click Event
+    checkOut.addEventListener('click', () => {
+        if (carts.length <= 0) {
+            alert('No items in cart');
+        } else {
+            populateCheckoutModal();
+            checkoutModal.style.display = 'block';
+        }
+    });
+
+    // Close Modal Button Click Event
+    closeModalButton.addEventListener('click', () => {
+        checkoutModal.style.display = 'none';
+    });
+
+    // Close Modal When Clicking Outside the Modal
+    window.addEventListener('click', (event) => {
+        if (event.target == checkoutModal) {
+            checkoutModal.style.display = 'none';
+        }
+    });
+
+    // Function to Populate the Modal with Cart Items
+    function populateCheckoutModal() {
+        zebraListContainer.innerHTML = ''; // Clear previous content
+        let totalPrice = 0;
+
+        carts.forEach(cart => {
+            const product = getProductByID(cart.product_id);
+            const itemTotalPrice = product.price * cart.quantity;
+            totalPrice += itemTotalPrice;
+
+            // Create item element for the zebra list
+            const itemElement = document.createElement('div');
+            itemElement.innerHTML = `
+                <span>${product.name}</span>
+                <span>$${product.price} x ${cart.quantity}</span>
+            `;
+            zebraListContainer.appendChild(itemElement);
+        });
+
+        // Update total price in the modal
+        totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    }
+
+    // Pay Now Button Click Event
+    payNowButton.addEventListener('click', () => {
+        alert('Payment successful! Thank you for your purchase.');
+        checkoutModal.style.display = 'none';
+        clearItemsInCart();
+    });
+
+    // Go Back Button Click Event
+    goBackButton.addEventListener('click', () => {
+        checkoutModal.style.display = 'none';
+    });
 });

@@ -130,7 +130,7 @@ header .icon-cart span{
 /*}*/
 
 /* CHECKOUT MODAL (pop-up window) */
-.modal {
+.checkout-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1000; /* Sit on top */
@@ -138,11 +138,10 @@ header .icon-cart span{
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
 }
 
-.modal-content {
+.modal-checkout-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -207,6 +206,7 @@ header .icon-cart span{
 .modal-footer button:hover {
     background-color: #8b5e00;
 }
+/* END CHECKOUT MODAL */
 
 .container{
     width: 900px;
