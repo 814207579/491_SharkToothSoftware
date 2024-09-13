@@ -153,12 +153,10 @@
             }
 
             newQuantity = parseInt(newQuantity, 10) || 0;
-
             // Update the quantity in the cart
             changeQuantity(product_id, 'input', newQuantity);
         }
     })
-
 
     const changeQuantity = (product_id, type, newQuantity = 1) => {
         let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
