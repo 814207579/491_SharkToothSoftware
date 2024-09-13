@@ -142,7 +142,17 @@
     listCartHTML.addEventListener('input', (event) => {
         if (event.target.classList.contains('quantity-input')) {
             const product_id = event.target.parentElement.parentElement.dataset.id;
-            const newQuantity = parseInt(event.target.value, 10) || 0;
+            let newQuantity = event.target.value.trim();
+
+            // Validate the input: Only allow numbers
+            if (!/^\d+$/.test(newQuantity)) {
+                // If the input is not a valid number, reset to the previous quantity or default to 1
+                const currentItem = carts.find(item => item.product_id === product_id);
+                event.target.value = currentItem ? currentItem.quantity : 1;
+                return;
+            }
+
+            newQuantity = parseInt(newQuantity, 10) || 0;
 
             // Update the quantity in the cart
             changeQuantity(product_id, 'input', newQuantity);
