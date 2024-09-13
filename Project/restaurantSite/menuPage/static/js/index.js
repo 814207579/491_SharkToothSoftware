@@ -142,12 +142,10 @@
     listCartHTML.addEventListener('input', (event) => {
         if (event.target.classList.contains('quantity-input')) {
             const product_id = event.target.parentElement.parentElement.dataset.id;
-            const newQuantity = parseInt(event.target.value, 10);
+            const newQuantity = parseInt(event.target.value, 10) || 0;
 
             // Update the quantity in the cart
-            if (newQuantity > 0) {
-                changeQuantity(product_id, 'input', newQuantity);
-            }
+            changeQuantity(product_id, 'input', newQuantity);
         }
     })
 
@@ -160,7 +158,11 @@
                     carts[positionItemInCart].quantity += 1;
                     break;
                 case 'input':
-                    carts[positionItemInCart].quantity = newQuantity;
+                    if (newQuantity > 0) {
+                        carts[positionItemInCart].quantity = newQuantity;
+                    } else {
+                        carts.splice(positionItemInCart, 1); // Remove item if quantity is 0
+                    }
                     break;
                 default:
                     let valueChange = carts[positionItemInCart].quantity - 1;

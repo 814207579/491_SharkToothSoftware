@@ -435,6 +435,21 @@ body.showCart .container{
     margin: 0 5px;
 }
 
+/* Remove arrows from number input in all browsers */
+.listCart .quantity input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    appearance: textfield; /* Standard syntax */
+    margin: 0; /* Removes default margin */
+}
+
+/* Removes spinners for input[type="number"] in Chrome, Safari, Edge, and Opera */
+.listCart .quantity input[type="number"]::-webkit-outer-spin-button,
+.listCart .quantity input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .listCart .totalPrice {
     margin-left: 10px; /* Add space between the quantity and the price */
 }
