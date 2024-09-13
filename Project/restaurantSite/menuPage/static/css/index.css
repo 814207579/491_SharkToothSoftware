@@ -387,7 +387,6 @@ body.showCart .container{
     border-top: 1px solid #ddd;
     text-align: left;
     margin-top: 10px;
-
 }
 
 .cartTab .listCart .item{
@@ -406,6 +405,12 @@ body.showCart .container{
     margin-bottom: 10px;
 }
 
+.listCart .quantity {
+    display: flex;
+    align-items: center; /* Center elements vertically */
+
+}
+
 .listCart .quantity span{
     width: auto;
     height: auto;
@@ -417,6 +422,21 @@ body.showCart .container{
     cursor: pointer;
     text-align: center;
     transition: background-color 0.2s ease;
+}
+
+/* To style the input field in shopping cart*/
+.listCart .quantity input[type="number"] {
+    width: 40px; /* Adjust width as needed */
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 5px;
+}
+
+.listCart .totalPrice {
+    margin-left: 10px; /* Add space between the quantity and the price */
 }
 
 /*.listCart .quantity .minus{
@@ -460,6 +480,7 @@ body.showCart .container{
     justify-content: center; 
     margin-top: 10px; 
 } */
+
 
 .listCart{
     overflow: auto;
