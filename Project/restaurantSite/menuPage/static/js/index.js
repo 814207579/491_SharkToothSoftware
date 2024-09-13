@@ -115,12 +115,11 @@
                     
                     <div class="quantity">
                         <span class="minus">-</span>
-                        <span>${cart.quantity}</span>
+                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     </div>
                     <div class="totalPrice">$${itemTotalPrice}</div>
-                   `
-                ;
+                `;
                 listCartHTML.appendChild(newCart);
             })
         }
@@ -140,20 +139,34 @@
             changeQuantity(product_id, type);
         }
     })
+    listCartHTML.addEventListener('input', (event) => {
+        if (event.target.classList.contains('quantity-input')) {
+            const product_id = event.target.parentElement.parentElement.dataset.id;
+            const newQuantity = parseInt(event.target.value, 10);
 
-    const changeQuantity = (product_id, type) => {
-        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id)
-        if(positionItemInCart >= 0){
-            switch(type){
+            // Update the quantity in the cart
+            if (newQuantity > 0) {
+                changeQuantity(product_id, 'input', newQuantity);
+            }
+        }
+    })
+
+
+    const changeQuantity = (product_id, type, newQuantity = 1) => {
+        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
+        if (positionItemInCart >= 0) {
+            switch (type) {
                 case 'plus':
                     carts[positionItemInCart].quantity += 1;
                     break;
-
+                case 'input':
+                    carts[positionItemInCart].quantity = newQuantity;
+                    break;
                 default:
                     let valueChange = carts[positionItemInCart].quantity - 1;
-                    if(valueChange > 0){
+                    if (valueChange > 0) {
                         carts[positionItemInCart].quantity = valueChange;
-                    } else{
+                    } else {
                         carts.splice(positionItemInCart, 1);
                     }
                     break;
@@ -162,6 +175,7 @@
         addCartToMemory();
         addCartToHTML();
     }
+
 
     const clearItemsInCart = () => {
         carts = [];
