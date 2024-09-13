@@ -354,8 +354,52 @@
         totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
     }
 
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
+        const orderData = {
+            table_id: 1,
+            restaurant_id: 1
+        };
+
+        // Send order to backend
+        fetch('/create-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')  // Ensure CSRF token is sent
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Payment successful! Order ID: ' + data.order_id);
+                checkoutModal.style.display = 'none';
+                clearItemsInCart();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('Failed to create order: ' + error.message);
+        });
+
         alert('Payment successful! Thank you for your purchase.');
         checkoutModal.style.display = 'none';
         clearItemsInCart();
