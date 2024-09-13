@@ -139,6 +139,7 @@
             changeQuantity(product_id, type);
         }
     })
+    
     listCartHTML.addEventListener('input', (event) => {
         if (event.target.classList.contains('quantity-input')) {
             const product_id = event.target.parentElement.parentElement.dataset.id;
