@@ -407,7 +407,6 @@ body.showCart .container{
 
 .listCart .quantity {
     display: flex;
-    align-items: center; /* Center elements vertically */
 
 }
 
