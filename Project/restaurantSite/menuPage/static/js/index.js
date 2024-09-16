@@ -139,8 +139,31 @@
             changeQuantity(product_id, type);
         }
     })
-    listCartHTML.addEventListener('input', (event) => {
+    // Existing blur event listener
+    listCartHTML.addEventListener('blur', (event) => {
         if (event.target.classList.contains('quantity-input')) {
+            const product_id = event.target.parentElement.parentElement.dataset.id;
+            let newQuantity = event.target.value.trim();
+
+            // Validate the input: Only allow numbers
+            if (!/^\d+$/.test(newQuantity)) {
+                // If the input is not a valid number, reset to the previous quantity or default to 1
+                const currentItem = carts.find(item => item.product_id === product_id);
+                event.target.value = currentItem ? currentItem.quantity : 1;
+                return;
+            }
+
+            newQuantity = parseInt(newQuantity, 10) || 0;
+
+            // Update the quantity in the cart
+            changeQuantity(product_id, 'input', newQuantity);
+        }
+    }, true);
+
+    // New keydown event listener to handle "Enter" key
+    listCartHTML.addEventListener('keydown', (event) => {
+        if (event.target.classList.contains('quantity-input') && event.key === 'Enter') {
+            event.preventDefault(); // Prevent default form submission or behavior
             const product_id = event.target.parentElement.parentElement.dataset.id;
             let newQuantity = event.target.value.trim();
 
