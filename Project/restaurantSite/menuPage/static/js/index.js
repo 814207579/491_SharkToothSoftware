@@ -339,7 +339,7 @@
     });
 
     // Close the modal when clicking the 'x' button
-    closeModal.onclick = function () {
+    closeModalButton.onclick = function () {
         modal.style.display = "none";
     };
 
