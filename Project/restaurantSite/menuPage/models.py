@@ -45,3 +45,12 @@ class Restaurant(models.Model):
     website = models.URLField(blank=True, null=True)
     food_items = models.ManyToManyField(FoodItem)
     tables = models.ManyToManyField(Table)
+
+class MenuPageAdministration(models.Model):
+    _id = models.ObjectIdField()
+    color = models.CharField(max_length=50, null=False, default="None", choices=[("blue", "None"),
+                                                                                 ("blue", "Blue"),
+                                                                                 ("green", "Green"),
+                                                                                 ("purple", "Purple"),
+                                                                                 ("orange", "Orange")])
+    bg_image = models.CharField(max_length=255, null=True, default="None")
