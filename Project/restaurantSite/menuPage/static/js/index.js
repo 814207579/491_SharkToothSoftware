@@ -314,7 +314,7 @@
     const modal = document.getElementById("itemModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalDescription = document.getElementById("modalDescription");
-    const closeModal = document.querySelector('.close-modal');
+    const closeModal = document.querySelector('.close-modal-popup');
 
     // Function to open the modal
     function openModal(itemName, itemDescription) {
