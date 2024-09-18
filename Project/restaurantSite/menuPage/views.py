@@ -36,16 +36,16 @@ def place_order(request):
             items = data.get('items')
 
             # Get Table and Restaurant objects
-            table = Table.objects.get(id=table_id)
-            restaurant = Restaurant.objects.get(id=restaurant_id)
+            # table = Table.objects.get(_id=table_id)
+            # restaurant = Restaurant.objects.get(_id=restaurant_id)
             # Create a new Order
-            order = Order.objects.create(
-                table=table,
-                restaurant=restaurant,
-            )
+            # order = Order.objects.create(
+            #     table=table,
+            #     restaurant=restaurant,
+            # )
             # You may want to process items and associate with the order
 
-            return JsonResponse({'success': True, 'order_id': str(order._id)})
+            return JsonResponse({'success': True}) #, 'order_id': str(order._id)})
 
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
