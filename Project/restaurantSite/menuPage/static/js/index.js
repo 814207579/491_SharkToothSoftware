@@ -174,8 +174,6 @@
         for(let i = 0; i < carts.length; i++) {
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
-
-        console.log(carts);
     }
 
     function clearFoodItemsFiler() {
