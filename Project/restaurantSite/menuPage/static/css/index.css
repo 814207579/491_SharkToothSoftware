@@ -129,6 +129,85 @@ header .icon-cart span{
 /*    opacity: 0.7;*/
 /*}*/
 
+/* CHECKOUT MODAL (pop-up window) */
+.checkout-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+.modal-checkout-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px; /* Max width for larger screens */
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.zebra-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.zebra-list div:nth-child(even) {
+    background-color: #f2f2f2; /* Zebra striping */
+}
+
+.zebra-list div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.total-footer {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    background-color: goldenrod;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-footer button:hover {
+    background-color: #8b5e00;
+}
+/* END CHECKOUT MODAL */
+
 .container{
     width: 900px;
     max-width: 90vw;
@@ -298,10 +377,16 @@ body.showCart .container{
 
 .totalPriceAllItems {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    color: #ffffff;
+    justify-content: flex-start;
+    /* Control spacing from the right */
+    /* Adjust this value to move the text to the left */
+    padding: 10px 40px 10px 300px;
+    color: #030c1f;
     font-size: 28px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    text-align: left;
+    margin-top: 10px;
 }
 
 .cartTab .listCart .item{
@@ -320,38 +405,65 @@ body.showCart .container{
     margin-bottom: 10px;
 }
 
+.listCart .quantity {
+    display: flex;
+
+}
+
 .listCart .quantity span{
     width: auto;
     height: auto;
     color: goldenrod;
     cursor: pointer;
-    display: block;
-    background-color: goldenrod;
-    color: #f5f5f5;
+    display: inline-block;
+    /*background-color: goldenrod;
+    color: #f5f5f5;*/
     cursor: pointer;
     text-align: center;
     transition: background-color 0.2s ease;
 }
 
-.listCart .quantity .minus{
+/* To style the input field in shopping cart*/
+.listCart .quantity input[type="number"] {
+    width: 40px; /* Adjust width as needed */
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 5px;
+}
+
+/* Remove arrows from number input in all browsers */
+.listCart .quantity input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    appearance: textfield; /* Standard syntax */
+    margin: 0; /* Removes default margin */
+}
+
+/* Removes spinners for input[type="number"] in Chrome, Safari, Edge, and Opera */
+.listCart .quantity input[type="number"]::-webkit-outer-spin-button,
+.listCart .quantity input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.listCart .totalPrice {
+    margin-left: 10px; /* Add space between the quantity and the price */
+}
+
+/*.listCart .quantity .minus{
     background-color: red;
 }
 
 .listCart .quantity span:hover{
-    background-color: #e0e0e0; 
-}
+    background-color: #e0e0e0;
+}*/
 
 .listCart .item:nth-child(even){
     background-color: #eee1;
 }
- 
-.totalPriceAllItems{
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd; 
-    padding: 15px 20px; 
-    text-align: center;
-    margin-top: 10px; 
-} 
 
 /* VERIFY THIS ONE BECAUSE IT'S NOT SHOWING UP */
 
@@ -380,6 +492,7 @@ body.showCart .container{
     justify-content: center; 
     margin-top: 10px; 
 } */
+
 
 .listCart{
     overflow: auto;

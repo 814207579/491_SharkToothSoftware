@@ -18,15 +18,15 @@
     clearCart.addEventListener('click', () => {
         clearItemsInCart();
     })
-    checkOut.addEventListener('click', () => {
-        //CHeck if items are in cart
-        if(carts.length <= 0){
-            alert('No items in cart');
-        } else {
-            clearItemsInCart();
-            alert('Thank you for your purchase');
-        }
-    })
+    // checkOut.addEventListener('click', () => {
+    //     //CHeck if items are in cart
+    //     if(carts.length <= 0){
+    //         alert('No items in cart');
+    //     } else {
+    //         clearItemsInCart();
+    //         alert('Thank you for your purchase');
+    //     }
+    // })
 
 
     //init for filling listProduct objects based on database
@@ -112,12 +112,14 @@
                     <div class="name">
                         ${info.name}
                     </div>
-                    <div class="totalPrice">$${itemTotalPrice}</div>
+                    
                     <div class="quantity">
                         <span class="minus">-</span>
-                        <span>${cart.quantity}</span>
+                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
                         <span class="plus">+</span>
-                    </div>`;
+                    </div>
+                    <div class="totalPrice">$${itemTotalPrice}</div>
+                `;
                 listCartHTML.appendChild(newCart);
             })
         }
@@ -137,20 +139,69 @@
             changeQuantity(product_id, type);
         }
     })
+    // Existing blur event listener
+    listCartHTML.addEventListener('blur', (event) => {
+        if (event.target.classList.contains('quantity-input')) {
+            const product_id = event.target.parentElement.parentElement.dataset.id;
+            let newQuantity = event.target.value.trim();
 
-    const changeQuantity = (product_id, type) => {
-        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id)
-        if(positionItemInCart >= 0){
-            switch(type){
+            // Validate the input: Only allow numbers
+            if (!/^\d+$/.test(newQuantity)) {
+                // If the input is not a valid number, reset to the previous quantity or default to 1
+                const currentItem = carts.find(item => item.product_id === product_id);
+                event.target.value = currentItem ? currentItem.quantity : 1;
+                return;
+            }
+
+            newQuantity = parseInt(newQuantity, 10) || 0;
+
+            // Update the quantity in the cart
+            changeQuantity(product_id, 'input', newQuantity);
+        }
+    }, true);
+
+    // New keydown event listener to handle "Enter" key
+    listCartHTML.addEventListener('keydown', (event) => {
+        if (event.target.classList.contains('quantity-input') && event.key === 'Enter') {
+            event.preventDefault(); // Prevent default form submission or behavior
+            const product_id = event.target.parentElement.parentElement.dataset.id;
+            let newQuantity = event.target.value.trim();
+
+            // Validate the input: Only allow numbers
+            if (!/^\d+$/.test(newQuantity)) {
+                // If the input is not a valid number, reset to the previous quantity or default to 1
+                const currentItem = carts.find(item => item.product_id === product_id);
+                event.target.value = currentItem ? currentItem.quantity : 1;
+                return;
+            }
+
+            newQuantity = parseInt(newQuantity, 10) || 0;
+
+            // Update the quantity in the cart
+            changeQuantity(product_id, 'input', newQuantity);
+        }
+    })
+
+
+    const changeQuantity = (product_id, type, newQuantity = 1) => {
+        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
+        if (positionItemInCart >= 0) {
+            switch (type) {
                 case 'plus':
                     carts[positionItemInCart].quantity += 1;
                     break;
-
+                case 'input':
+                    if (newQuantity > 0) {
+                        carts[positionItemInCart].quantity = newQuantity;
+                    } else {
+                        carts.splice(positionItemInCart, 1); // Remove item if quantity is 0
+                    }
+                    break;
                 default:
                     let valueChange = carts[positionItemInCart].quantity - 1;
-                    if(valueChange > 0){
+                    if (valueChange > 0) {
                         carts[positionItemInCart].quantity = valueChange;
-                    } else{
+                    } else {
                         carts.splice(positionItemInCart, 1);
                     }
                     break;
@@ -159,6 +210,7 @@
         addCartToMemory();
         addCartToHTML();
     }
+
 
     const clearItemsInCart = () => {
         carts = [];
@@ -260,7 +312,7 @@
     const modal = document.getElementById("itemModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalDescription = document.getElementById("modalDescription");
-    const closeModal = document.getElementsByClassName("close")[0];
+    const closeModal = document.querySelector('.close-modal');
 
     // Function to open the modal
     function openModal(itemName, itemDescription) {
@@ -295,4 +347,69 @@
             modal.style.display = "none";
         }
     };
+
+    // Modal Elements
+    const checkoutModal = document.getElementById('checkoutModal');
+    const closeModalButton = document.querySelector('.close-modal');
+    const zebraListContainer = document.querySelector('.zebra-list');
+    const totalPriceElement = document.getElementById('totalPrice');
+    const payNowButton = document.querySelector('.pay-now');
+    const goBackButton = document.querySelector('.go-back');
+
+    // Checkout Button Click Event
+    checkOut.addEventListener('click', () => {
+        if (carts.length <= 0) {
+            alert('No items in cart');
+        } else {
+            populateCheckoutModal();
+            checkoutModal.style.display = 'block';
+        }
+    });
+
+    // Close Modal Button Click Event
+    closeModalButton.addEventListener('click', () => {
+        checkoutModal.style.display = 'none';
+    });
+
+    // Close Modal When Clicking Outside the Modal
+    window.addEventListener('click', (event) => {
+        if (event.target == checkoutModal) {
+            checkoutModal.style.display = 'none';
+        }
+    });
+
+    // Function to Populate the Modal with Cart Items
+    function populateCheckoutModal() {
+        zebraListContainer.innerHTML = ''; // Clear previous content
+        let totalPrice = 0;
+
+        carts.forEach(cart => {
+            const product = getProductByID(cart.product_id);
+            const itemTotalPrice = product.price * cart.quantity;
+            totalPrice += itemTotalPrice;
+
+            // Create item element for the zebra list
+            const itemElement = document.createElement('div');
+            itemElement.innerHTML = `
+                <span>${product.name}</span>
+                <span>$${product.price} x ${cart.quantity}</span>
+            `;
+            zebraListContainer.appendChild(itemElement);
+        });
+
+        // Update total price in the modal
+        totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    }
+
+    // Pay Now Button Click Event
+    payNowButton.addEventListener('click', () => {
+        alert('Payment successful! Thank you for your purchase.');
+        checkoutModal.style.display = 'none';
+        clearItemsInCart();
+    });
+
+    // Go Back Button Click Event
+    goBackButton.addEventListener('click', () => {
+        checkoutModal.style.display = 'none';
+    });
 });
