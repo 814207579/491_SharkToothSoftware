@@ -143,10 +143,10 @@ header .icon-cart span{
 
 .modal-checkout-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%;
     max-width: 600px; /* Max width for larger screens */
 }
 
@@ -218,7 +218,6 @@ header .icon-cart span{
 
 .listProduct .item img{
     margin: auto;
-    width: 90%;
     border-radius: 10%;
     width: 170px;
     height: 170px; 
@@ -241,25 +240,36 @@ header .icon-cart span{
     flex-direction: column;
     justify-content: space-between;
     transition: box-shadow 0.3s ease;
+    text-align: center;
 }
 
 .listProduct .item:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* foodName */
 .listProduct .item h2{
     font-weight: 500;
     font-size: large;
+    margin: 0;
+    height: 40px;
+    padding: 10px 0; /* Add padding for spacing */
+    /* line-height: 1.4 Adjust line-height for vertical centering */
+    height: 50px; /* Fixed height for consistency */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
 }
 
 .listProduct .item .foodDescription{
     margin-bottom: 10px;
     text-align: center;
+    display: none;
 }
 
 .listProduct .item .price{
-    letter-spacing: 7px;
+    letter-spacing: 3px;
     font-size: small;
+    margin-top: auto;
 }
 
 .listProduct .item button{
@@ -402,7 +412,7 @@ body.showCart .container{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 15px;
+    margin: 0 0 4px 25px;
 }
 
 .listCart .item .name {
