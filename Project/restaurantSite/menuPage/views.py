@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from .models import Order, Table, Restaurant, Person, FoodItem
 from .forms import RestaurantForm, FoodItemForm
 from django.http import HttpResponse
@@ -24,34 +25,31 @@ def index(request):
     imageResolution = [random.random()*800, random.random()*800]
     return render(request, "index.html", {"array": myArr, "imageSizes": imageResolution, "foodItems": foodArr})
 
-def create_order(request):
+@csrf_exempt
+def place_order(request):
     if request.method == 'POST':
         try:
+            print(request)
             data = json.loads(request.body)
             table_id = data.get('table_id')
             restaurant_id = data.get('restaurant_id')
+            items = data.get('items')
 
-            # Create and save the order
+            # Get Table and Restaurant objects
             table = Table.objects.get(id=table_id)
             restaurant = Restaurant.objects.get(id=restaurant_id)
-
+            # Create a new Order
             order = Order.objects.create(
                 table=table,
-                restaurant=restaurant
+                restaurant=restaurant,
             )
+            # You may want to process items and associate with the order
 
-            # Return success response with order details
-            return JsonResponse({
-                'success': True,
-                'message': 'Order created successfully',
-                'order_id': str(order._id),
-                'order_status': order.order_status,
-                'order_date': order.order_date
-            })
+            return JsonResponse({'success': True, 'order_id': str(order._id)})
 
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
-    return JsonResponse({'success': False, 'message': 'Invalid request'}, status=400)
+        return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
 def restaurant_data_view(request):
     if request.method == 'POST':
@@ -64,7 +62,6 @@ def restaurant_data_view(request):
     return render(request, 'create_restaurant.html', {'form': form})
 
 def fooditem_data_view(request):
-    print("Request made!")
     if request.method == 'POST':
         form = FoodItemForm(request.POST)
         if form.is_valid():

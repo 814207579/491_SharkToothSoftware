@@ -178,7 +178,7 @@
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
 
-        console.log(carts);
+        //console.log(carts);
     }
 
     function clearFoodItemsFiler() {
@@ -354,15 +354,15 @@
         totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
     }
 
-    function getCookie(name) {
+    // Helper function to get CSRF token from cookie
+    function getCSRFToken() {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                if (cookie.substring(0, 10) === 'csrftoken=') {
+                    cookieValue = cookie.substring(10);
                     break;
                 }
             }
@@ -372,24 +372,31 @@
 
     // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
+        for(let i = 0; i < carts.length; i++) {
+            console.log(carts[i])
+        }
+
         const orderData = {
             table_id: 1,
-            restaurant_id: 1
+            restaurant_id: 1,
+            items: carts
         };
 
+        console.log(JSON.stringify(orderData))
+
         // Send order to backend
-        fetch('/create-order', {
+        fetch('place_order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')  // Ensure CSRF token is sent
+                'X-CSRFToken': getCSRFToken()
             },
             body: JSON.stringify(orderData)
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Payment successful! Order ID: ' + data.order_id);
+                alert('Payment successful! Order ID: ' + 1);
                 checkoutModal.style.display = 'none';
                 clearItemsInCart();
             } else {
@@ -399,10 +406,6 @@
         .catch(error => {
             alert('Failed to create order: ' + error.message);
         });
-
-        alert('Payment successful! Thank you for your purchase.');
-        checkoutModal.style.display = 'none';
-        clearItemsInCart();
     });
 
     // Go Back Button Click Event
