@@ -387,7 +387,6 @@ body.showCart .container{
     border-top: 1px solid #ddd;
     text-align: left;
     margin-top: 10px;
-
 }
 
 .cartTab .listCart .item{
@@ -406,6 +405,11 @@ body.showCart .container{
     margin-bottom: 10px;
 }
 
+.listCart .quantity {
+    display: flex;
+
+}
+
 .listCart .quantity span{
     width: auto;
     height: auto;
@@ -419,6 +423,36 @@ body.showCart .container{
     transition: background-color 0.2s ease;
 }
 
+/* To style the input field in shopping cart*/
+.listCart .quantity input[type="number"] {
+    width: 40px; /* Adjust width as needed */
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 5px;
+}
+
+/* Remove arrows from number input in all browsers */
+.listCart .quantity input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    appearance: textfield; /* Standard syntax */
+    margin: 0; /* Removes default margin */
+}
+
+/* Removes spinners for input[type="number"] in Chrome, Safari, Edge, and Opera */
+.listCart .quantity input[type="number"]::-webkit-outer-spin-button,
+.listCart .quantity input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.listCart .totalPrice {
+    margin-left: 10px; /* Add space between the quantity and the price */
+}
+
 /*.listCart .quantity .minus{
     background-color: red;
 }
@@ -430,8 +464,6 @@ body.showCart .container{
 .listCart .item:nth-child(even){
     background-color: #eee1;
 }
-
-
 
 /* VERIFY THIS ONE BECAUSE IT'S NOT SHOWING UP */
 
@@ -460,6 +492,7 @@ body.showCart .container{
     justify-content: center; 
     margin-top: 10px; 
 } */
+
 
 .listCart{
     overflow: auto;
