@@ -139,16 +139,46 @@
             changeQuantity(product_id, type);
         }
     })
-    
-    listCartHTML.addEventListener('input', (event) => {
+    // Existing blur event listener
+    listCartHTML.addEventListener('blur', (event) => {
         if (event.target.classList.contains('quantity-input')) {
             const product_id = event.target.parentElement.parentElement.dataset.id;
-            const newQuantity = parseInt(event.target.value, 10);
+            let newQuantity = event.target.value.trim();
+
+            // Validate the input: Only allow numbers
+            if (!/^\d+$/.test(newQuantity)) {
+                // If the input is not a valid number, reset to the previous quantity or default to 1
+                const currentItem = carts.find(item => item.product_id === product_id);
+                event.target.value = currentItem ? currentItem.quantity : 1;
+                return;
+            }
+
+            newQuantity = parseInt(newQuantity, 10) || 0;
 
             // Update the quantity in the cart
-            if (newQuantity > 0) {
-                changeQuantity(product_id, 'input', newQuantity);
+            changeQuantity(product_id, 'input', newQuantity);
+        }
+    }, true);
+
+    // New keydown event listener to handle "Enter" key
+    listCartHTML.addEventListener('keydown', (event) => {
+        if (event.target.classList.contains('quantity-input') && event.key === 'Enter') {
+            event.preventDefault(); // Prevent default form submission or behavior
+            const product_id = event.target.parentElement.parentElement.dataset.id;
+            let newQuantity = event.target.value.trim();
+
+            // Validate the input: Only allow numbers
+            if (!/^\d+$/.test(newQuantity)) {
+                // If the input is not a valid number, reset to the previous quantity or default to 1
+                const currentItem = carts.find(item => item.product_id === product_id);
+                event.target.value = currentItem ? currentItem.quantity : 1;
+                return;
             }
+
+            newQuantity = parseInt(newQuantity, 10) || 0;
+
+            // Update the quantity in the cart
+            changeQuantity(product_id, 'input', newQuantity);
         }
     })
 
@@ -161,7 +191,11 @@
                     carts[positionItemInCart].quantity += 1;
                     break;
                 case 'input':
-                    carts[positionItemInCart].quantity = newQuantity;
+                    if (newQuantity > 0) {
+                        carts[positionItemInCart].quantity = newQuantity;
+                    } else {
+                        carts.splice(positionItemInCart, 1); // Remove item if quantity is 0
+                    }
                     break;
                 default:
                     let valueChange = carts[positionItemInCart].quantity - 1;
@@ -193,7 +227,7 @@
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
 
-        console.log(carts);
+        //console.log(carts);
     }
 
     function clearFoodItemsFiler() {
@@ -280,7 +314,7 @@
     const modal = document.getElementById("itemModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalDescription = document.getElementById("modalDescription");
-    const closeModal = document.getElementsByClassName("close")[0];
+    const closeModal = document.querySelector('.close-modal-popup');
 
     // Function to open the modal
     function openModal(itemName, itemDescription) {
@@ -369,11 +403,58 @@
         totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
     }
 
+    // Helper function to get CSRF token from cookie
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, 10) === 'csrftoken=') {
+                    cookieValue = cookie.substring(10);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
-        alert('Payment successful! Thank you for your purchase.');
-        checkoutModal.style.display = 'none';
-        clearItemsInCart();
+        for(let i = 0; i < carts.length; i++) {
+            console.log(carts[i])
+        }
+
+        const orderData = {
+            table_id: 1,
+            restaurant_id: 1,
+            items: carts
+        };
+
+        console.log(JSON.stringify(orderData))
+
+        // Send order to backend
+        fetch('place_order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Payment successful! Order ID: ' + 1);
+                checkoutModal.style.display = 'none';
+                clearItemsInCart();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('Failed to create order: ' + error.message);
+        });
     });
 
     // Go Back Button Click Event

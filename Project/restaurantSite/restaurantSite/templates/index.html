@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% csrf_token %}
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 
     <head>
@@ -88,10 +89,10 @@
         </div>
     </div>
 
-    <!-- Modal Structure -->
+    <!-- Modal Structure for item pop up menu -->
     <div id="itemModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close-modal-popup">&times;</span>
             <h2 id="modalTitle"></h2>
             <p id="modalDescription"></p>
         </div>
