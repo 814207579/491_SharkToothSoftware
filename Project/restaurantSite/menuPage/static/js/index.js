@@ -118,14 +118,14 @@
                         <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     </div>
-                    <div class="totalPrice">$${itemTotalPrice}</div>
+                    <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
                 `;
                 listCartHTML.appendChild(newCart);
             })
         }
         iconCartSpan.textContent = totalQuantity;
 
-        document.querySelector('.totalPriceAllItems').textContent = `$${totalPrice}`;
+        document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
     }
 
     listCartHTML.addEventListener('click', (event) => {
@@ -400,7 +400,7 @@
         });
 
         // Update total price in the modal
-        totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+        totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
     }
 
     // Helper function to get CSRF token from cookie
