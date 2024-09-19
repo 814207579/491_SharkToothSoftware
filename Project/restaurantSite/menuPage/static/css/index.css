@@ -150,7 +150,8 @@ header .icon-cart span{
     max-width: 600px; /* Max width for larger screens */
 }
 
-.close-modal {
+.close-modal,
+.close-modal-popup {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -159,7 +160,9 @@ header .icon-cart span{
 }
 
 .close-modal:hover,
-.close-modal:focus {
+.close-modal:focus,
+.close-modal-popup:hover,
+.close-modal-popup:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
