@@ -284,6 +284,7 @@ svg{
 
 .cartTab{
     width: 400px;
+    height: 500px;
     background-color: #fff; /* Lighter background for better contrast */
     color: #333; /* Darker text for readability */
     position: fixed;
@@ -302,7 +303,7 @@ body.showCart .cartTab{
 }
 
 body.showCart .container{
-    transform: translate(-250px);
+    transform: translate(0px);
 }
 
 .cartTab h1{
