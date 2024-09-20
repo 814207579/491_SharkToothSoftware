@@ -118,14 +118,14 @@
                         <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     </div>
-                    <div class="totalPrice">$${itemTotalPrice}</div>
+                    <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
                 `;
                 listCartHTML.appendChild(newCart);
             })
         }
         iconCartSpan.textContent = totalQuantity;
 
-        document.querySelector('.totalPriceAllItems').textContent = `$${totalPrice}`;
+        document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
     }
 
     listCartHTML.addEventListener('click', (event) => {
@@ -312,7 +312,7 @@
     const modal = document.getElementById("itemModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalDescription = document.getElementById("modalDescription");
-    const closeModal = document.querySelector('.close-modal');
+    const closeModal = document.querySelector('.close-modal-popup');
 
     // Function to open the modal
     function openModal(itemName, itemDescription) {
@@ -398,14 +398,61 @@
         });
 
         // Update total price in the modal
-        totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+        totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+    }
+
+    // Helper function to get CSRF token from cookie
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, 10) === 'csrftoken=') {
+                    cookieValue = cookie.substring(10);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 
     // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
-        alert('Payment successful! Thank you for your purchase.');
-        checkoutModal.style.display = 'none';
-        clearItemsInCart();
+        for(let i = 0; i < carts.length; i++) {
+            console.log(carts[i])
+        }
+
+        const orderData = {
+            table_id: 1,
+            restaurant_id: 1,
+            items: carts
+        };
+
+        console.log(JSON.stringify(orderData))
+
+        // Send order to backend
+        fetch('place_order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Payment successful! Order ID: ' + 1);
+                checkoutModal.style.display = 'none';
+                clearItemsInCart();
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('Failed to create order: ' + error.message);
+        });
     });
 
     // Go Back Button Click Event
