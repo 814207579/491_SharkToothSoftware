@@ -126,6 +126,7 @@
         iconCartSpan.textContent = totalQuantity;
 
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
+        document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
 
     listCartHTML.addEventListener('click', (event) => {
@@ -384,11 +385,13 @@
     function populateCheckoutModal() {
         zebraListContainer.innerHTML = ''; // Clear previous content
         let totalPrice = 0;
+        totalQuantity = 0;
 
         carts.forEach(cart => {
             const product = getProductByID(cart.product_id);
             const itemTotalPrice = product.price * cart.quantity;
             totalPrice += itemTotalPrice;
+            totalQuantity += cart.quantity;
 
             // Create item element for the zebra list
             const itemElement = document.createElement('div');
@@ -401,6 +404,7 @@
 
         // Update total price in the modal
         totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+        document.getElementById('totalItemsCheckout').textContent = totalQuantity;
     }
 
     // Helper function to get CSRF token from cookie
