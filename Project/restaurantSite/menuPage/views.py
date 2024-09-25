@@ -46,6 +46,7 @@ def place_order(request):
 
             if items:
                 for item in items:
+                    print(item)
                     product_id = item['product_id']
                     quantity = item.get('quantity', 1)  # Default quantity to 1 if not provided
                     try:
