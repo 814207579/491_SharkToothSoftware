@@ -1,8 +1,9 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from .models import Order, Table, Restaurant, Person, FoodItem
+from .models import Order, Table, Restaurant, Person, FoodItem, OrderItem
 from .forms import RestaurantForm, FoodItemForm
+from bson import ObjectId
 from django.http import HttpResponse
 import random
 import json
@@ -29,27 +30,44 @@ def index(request):
 def place_order(request):
     if request.method == 'POST':
         try:
-            print(request)
             data = json.loads(request.body)
-            table_id = data.get('table_id')
-            restaurant_id = data.get('restaurant_id')
+            table_number = int(data.get('table_number'))
+            restaurant_id = ObjectId(data.get('restaurant_id'))
             items = data.get('items')
 
-            # Get Table and Restaurant objects
-            # table = Table.objects.get(_id=table_id)
-            # restaurant = Restaurant.objects.get(_id=restaurant_id)
-            # Create a new Order
-            # order = Order.objects.create(
-            #     table=table,
-            #     restaurant=restaurant,
-            # )
-            # You may want to process items and associate with the order
+            restaurant = Restaurant.objects.get(_id=restaurant_id)
 
-            return JsonResponse({'success': True}) #, 'order_id': str(order._id)})
+            table = Table.objects.get(table_number=table_number, restaurant = restaurant)
 
+            order = Order.objects.create(
+                table=table,
+                restaurant=restaurant,
+            )
+
+            if items:
+                for item in items:
+                    product_id = item['product_id']
+                    quantity = item.get('quantity', 1)  # Default quantity to 1 if not provided
+                    try:
+                        food_item = FoodItem.objects.get(_id=ObjectId(product_id))  # Convert to ObjectId
+                        # Create an OrderItem instance
+                        OrderItem.objects.create(order=order, food_item=food_item, quantity=quantity)
+                    except FoodItem.DoesNotExist:
+                        return JsonResponse({'error': f'Food item with ID {product_id} not found.'}, status=404)
+
+            return JsonResponse({'message': 'Order placed successfully!', 'order_id': str(order._id)}, status=201)
+
+        except Table.DoesNotExist:
+            return JsonResponse({'error': 'Table not found.'}, status=404)
+        except Restaurant.DoesNotExist:
+            return JsonResponse({'error': 'Restaurant not found.'}, status=404)
+        except FoodItem.DoesNotExist:
+            return JsonResponse({'error': 'Food item not found.'}, status=404)
         except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)}, status=400)
-        return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
+            print(e)
+            return JsonResponse({'error': 'An error occurred while placing the order.'}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=405)
 
 def restaurant_data_view(request):
     if request.method == 'POST':
