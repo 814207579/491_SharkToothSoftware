@@ -187,9 +187,13 @@ header .icon-cart span{
 
 .total-footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     font-weight: bold;
     margin-top: 10px;
+}
+
+.total-footer p{
+    margin: 0;
 }
 
 .modal-footer {
@@ -393,16 +397,27 @@ body.showCart .container{
     margin: 10px 10px;
 }
 
-/* Total Price in Cart */
-.totalPriceAllItems {
+/* Total Price and Items in Cart */
+.cartSummary {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
     color: #030c1f;
     border-top: 1px solid #ddd;
     margin-top: 10px; 
     max-width: 100%;
     font-weight: bold;
+}
+
+.totalPriceAllItems {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.totalQuantityAllItems {
+    text-align: left;
+    flex-shrink: 0;
 }
 
 .cartTab .listCart .item{
