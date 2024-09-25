@@ -65,6 +65,15 @@
         return listProducts.find(obj => obj.id === product_id);
     }
 
+    function getTotalPrice() {
+        let totalPrice = 0
+        for (let i = 0; i < carts.length; i++) {
+            totalPrice += carts[i].total;
+        }
+
+        return totalPrice;
+    }
+
     const addToCart = (product_id) => {
         let positionThisProductInCart = carts.findIndex((value) => value.product_id === product_id);
         if(carts.length <= 0){
@@ -354,6 +363,8 @@
     const zebraListContainer = document.querySelector('.zebra-list');
     const totalPriceElement = document.getElementById('totalPrice');
     const payNowButton = document.querySelector('.pay-now');
+    const splitCardButton = document.getElementById("splitCartButton");
+    const splitCartConfirmButton = document.getElementById("splitCartConfirm");
     const goBackButton = document.querySelector('.go-back');
 
     // Checkout Button Click Event
@@ -459,4 +470,58 @@
     goBackButton.addEventListener('click', () => {
         checkoutModal.style.display = 'none';
     });
+
+    // Function that modifies the checkout modal to be used as the split cart function
+    splitCardButton.addEventListener("click", event => {
+        event.preventDefault();
+        // Hyjacking the modal to be used by
+        checkoutModal.innerHTML =
+        '<div class="modal-checkout-content"> ' +
+            '<span class="close-modal">&times;</span>' +
+            '<h2>Checkout</h2>' +
+            '<div class="split-cart-selection">' +
+                '<span>How many times would you like to split the cart? </span>' +
+                '<select id="splitCartSelect" class="split-modal-select">' +
+                    '<option value="1">1</option>' +
+                    '<option value="2">2</option>' +
+                    '<option value="3">3</option>' +
+                    '<option value="4">4</option>' +
+                '</select>' +
+                '<div class="modal-footer">' +
+                    '<button id="splitCartConfirm" class="confirm button">Confirm</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+        document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
+    })
+
+    // Updates the cart to be the split up cart
+    function splitCartModalUpdate() {
+        let selectionBoxElement = document.getElementById("splitCartSelect");
+        let selectionBoxVal = Number($(selectionBoxElement).val());
+        let buildString =
+            '<div class="modal-checkout-content"> ' +
+                '<span class="close-modal">&times;</span>' +
+                '<h2>Checkout</h2>' +
+                '<div class="zebra-list">';
+
+        for(i = 0; i < selectionBoxVal; i++) {
+            buildString += '<div>'+
+                                '<span>' +
+                                    'Person' + i +
+                                '</span>' +
+                                '<span>' +
+                                    'Cost' + ': $' + (getTotalPrice() / selectionBoxVal) +
+                                '</span>' +
+                           '</div>';
+        }
+
+        buildString += '</div>' +
+                '<div class="total-footer">' +
+                    '<p>Total Price: <span id="totalPrice">$' + getTotalPrice() + '</span></p>' +
+                '</div>' +
+            '</div>';
+
+        checkoutModal.innerHTML = buildString;
+    }
 });
