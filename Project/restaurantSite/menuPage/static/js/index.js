@@ -425,17 +425,17 @@
 
     // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
-        for(let i = 0; i < carts.length; i++) {
-            console.log(carts[i])
-        }
+        // for(let i = 0; i < carts.length; i++) {
+        //     console.log(carts[i])
+        // }
 
         const orderData = {
-            table_id: 1,
-            restaurant_id: 1,
+            table_number: 2,
+            restaurant_id: "507f191e810c19729de860ee",
             items: carts
         };
 
-        console.log(JSON.stringify(orderData))
+        // console.log(JSON.stringify(orderData))
 
         // Send order to backend
         fetch('place_order', {
@@ -448,7 +448,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.message) {
                 alert('Payment successful! Order ID: ' + 1);
                 checkoutModal.style.display = 'none';
                 clearItemsInCart();

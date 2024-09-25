@@ -20,19 +20,28 @@ class FoodItem(models.Model):
     def __str__(self):
         return self.name
 
-class Table(models.Model):
-    _id = models.ObjectIdField()
-    table_number = models.IntegerField(unique=True)
-    table_status = models.BooleanField(default=False)
-
 class Restaurant(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20)
     website = models.URLField(blank=True, null=True)
-    food_items = models.ManyToManyField(FoodItem)
-    tables = models.ManyToManyField(Table)
+    food_items = models.ManyToManyField('FoodItem')
+
+    def __str__(self):
+        return self.name
+
+class Table(models.Model):
+    _id = models.ObjectIdField()
+    table_number = models.IntegerField()
+    table_status = models.BooleanField(default=False)
+    restaurant = models.ForeignKey(Restaurant, related_name='tables', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('table_number', 'restaurant')  # Ensure unique table numbers per restaurant
+
+    def __str__(self):
+        return f"Table {self.table_number} - {self.restaurant.name}"
 
 class Order(models.Model):
     _id = models.ObjectIdField()
@@ -40,12 +49,20 @@ class Order(models.Model):
     order_status = models.BooleanField(default=False)
     table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name='orders')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='orders')
+#
+# class OrderItem(models.Model):
+#     _id = models.ObjectIdField()
+#     food_id = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+#     quantity = models.IntegerField()
+#     order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
 
 class OrderItem(models.Model):
-    _id = models.ObjectIdField()
-    food_id = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.food_item.name} (x{self.quantity})"
 
 class MenuPageAdministration(models.Model):
     _id = models.ObjectIdField()
