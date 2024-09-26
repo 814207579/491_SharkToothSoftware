@@ -465,4 +465,25 @@
     goBackButton.addEventListener('click', () => {
         checkoutModal.style.display = 'none';
     });
+
+    //Navbar underline
+    const navLinks = document.querySelectorAll('.navbar ul li a.navBarSort');
+    const underline = document.querySelector('.underline');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // 1. Remove 'active' class from all links
+            navLinks.forEach(l => l.classList.remove('active'));
+
+            // 2. Add 'active' class to the clicked link
+            this.classList.add('active');
+
+            // 3. Position underline
+            const linkRect = this.getBoundingClientRect();
+            underline.style.left = linkRect.left + 'px';
+            underline.style.width = linkRect.width + 'px';
+
+            filterItems(event);
+        });
+    });
 });
