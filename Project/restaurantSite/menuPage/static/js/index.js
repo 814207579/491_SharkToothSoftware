@@ -450,7 +450,7 @@
             items: carts
         };
 
-        // console.log(JSON.stringify(orderData))
+        console.log(JSON.stringify(orderData))
 
         // Send order to backend
         fetch('place_order', {
@@ -464,7 +464,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.message) {
-                alert('Payment successful! Order ID: ' + 1);
+                    alert('Payment successful! Order ID: ' + data.order_id);
                 checkoutModal.style.display = 'none';
                 clearItemsInCart();
             } else {
