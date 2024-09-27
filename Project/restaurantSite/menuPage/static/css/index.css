@@ -13,6 +13,7 @@ body{
 
 .navbar{
     width: 100%; /* Occupy full width */
+    height: 100px; /* Adjust height as needed */
     background-color: #000000;
     position: fixed;
     top: 0;
@@ -307,11 +308,11 @@ svg{
 
 .cartTab{
     width: 400px;
-    height: 500px;
+    height: 540px;
     background-color: #fff; /* Lighter background for better contrast */
     color: #333; /* Darker text for readability */
     position: fixed;
-    inset: 0 -400px 0 auto;
+    inset: 100px -400px 0 auto;
     display: flex;
     flex-direction: column; /* Simplify layout with flexbox */
     transition: transform .2s ease-in-out;
@@ -321,7 +322,7 @@ svg{
 
 
 body.showCart .cartTab{
-    inset: 0 0 0 auto;
+    inset: 100px 0 0 auto;
 }
 
 body.showCart .container{
