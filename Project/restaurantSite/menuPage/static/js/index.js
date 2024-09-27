@@ -135,6 +135,7 @@
         iconCartSpan.textContent = totalQuantity;
 
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
+        document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
 
     listCartHTML.addEventListener('click', (event) => {
@@ -247,6 +248,27 @@
         }
     }
 
+    //Navbar underline
+    const navLinks = document.querySelectorAll('.navbar ul li a.navBarSort');
+    const underline = document.querySelector('.underline');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // 1. Remove 'active' class from all links
+            navLinks.forEach(l => l.classList.remove('active'));
+
+            // 2. Add 'active' class to the clicked link
+            this.classList.add('active');
+
+            // 3. Position underline
+            const linkRect = this.getBoundingClientRect();
+            underline.style.left = linkRect.left + 'px';
+            underline.style.width = linkRect.width + 'px';
+
+            filterItems(event);
+        });
+    });
+
     function filterItems(event) {
         // prevent default behavior of the anchor tag
         event.preventDefault();
@@ -289,12 +311,6 @@
                     $(foodList[i]).hide()
                 }
             }
-        }
-        if (!show) {
-            navBarSortItems.removeClass("Selected")
-            navBarSortItems.attr('style', '');
-            $(event.target).addClass("Selected")
-            $(event.target).css("box-shadow", "0px 10px 0px green");
         }
     }
 
@@ -393,11 +409,13 @@
     function populateCheckoutModal() {
         zebraListContainer.innerHTML = ''; // Clear previous content
         let totalPrice = 0;
+        totalQuantity = 0;
 
         carts.forEach(cart => {
             const product = getProductByID(cart.product_id);
             const itemTotalPrice = product.price * cart.quantity;
             totalPrice += itemTotalPrice;
+            totalQuantity += cart.quantity;
 
             // Create item element for the zebra list
             const itemElement = document.createElement('div');
@@ -410,6 +428,7 @@
 
         // Update total price in the modal
         totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+        document.getElementById('totalItemsCheckout').textContent = totalQuantity;
     }
 
     // Helper function to get CSRF token from cookie
@@ -430,17 +449,17 @@
 
     // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
-        for(let i = 0; i < carts.length; i++) {
-            console.log(carts[i])
-        }
+        // for(let i = 0; i < carts.length; i++) {
+        //     console.log(carts[i])
+        // }
 
         const orderData = {
-            table_id: 1,
-            restaurant_id: 1,
+            table_number: 2,
+            restaurant_id: "507f191e810c19729de860ee",
             items: carts
         };
 
-        console.log(JSON.stringify(orderData))
+        // console.log(JSON.stringify(orderData))
 
         // Send order to backend
         fetch('place_order', {
@@ -453,7 +472,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.message) {
                 alert('Payment successful! Order ID: ' + 1);
                 checkoutModal.style.display = 'none';
                 clearItemsInCart();
