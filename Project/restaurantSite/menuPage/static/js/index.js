@@ -495,10 +495,30 @@
         document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
     })
 
+    // Function that changes the button as well as moves back to the main checkout
+    function updateSplitPayButtonText(event) {
+        let totalPayments = document.getElementById("totalNumberOfPayments").value;
+        let payButton = document.getElementById("payButtonValue");
+        alert("Thank you for paying Person " + payButton.value);
+        console.log(totalPayments)
+        if (payButton.value < totalPayments) {
+            payButton.value = Number(payButton.value) + 1;
+            document.getElementById("payButtonClick").innerHTML = "Person " + payButton.value + " Pay";
+            document.getElementById("payButtonValue").value = payButton.value
+        }
+        else {
+            splitCardButton.click();
+        }
+    }
+
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
         let selectionBoxElement = document.getElementById("splitCartSelect");
         let selectionBoxVal = Number($(selectionBoxElement).val());
+        // Starts at 1 because there's no "person 0"
+        let currentPerson = 1;
+        //keeps track of if everyone has paid
+        let allPayed = false;
         let buildString =
             '<div class="modal-checkout-content"> ' +
                 '<span class="close-modal">&times;</span>' +
@@ -508,7 +528,7 @@
         for(i = 0; i < selectionBoxVal; i++) {
             buildString += '<div>'+
                                 '<span>' +
-                                    'Person' + i +
+                                    'Person ' + Number(i + 1) +
                                 '</span>' +
                                 '<span>' +
                                     'Cost' + ': $' + (getTotalPrice() / selectionBoxVal) +
@@ -520,8 +540,14 @@
                 '<div class="total-footer">' +
                     '<p>Total Price: <span id="totalPrice">$' + getTotalPrice() + '</span></p>' +
                 '</div>' +
+                '<div class="modal-footer">' +
+                    '<input id="payButtonValue" type="hidden" value="' + currentPerson + '"/>' +
+                    '<input id="totalNumberOfPayments" type="hidden" value="' + selectionBoxVal + '"/>' +
+                    '<button id="payButtonClick" class="pay-now">Person ' + currentPerson + ' Pay</button>' +
+                '</div>' +
             '</div>';
 
         checkoutModal.innerHTML = buildString;
+        document.getElementById("payButtonClick").onclick = updateSplitPayButtonText;
     }
 });
