@@ -13,6 +13,7 @@ body{
 
 .navbar{
     width: 100%; /* Occupy full width */
+    height: 100px; /* Adjust height as needed */
     background-color: #000000;
     position: fixed;
     top: 0;
@@ -146,6 +147,7 @@ header .icon-cart span{
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    animation: fadeIn 0.3s ease-out;
 }
 
 .modal-checkout-content {
@@ -157,13 +159,23 @@ header .icon-cart span{
     max-width: 600px; /* Max width for larger screens */
 }
 
-.close-modal,
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .close-modal-popup {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
 }
 
 .close-modal:hover,
@@ -317,11 +329,11 @@ svg{
 
 .cartTab{
     width: 400px;
-    height: 500px;
+    height: 540px;
     background-color: #fff; /* Lighter background for better contrast */
     color: #333; /* Darker text for readability */
     position: fixed;
-    inset: 0 -400px 0 auto;
+    inset: 100px -400px 0 auto;
     display: flex;
     flex-direction: column; /* Simplify layout with flexbox */
     transition: transform .2s ease-in-out;
@@ -331,7 +343,7 @@ svg{
 
 
 body.showCart .cartTab{
-    inset: 0 0 0 auto;
+    inset: 100px 0 0 auto;
 }
 
 body.showCart .container{
@@ -569,17 +581,39 @@ overflow: hidden;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    /* overflow: auto; */
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
+    margin: 10% auto;
+    padding: 30px;
+    /* border: 1px solid #888; */
+    border-radius: 10px;
     width: 80%;
     max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s ease-out;
+    position: relative;
+}
+
+.item-modal-title{
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+.item-modal-description{
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    padding: 0 10px;
 }
 
 .close {
@@ -604,5 +638,16 @@ overflow: hidden;
 @media screen and (max-width: 480px){
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
