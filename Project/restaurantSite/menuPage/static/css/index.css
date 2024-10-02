@@ -1,6 +1,6 @@
 body{
     background-color: whitesmoke;
-    /*padding-top: 40px;*/
+    padding-top: 40px;
     /*!*display: flex;*!*/
     /*justify-content: center;*/
     /*align-items: center;*/
@@ -644,7 +644,7 @@ overflow: hidden;
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(-5px);
     }
     to {
         opacity: 1;
