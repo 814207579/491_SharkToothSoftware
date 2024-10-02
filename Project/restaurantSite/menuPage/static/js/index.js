@@ -525,8 +525,11 @@
             document.getElementById("payButtonClick").innerHTML = "Person " + payButton.value + " Pay";
             document.getElementById("payButtonValue").value = payButton.value
         }
+        // Change the modal back to normal
         else {
-            splitCardButton.click();
+            alert("Thank you for your purchase.");
+            clearItemsInCart();
+            location.reload();
         }
     }
 
@@ -537,14 +540,13 @@
         // Starts at 1 because there's no "person 0"
         let currentPerson = 1;
         //keeps track of if everyone has paid
-        let allPayed = false;
         let buildString =
             '<div class="modal-checkout-content"> ' +
                 '<span class="close-modal">&times;</span>' +
                 '<h2>Checkout</h2>' +
                 '<div class="zebra-list">';
 
-        for(i = 0; i < selectionBoxVal; i++) {
+        for(let i = 0; i < selectionBoxVal; i++) {
             buildString += '<div>'+
                                 '<span>' +
                                     'Person ' + Number(i + 1) +
