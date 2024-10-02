@@ -552,14 +552,15 @@
                                     'Person ' + Number(i + 1) +
                                 '</span>' +
                                 '<span>' +
-                                    'Cost' + ': $' + (getTotalPrice() / selectionBoxVal) +
+                                    'Cost' + ': $' + (getTotalPrice() / selectionBoxVal).toLocaleString() +
                                 '</span>' +
                            '</div>';
         }
 
         buildString += '</div>' +
                 '<div class="total-footer">' +
-                    '<p>Total Price: <span id="totalPrice">$' + getTotalPrice() + '</span></p>' +
+                    '<span id="totalItems" class="totalQuantityAllItems">Items: 0</span> '+
+                    '<span id="totalPrice" class="totalPriceAllItems">Total: $0</span> '+
                 '</div>' +
                 '<div class="modal-footer">' +
                     '<input id="payButtonValue" type="hidden" value="' + currentPerson + '"/>' +
@@ -569,6 +570,12 @@
             '</div>';
 
         checkoutModal.innerHTML = buildString;
+        document.getElementById("totalPrice").innerHTML = `$${getTotalPrice().toLocaleString()}`;
+        let tempItems = 0;
+        for (let i = 0; i < carts.length; i++) {
+            tempItems += carts[i].quantity;
+        }
+        document.getElementById("totalItems").innerHTML = "Items: " + tempItems;
         document.getElementById("payButtonClick").onclick = updateSplitPayButtonText;
     }
 });
