@@ -1,6 +1,6 @@
 body{
     background-color: whitesmoke;
-    /*padding-top: 40px;*/
+    padding-top: 40px;
     /*!*display: flex;*!*/
     /*justify-content: center;*/
     /*align-items: center;*/
@@ -358,7 +358,7 @@ body.showCart .container{
     border-bottom: 5px solid black;
 }
 
-.cartTab .btn{
+.cartTab .cartButtons{
     /* display: grid;
     grid-template-columns: repeat(2, 1fr); */
     display: flex;
@@ -367,7 +367,7 @@ body.showCart .container{
     border: 1px solid #ddd; /* Add top border for separation */
 }
 
-.cartTab .btn button{
+.cartTab .cartButtons button{
     background-color: goldenrod; /* Distinct color for buttons */
     color: #fff;
     padding: 5px 10px;
@@ -378,24 +378,24 @@ body.showCart .container{
     transition: background-color 0.2s ease;
 }
 
-.cartTab .btn button:hover{
+.cartTab .cartButtons button:hover{
     background-color: rgb(246, 176, 0); /* Distinct color for buttons */
 }
 
-.cartTab .btn .checkOut {
+.cartTab .cartButtons .checkOut {
     background-color: rgb(34, 179, 34);
 }
 
-.cartTab .btn .checkOut:hover{
+.cartTab .cartButtons .checkOut:hover{
     background-color: rgb(39, 227, 26); /* Distinct color for buttons */
 }
 
-.cartTab .btn .close{
+.cartTab .cartButtons .close{
     background-color: rgba(187, 51, 51, 0.692); /* Light background for contrast */
     color: #fff; /* Darker text for readability */
 }
 
-.cartTab .btn .close:hover{
+.cartTab .cartButtons .close:hover{
     background-color: rgb(233, 31, 31); /* Distinct color for buttons */
 }
 
@@ -644,7 +644,7 @@ overflow: hidden;
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(-5px);
     }
     to {
         opacity: 1;
