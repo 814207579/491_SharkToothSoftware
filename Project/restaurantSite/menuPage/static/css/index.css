@@ -11,6 +11,11 @@ body{
     margin: 0;
 }
 
+/* enable/disable body scroll when modal is open */
+.no-scroll{
+    overflow: hidden;
+}
+
 .navbar{
     width: 100%; /* Occupy full width */
     height: 100px; /* Adjust height as needed */
@@ -152,11 +157,16 @@ header .icon-cart span{
 
 .modal-checkout-content {
     background-color: #fefefe;
-    margin: 5% auto; /* 15% from the top and centered */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
     max-width: 600px; /* Max width for larger screens */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
 }
 
 .close-modal {
@@ -333,17 +343,18 @@ svg{
     background-color: #fff; /* Lighter background for better contrast */
     color: #333; /* Darker text for readability */
     position: fixed;
-    inset: 100px -400px 0 auto;
+    right: -400px;
+    top: 100px;
     display: flex;
     flex-direction: column; /* Simplify layout with flexbox */
-    transition: transform .2s ease-in-out;
+    transition: left 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
     z-index: 1000; /* Ensure it stays above other elements */
 }
 
 
 body.showCart .cartTab{
-    inset: 100px 0 0 auto;
+    right: 0;
 }
 
 body.showCart .container{
@@ -359,10 +370,8 @@ body.showCart .container{
 }
 
 .cartTab .cartButtons{
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr); */
     display: flex;
-    justify-content: space-between; /* Better alignment */
+    justify-content: space-around; /* Better alignment */
     padding: 15px 20px;
     border: 1px solid #ddd; /* Add top border for separation */
 }
@@ -375,6 +384,7 @@ body.showCart .container{
     border-radius: 4px;
     font-weight: 500;
     cursor: pointer;
+    margin: 0 1px;
     transition: background-color 0.2s ease;
 }
 
@@ -581,22 +591,23 @@ overflow: hidden;
     top: 0;
     width: 100%;
     height: 100%;
-    /* overflow: auto; */
     background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 10% auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 30px;
-    /* border: 1px solid #888; */
     border-radius: 10px;
     width: 80%;
     max-width: 500px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     animation: fadeIn 0.3s ease-out;
-    position: relative;
 }
 
 .item-modal-title{
@@ -644,10 +655,8 @@ overflow: hidden;
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-5px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
