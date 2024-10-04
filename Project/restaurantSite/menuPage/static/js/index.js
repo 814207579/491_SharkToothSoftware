@@ -236,6 +236,8 @@
         for(let i = 0; i < carts.length; i++) {
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
+
+        //console.log(carts);
     }
 
     function clearFoodItemsFiler() {
@@ -358,18 +360,22 @@
             const itemDescription = item.querySelector(".foodDescription").textContent;
 
             openModal(itemName, itemDescription);
+            document.body.classList.add('no-scroll'); // Disable scroll on body
+            
         });
     });
 
     // Close the modal when clicking the 'x' button
     closeModal.onclick = function () {
         modal.style.display = "none";
+        document.body.classList.remove('no-scroll'); // Enable scroll on body
     };
 
     // Close the modal when clicking anywhere outside the modal
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
+            document.body.classList.remove('no-scroll'); // Enable scroll on body
         }
     };
 
@@ -390,18 +396,21 @@
         } else {
             populateCheckoutModal();
             checkoutModal.style.display = 'block';
+            document.body.classList.add('no-scroll'); // Disable scroll on body
         }
     });
 
     // Close Modal Button Click Event
     closeModalButton.addEventListener('click', () => {
         checkoutModal.style.display = 'none';
+        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
     });
 
     // Close Modal When Clicking Outside the Modal
     window.addEventListener('click', (event) => {
         if (event.target == checkoutModal) {
             checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
         }
     });
 
