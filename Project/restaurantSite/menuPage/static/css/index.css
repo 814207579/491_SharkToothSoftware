@@ -1,12 +1,6 @@
 body{
-    background-color: whitesmoke;
+    background: linear-gradient(to top right, whitesmoke, gray);
     padding-top: 40px;
-    /*!*display: flex;*!*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*height: 100vh;*/
-    /*margin: 0;*/
-    /*overflow: hidden;*/
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
@@ -67,7 +61,7 @@ body{
 
 h1{
     text-align: center;
-    color: white;
+    color: black;
 }
 
 /*This is where the title should be*/
@@ -319,8 +313,8 @@ header .icon-cart span{
 }
 
 .listProduct .item button{
-    background-color: goldenrod;
-    color: #eee;
+    background-color: gold;
+    color: black;
     padding: 5px 10px;
     border-radius: 20px;
     /*margin-top: 10px;*/
@@ -330,7 +324,8 @@ header .icon-cart span{
 }
 
 .listProduct .item button:hover{
-    background-color: hsl(0, 0%, 20%);
+    background-color: brown;
+    color: white;
 }
 
 svg{
@@ -340,7 +335,7 @@ svg{
 .cartTab{
     width: 400px;
     height: 540px;
-    background-color: #fff; /* Lighter background for better contrast */
+    background: linear-gradient(to top right, whitesmoke, gray);
     color: #333; /* Darker text for readability */
     position: fixed;
     right: -400px;
@@ -365,7 +360,7 @@ body.showCart .container{
     padding: 20px;
     margin: 0;
     font-weight: bold;
-    background-color: #9b9999cc;
+    background: linear-gradient(to top right, whitesmoke, gray);
     border-bottom: 5px solid black;
 }
 
@@ -373,12 +368,12 @@ body.showCart .container{
     display: flex;
     justify-content: space-around; /* Better alignment */
     padding: 15px 20px;
-    border: 1px solid #ddd; /* Add top border for separation */
+    border: 1px solid slategray; /* Add top border for separation */
 }
 
 .cartTab .cartButtons button{
-    background-color: goldenrod; /* Distinct color for buttons */
-    color: #fff;
+    background-color: gold; /* Distinct color for buttons */
+    color: black;
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
@@ -389,24 +384,27 @@ body.showCart .container{
 }
 
 .cartTab .cartButtons button:hover{
-    background-color: rgb(246, 176, 0); /* Distinct color for buttons */
+    background-color: brown; /* Distinct color for buttons */
+    color: white;
 }
 
 .cartTab .cartButtons .checkOut {
-    background-color: rgb(34, 179, 34);
+    background-color: rgb(0, 255, 0);
 }
 
 .cartTab .cartButtons .checkOut:hover{
-    background-color: rgb(39, 227, 26); /* Distinct color for buttons */
+    background-color: darkgreen; /* Distinct color for buttons */
 }
 
 .cartTab .cartButtons .close{
-    background-color: rgba(187, 51, 51, 0.692); /* Light background for contrast */
-    color: #fff; /* Darker text for readability */
+    background-color: gold;
+      /* Light background for contrast */
+    color: black; /* Darker text for readability */
 }
 
 .cartTab .cartButtons .close:hover{
-    background-color: rgb(233, 31, 31); /* Distinct color for buttons */
+    background-color: brown ; /* Distinct color for buttons */
+    color: white;
 }
 
 .cartTab .listCart {
@@ -431,7 +429,7 @@ body.showCart .container{
     align-items: center;
     padding: 10px 20px;
     color: #030c1f;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid slategray;
     margin-top: 10px; 
     max-width: 100%;
     font-weight: bold;
@@ -457,7 +455,7 @@ body.showCart .container{
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    border: 1px solid #ddd; /* Add bottom border for separation */
+    border: 1px solid slategray; /* Add bottom border for separation */
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -527,7 +525,7 @@ body.showCart .container{
 }
 
 .listCart .item:nth-child(even){
-    background-color: #f2f2f2;
+    background-color: lightgray;
 }
 
 .listCart{
