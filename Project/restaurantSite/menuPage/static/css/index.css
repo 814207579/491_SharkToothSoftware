@@ -637,18 +637,34 @@ overflow: hidden;
     cursor: pointer;
 }
 
-
-@media screen and (max-width: 992px){
+/* Desktop website responsive stuff  */
+@media screen and (min-width: 1000px){
     .listProduct{
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-@media screen and (max-width: 480px){
+/* This section is use for the mobile responsive view  */
+@media screen and (min-width: 480px) and (max-width: 1000px){
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
+        font-size: 50px;
+    }
+    .addCart {
+        font-size: 30px;
+    }
+    .listProduct .item .foodPrice {
+        font-size: 40px;
+    }
+    .listProduct .item .foodName {
+        font-size: 35px;
+    }
+    .listProduct .item img {
+        width: 300px;
+        height: 300px;
     }
 }
+
 
 @keyframes fadeIn {
     from {
