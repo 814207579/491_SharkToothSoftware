@@ -642,7 +642,7 @@ overflow: hidden;
 /* Desktop website responsive stuff  */
 @media screen and (min-width: 1000px){
     .listProduct{
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
