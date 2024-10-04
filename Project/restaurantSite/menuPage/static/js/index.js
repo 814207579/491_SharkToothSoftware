@@ -28,6 +28,29 @@
     //     }
     // })
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartTab = document.querySelector('.cartTab');
+        const openCartButton = document.querySelector('.icon-cart');
+        const closeCartButton = document.querySelector('.close');
+        const body = document.querySelector('body');
+    
+        openCartButton.addEventListener('click', function() {
+            body.classList.add('showCart');
+        });
+    
+        closeCartButton.addEventListener('click', function() {
+            body.classList.remove('showCart');
+        });
+    
+        // Close the cart when clicking outside of it
+        //FIXME: Have cart not close when adding items to cart or on checkout
+        window.addEventListener('click', function(event) {
+            if (!cartTab.contains(event.target) && !openCartButton.contains(event.target) && !checkOut.contains(event.target) && !clearCart.contains(event.target)) {
+                body.classList.remove('showCart');
+            }
+        });
+    });
+
 
     //init for filling listProduct objects based on database
     function fillProducts() {
@@ -124,7 +147,7 @@
                     
                     <div class="quantity">
                         <span class="minus">-</span>
-                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        <input type="number" class="quantity-input" min="1" max="99" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     </div>
                     <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
