@@ -73,7 +73,7 @@
                 </div>
                     <div class="quantity">
                         <span class="minus">-</span>
-                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        <input type="number" class="quantity-input" min="1" max="99" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     </div>
                     <div class="totalPrice">
@@ -85,8 +85,8 @@
             <span class="totalQuantityAllItems">Items: 0</span>
             <span class="totalPriceAllItems">Total: $0</span>
         </div>
-        <div class="btn">
-            <button id ="close" class="close">CLOSE</button>
+        <div class="cartButtons">
+            <button class="close">CLOSE</button>
             <button id ="checkoutBtn" class="checkOut">CHECKOUT</button>
             <button id ="clearCart" class="clearCart">CLEAR CART</button>
         </div>

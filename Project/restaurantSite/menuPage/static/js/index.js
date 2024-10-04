@@ -102,6 +102,29 @@
     //     }
     // })
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartTab = document.querySelector('.cartTab');
+        const openCartButton = document.querySelector('.icon-cart');
+        const closeCartButton = document.querySelector('.close');
+        const body = document.querySelector('body');
+    
+        openCartButton.addEventListener('click', function() {
+            body.classList.add('showCart');
+        });
+    
+        closeCartButton.addEventListener('click', function() {
+            body.classList.remove('showCart');
+        });
+    
+        // Close the cart when clicking outside of it
+        //FIXME: Have cart not close when adding items to cart or on checkout
+        window.addEventListener('click', function(event) {
+            if (!cartTab.contains(event.target) && !openCartButton.contains(event.target) && !checkOut.contains(event.target) && !clearCart.contains(event.target)) {
+                body.classList.remove('showCart');
+            }
+        });
+    });
+
 
     //init for filling listProduct objects based on database
     function fillProducts() {
@@ -198,7 +221,7 @@
                     
                     <div class="quantity">
                         <span class="minus">-</span>
-                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        <input type="number" class="quantity-input" min="1" max="99" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     </div>
                     <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
@@ -310,6 +333,8 @@
         for(let i = 0; i < carts.length; i++) {
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
+
+        //console.log(carts);
     }
 
     function clearFoodItemsFiler() {
@@ -432,18 +457,22 @@
             const itemDescription = item.querySelector(".foodDescription").textContent;
 
             openModal(itemName, itemDescription);
+            document.body.classList.add('no-scroll'); // Disable scroll on body
+            
         });
     });
 
     // Close the modal when clicking the 'x' button
     closeModal.onclick = function () {
         modal.style.display = "none";
+        document.body.classList.remove('no-scroll'); // Enable scroll on body
     };
 
     // Close the modal when clicking anywhere outside the modal
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
+            document.body.classList.remove('no-scroll'); // Enable scroll on body
         }
     };
 
@@ -464,18 +493,21 @@
         } else {
             populateCheckoutModal();
             checkoutModal.style.display = 'block';
+            document.body.classList.add('no-scroll'); // Disable scroll on body
         }
     });
 
     // Close Modal Button Click Event
     closeModalButton.addEventListener('click', () => {
         checkoutModal.style.display = 'none';
+        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
     });
 
     // Close Modal When Clicking Outside the Modal
     window.addEventListener('click', (event) => {
         if (event.target == checkoutModal) {
             checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
         }
     });
 
