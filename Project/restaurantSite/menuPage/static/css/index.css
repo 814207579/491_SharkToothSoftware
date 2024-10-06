@@ -13,7 +13,7 @@ body{
 .navbar{
     width: 100%; /* Occupy full width */
     height: 100px; /* Adjust height as needed */
-    background-color: #000000;
+    background-color: #333333;
     position: fixed;
     top: 0;
     left: 0;
@@ -32,7 +32,6 @@ body{
     padding-right: 200px;
     overflow: hidden;
     align-items: center;
-    /*width: 100%;*/
     display: flex;
 }
 
@@ -54,7 +53,7 @@ body{
     bottom: 0;
     left: 0;
     height: 3px;
-    background-color: green;
+    background-color: gold;
     width: 0; /* Initially 0 width */
     transition: left 0.3s ease, width 0.3s ease;
 }
@@ -96,7 +95,7 @@ header .icon-cart span{
     display: flex;
     width: 30px;
     height: 30px;
-    background-color: red;
+    /* background-color: red; */
     justify-content: center;
     align-items: center;
     color: white;
@@ -150,7 +149,7 @@ header .icon-cart span{
 }
 
 .modal-checkout-content {
-    background-color: #fefefe;
+    background: linear-gradient(to top right, whitesmoke, gray);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -198,13 +197,14 @@ header .icon-cart span{
 }
 
 .zebra-list div:nth-child(even) {
-    background-color: #f2f2f2; /* Zebra striping */
+    background-color: lightgray; /* Zebra striping */
 }
 
 .zebra-list div {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    border: 0.5px solid rgba(122, 122, 122, 0.185);
 }
 
 .total-footer {
@@ -226,15 +226,16 @@ header .icon-cart span{
 
 .modal-footer button {
     padding: 10px 20px;
-    background-color: goldenrod;
-    color: white;
+    background-color: gold;
+    color: black;
     border: none;
     cursor: pointer;
     border-radius: 5px;
 }
 
 .modal-footer button:hover {
-    background-color: #8b5e00;
+    background-color: brown;
+    color: white
 }
 /* END CHECKOUT MODAL */
 
@@ -389,11 +390,11 @@ body.showCart .container{
 }
 
 .cartTab .cartButtons .checkOut {
-    background-color: rgb(0, 255, 0);
+    background-color: gold;
 }
 
 .cartTab .cartButtons .checkOut:hover{
-    background-color: darkgreen; /* Distinct color for buttons */
+    background-color: brown; /* Distinct color for buttons */
 }
 
 .cartTab .cartButtons .close{
@@ -594,12 +595,13 @@ overflow: hidden;
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background: linear-gradient(to top right, whitesmoke, gray);
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 30px;
+    border: 1px solid #888;
     border-radius: 10px;
     width: 80%;
     max-width: 500px;
@@ -619,7 +621,7 @@ overflow: hidden;
 
 .item-modal-description{
     font-size: 18px;
-    color: #555;
+    color: #3d3d3d;
     line-height: 1.6;
     margin-bottom: 30px;
     padding: 0 10px;

@@ -117,9 +117,15 @@
         });
     
         // Close the cart when clicking outside of it
-        //FIXME: Have cart not close when adding items to cart or on checkout
         window.addEventListener('click', function(event) {
-            if (!cartTab.contains(event.target) && !openCartButton.contains(event.target) && !checkOut.contains(event.target) && !clearCart.contains(event.target)) {
+            if (!cartTab.contains(event.target) &&
+                !openCartButton.contains(event.target) &&
+                !checkOut.contains(event.target) && 
+                !clearCart.contains(event.target) &&
+                !checkoutModal.contains(event.target) &&
+                !event.target.classList.contains('plus') &&
+                !event.target.classList.contains('minus')    
+            ) {
                 body.classList.remove('showCart');
             }
         });
