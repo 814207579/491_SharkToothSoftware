@@ -313,7 +313,9 @@
         if (positionItemInCart >= 0) {
             switch (type) {
                 case 'plus':
-                    carts[positionItemInCart].quantity += 1;
+                    if (carts[positionItemInCart].quantity < 99) {
+                        carts[positionItemInCart].quantity += 1;
+                    }
                     break;
                 case 'input':
                     if (newQuantity > 0) {
