@@ -109,7 +109,6 @@
         const body = document.querySelector('body');
         let isCartOpen = Boolean(false);
 
-        //FIXME: Cart wont close when clicking on the checkout button while the cart is open
         openCartButton.addEventListener('click', function() {
             if (!isCartOpen) {
                 body.classList.add('showCart');
@@ -294,6 +293,11 @@
                 const currentItem = carts.find(item => item.product_id === product_id);
                 event.target.value = currentItem ? currentItem.quantity : 1;
                 return;
+            }
+
+            //Check for max quantity
+            if (newQuantity > 99) {
+                newQuantity = 99;
             }
 
             newQuantity = parseInt(newQuantity, 10) || 0;
