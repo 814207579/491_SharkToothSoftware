@@ -1,12 +1,6 @@
 body{
-    background-color: whitesmoke;
+    background: linear-gradient(to top right, whitesmoke, gray);
     padding-top: 40px;
-    /*!*display: flex;*!*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*height: 100vh;*/
-    /*margin: 0;*/
-    /*overflow: hidden;*/
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
@@ -19,7 +13,7 @@ body{
 .navbar{
     width: 100%; /* Occupy full width */
     height: 100px; /* Adjust height as needed */
-    background-color: #000000;
+    background-color: #333333;
     position: fixed;
     top: 0;
     left: 0;
@@ -38,7 +32,6 @@ body{
     padding-right: 200px;
     overflow: hidden;
     align-items: center;
-    /*width: 100%;*/
     display: flex;
 }
 
@@ -60,14 +53,14 @@ body{
     bottom: 0;
     left: 0;
     height: 3px;
-    background-color: green;
+    background-color: gold;
     width: 0; /* Initially 0 width */
     transition: left 0.3s ease, width 0.3s ease;
 }
 
 h1{
     text-align: center;
-    color: white;
+    color: black;
 }
 
 /*This is where the title should be*/
@@ -102,7 +95,7 @@ header .icon-cart span{
     display: flex;
     width: 30px;
     height: 30px;
-    background-color: red;
+    /* background-color: red; */
     justify-content: center;
     align-items: center;
     color: white;
@@ -156,7 +149,7 @@ header .icon-cart span{
 }
 
 .modal-checkout-content {
-    background-color: #fefefe;
+    background: linear-gradient(to top right, whitesmoke, gray);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -204,13 +197,14 @@ header .icon-cart span{
 }
 
 .zebra-list div:nth-child(even) {
-    background-color: #f2f2f2; /* Zebra striping */
+    background-color: lightgray; /* Zebra striping */
 }
 
 .zebra-list div {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    border: 0.5px solid rgba(122, 122, 122, 0.185);
 }
 
 .total-footer {
@@ -232,15 +226,16 @@ header .icon-cart span{
 
 .modal-footer button {
     padding: 10px 20px;
-    background-color: goldenrod;
-    color: white;
+    background-color: gold;
+    color: black;
     border: none;
     cursor: pointer;
     border-radius: 5px;
 }
 
 .modal-footer button:hover {
-    background-color: #8b5e00;
+    background-color: brown;
+    color: white
 }
 /* END CHECKOUT MODAL */
 
@@ -319,8 +314,8 @@ header .icon-cart span{
 }
 
 .listProduct .item button{
-    background-color: goldenrod;
-    color: #eee;
+    background-color: gold;
+    color: black;
     padding: 5px 10px;
     border-radius: 20px;
     /*margin-top: 10px;*/
@@ -330,7 +325,8 @@ header .icon-cart span{
 }
 
 .listProduct .item button:hover{
-    background-color: hsl(0, 0%, 20%);
+    background-color: brown;
+    color: white;
 }
 
 svg{
@@ -340,7 +336,7 @@ svg{
 .cartTab{
     width: 400px;
     height: 540px;
-    background-color: #fff; /* Lighter background for better contrast */
+    background: linear-gradient(to top right, whitesmoke, gray);
     color: #333; /* Darker text for readability */
     position: fixed;
     right: -400px;
@@ -365,7 +361,7 @@ body.showCart .container{
     padding: 20px;
     margin: 0;
     font-weight: bold;
-    background-color: #9b9999cc;
+    background: linear-gradient(to top right, whitesmoke, gray);
     border-bottom: 5px solid black;
 }
 
@@ -373,12 +369,12 @@ body.showCart .container{
     display: flex;
     justify-content: space-around; /* Better alignment */
     padding: 15px 20px;
-    border: 1px solid #ddd; /* Add top border for separation */
+    border: 1px solid slategray; /* Add top border for separation */
 }
 
 .cartTab .cartButtons button{
-    background-color: goldenrod; /* Distinct color for buttons */
-    color: #fff;
+    background-color: gold; /* Distinct color for buttons */
+    color: black;
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
@@ -389,24 +385,27 @@ body.showCart .container{
 }
 
 .cartTab .cartButtons button:hover{
-    background-color: rgb(246, 176, 0); /* Distinct color for buttons */
+    background-color: brown; /* Distinct color for buttons */
+    color: white;
 }
 
 .cartTab .cartButtons .checkOut {
-    background-color: rgb(34, 179, 34);
+    background-color: gold;
 }
 
 .cartTab .cartButtons .checkOut:hover{
-    background-color: rgb(39, 227, 26); /* Distinct color for buttons */
+    background-color: brown; /* Distinct color for buttons */
 }
 
 .cartTab .cartButtons .close{
-    background-color: rgba(187, 51, 51, 0.692); /* Light background for contrast */
-    color: #fff; /* Darker text for readability */
+    background-color: gold;
+      /* Light background for contrast */
+    color: black; /* Darker text for readability */
 }
 
 .cartTab .cartButtons .close:hover{
-    background-color: rgb(233, 31, 31); /* Distinct color for buttons */
+    background-color: brown ; /* Distinct color for buttons */
+    color: white;
 }
 
 .cartTab .listCart {
@@ -431,7 +430,7 @@ body.showCart .container{
     align-items: center;
     padding: 10px 20px;
     color: #030c1f;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid slategray;
     margin-top: 10px; 
     max-width: 100%;
     font-weight: bold;
@@ -457,7 +456,7 @@ body.showCart .container{
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    border: 1px solid #ddd; /* Add bottom border for separation */
+    border: 1px solid slategray; /* Add bottom border for separation */
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -527,7 +526,7 @@ body.showCart .container{
 }
 
 .listCart .item:nth-child(even){
-    background-color: #f2f2f2;
+    background-color: lightgray;
 }
 
 .listCart{
@@ -596,12 +595,13 @@ overflow: hidden;
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background: linear-gradient(to top right, whitesmoke, gray);
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 30px;
+    border: 1px solid #888;
     border-radius: 10px;
     width: 80%;
     max-width: 500px;
@@ -621,7 +621,7 @@ overflow: hidden;
 
 .item-modal-description{
     font-size: 18px;
-    color: #555;
+    color: #3d3d3d;
     line-height: 1.6;
     margin-bottom: 30px;
     padding: 0 10px;
