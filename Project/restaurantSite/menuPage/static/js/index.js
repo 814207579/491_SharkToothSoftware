@@ -107,9 +107,17 @@
         const openCartButton = document.querySelector('.icon-cart');
         const closeCartButton = document.querySelector('.close');
         const body = document.querySelector('body');
-    
+        let isCartOpen = Boolean(false);
+
+        //FIXME: Cart wont close when clicking on the checkout button while the cart is open
         openCartButton.addEventListener('click', function() {
-            body.classList.add('showCart');
+            if (!isCartOpen) {
+                body.classList.add('showCart');
+                isCartOpen = true;
+            } else {
+                body.classList.remove('showCart');
+                isCartOpen = false;
+            }
         });
     
         closeCartButton.addEventListener('click', function() {
@@ -124,7 +132,7 @@
                 !clearCart.contains(event.target) &&
                 !checkoutModal.contains(event.target) &&
                 !event.target.classList.contains('plus') &&
-                !event.target.classList.contains('minus')    
+                !event.target.classList.contains('minus')
             ) {
                 body.classList.remove('showCart');
             }
@@ -564,6 +572,8 @@
         // for(let i = 0; i < carts.length; i++) {
         //     console.log(carts[i])
         // }
+
+        payNowButton.disabled = true;
 
         const orderData = {
             table_number: 2,
