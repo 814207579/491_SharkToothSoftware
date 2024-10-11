@@ -478,23 +478,49 @@ body.showCart .container{
 }
 
 .listCart .quantity span{
-    width: 20px;
+    width: 30px;
     height: auto;
-    color: goldenrod;
-    display: inline-block;
+    color: black;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gold;
+    font-size: 20px;
     cursor: pointer;
-    text-align: center;
-    transition: background-color 0.2s ease;
+    font-weight: bold;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0 8px;
+}
+
+.listCart .quantity span:hover  {
+    background-color: brown;
+    transform: scale(1.1);
+    color: white;
+}
+
+.listCart .quantity span:active {
+    transform: scale(0.95);
 }
 
 /* To style the input field in shopping cart*/
 .listCart .quantity input[type="number"] {
     width: 50px; /* Adjust width as needed */
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin: 10px 10px 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    /* margin: 10px 10px 10px; */
+    margin: 0 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3 ease;
+}
+
+.listCart .quantity input[type="number"]:focus {
+    border-color: gold;
+    outline: none;
 }
 
 .listCart .item .totalPrice {
