@@ -244,9 +244,22 @@
         }
         iconCartSpan.textContent = totalQuantity;
 
+        // validation for the manual input of items in the text box
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('input', function() {
+                let value = parseInt(this.value);
+
+                // default to 99 if the user tries to add more
+                if (value > 99) {
+                    this.value = 99;
+                }
+            });
+        });
+
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
+
 
     listCartHTML.addEventListener('click', (event) => {
         let positionClick = event.target;
@@ -445,8 +458,8 @@
         
         navBarUl.onclick = filterItems;
         document.getElementById("checkoutBtn").onclick = getCheckoutItems;
-
     }
+
     initApp();
     document.addEventListener("DOMContentLoaded", function () {
     // Get all item cards
@@ -616,6 +629,7 @@
     // Go Back Button Click Event
     goBackButton.addEventListener('click', () => {
         checkoutModal.style.display = 'none';
+        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
     });
 
     // Function that modifies the checkout modal to be used as the split cart function
