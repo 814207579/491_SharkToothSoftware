@@ -519,6 +519,15 @@ body.showCart .container{
     transform: scale(0.95);
 }
 
+.listCart .item .totalPrice {
+    grid-area: price;
+    text-align: right;
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+    margin: auto;
+}
+
 /* To style the input field in shopping cart*/
 .listCart .quantity input[type="number"] {
     width: 50px; /* Adjust width as needed */
@@ -537,15 +546,6 @@ body.showCart .container{
 .listCart .quantity input[type="number"]:focus {
     border-color: gold;
     outline: none;
-}
-
-.listCart .item .totalPrice {
-    grid-area: price;
-    text-align: right;
-    font-size: 18px;
-    color: black;
-    font-weight: bold;
-    margin: auto;
 }
 
 /* Remove arrows from number input in all browsers */
