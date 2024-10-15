@@ -47,6 +47,17 @@ body{
 .navbar li{
     margin-right: 30px;
 }
+.logo-title-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align items in the center */
+    margin-left: 20px; /* Add some space to the left */
+}
+
+.title {
+    margin-left: 10px; /* Add space between logo and title */
+    font-size: 34px; /* Adjust font size if needed */
+    color: white;
+}
 
 .underline {
     position: absolute;
@@ -244,7 +255,7 @@ header .icon-cart span{
     max-width: 90vw;
     margin: auto;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 120px;
 }
 
 .listProduct .item img{
