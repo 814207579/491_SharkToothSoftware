@@ -224,6 +224,21 @@
                 let itemTotalPrice = info.price * cart.quantity;
                 totalPrice += itemTotalPrice;
 
+                let quantityButtonsHTML = '';
+                if (cart.quantity > 1) {
+                    quantityButtonsHTML = `
+                        <span class="minus">-</span>
+                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        <span class="plus">+</span>
+                    `;
+                } else {
+                    quantityButtonsHTML = `
+                        <span class="delete">🗑️</span>
+                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        <span class="plus">+</span>
+                    `;
+                }
+
                 newCart.innerHTML =
                     `<div class="image">
                         <img src="${info.image}" alt="Error: Image Not Found">
@@ -231,11 +246,8 @@
                     <div class="name">
                         ${info.name}
                     </div>
-                    
                     <div class="quantity">
-                        <span class="minus">-</span>
-                        <input type="number" class="quantity-input" min="1" max="99" value="${cart.quantity}" />
-                        <span class="plus">+</span>
+                        ${quantityButtonsHTML}
                     </div>
                     <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
                 `;
@@ -271,7 +283,19 @@
             }
             changeQuantity(product_id, type);
         }
-    })
+            else if (positionClick.classList.contains('delete')) {
+            let product_id = positionClick.parentElement.parentElement.dataset.id;
+            removeItemFromCart(product_id);
+        }
+    });
+    const removeItemFromCart = (product_id) => {
+        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
+        if (positionItemInCart >= 0) {
+            carts.splice(positionItemInCart, 1); // Remove the item
+            addCartToMemory();
+            addCartToHTML();
+        }
+    };
     // Existing blur event listener
     listCartHTML.addEventListener('blur', (event) => {
         if (event.target.classList.contains('quantity-input')) {

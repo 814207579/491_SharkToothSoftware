@@ -480,6 +480,11 @@ body.showCart .container{
     margin: 0 0 4px 25px;
 }
 
+.listCart .quantity .delete { /* Style for the trash can icon */
+    font-size: 18px;
+    cursor: pointer;
+}
+
 .listCart .item .name {
     grid-area: title;
     font-weight: bold;
