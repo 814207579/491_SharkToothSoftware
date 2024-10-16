@@ -8,6 +8,7 @@
     let checkOut = document.querySelector('.checkOut');
     let listProducts = [];
     let carts = [];
+    let storedModel = "";
 
     // Credit Card Checking methods
     // Used from: https://www.geeksforgeeks.org/program-credit-card-number-validation/
@@ -419,129 +420,28 @@
         }
     }
 
-    const initApp = () => {
-        //fill productsList
-        listProducts = fillProducts();
+    function initButtons() {
+        const items = document.querySelectorAll(".listProduct .item");
+        const payNowButton = document.querySelector('.pay-now');
+        const splitCardButton = document.getElementById("splitCartButton");
+        const splitCartConfirmButton = document.getElementById("splitCartConfirm");
+        const goBackButton = document.querySelector('.go-back');
+        // Add click event listener to each card item
+        items.forEach(function (item) {
+            item.addEventListener("click", function (e) {
+                // Prevent the click event if it is on the "Add To Cart" button
+                if (e.target.classList.contains("addCart")) {
+                    return;
+                }
 
-        // get cart from memory
-        if(localStorage.getItem('cart')){
-            carts = JSON.parse(localStorage.getItem('cart'));
-            addCartToHTML();
-        }
-        
-        navBarUl.onclick = filterItems;
-        document.getElementById("checkoutBtn").onclick = getCheckoutItems;
+                const itemName = item.querySelector(".foodName").textContent;
+                const itemDescription = item.querySelector(".foodDescription").textContent;
 
-    }
-    initApp();
-    document.addEventListener("DOMContentLoaded", function () {
-    // Get all item cards
-    const items = document.querySelectorAll(".listProduct .item");
+                openModal(itemName, itemDescription);
+                document.body.classList.add('no-scroll'); // Disable scroll on body
 
-    // Get the modal and elements inside it
-    const modal = document.getElementById("itemModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalDescription = document.getElementById("modalDescription");
-    const closeModal = document.querySelector('.close-modal-popup');
-
-    // Function to open the modal
-    function openModal(itemName, itemDescription) {
-        modalTitle.textContent = itemName;
-        modalDescription.textContent = itemDescription;
-        modal.style.display = "block";
-    }
-
-    // Add click event listener to each card item
-    items.forEach(function (item) {
-        item.addEventListener("click", function (e) {
-            // Prevent the click event if it is on the "Add To Cart" button
-            if (e.target.classList.contains("addCart")) {
-                return;
-            }
-
-            const itemName = item.querySelector(".foodName").textContent;
-            const itemDescription = item.querySelector(".foodDescription").textContent;
-
-            openModal(itemName, itemDescription);
-            document.body.classList.add('no-scroll'); // Disable scroll on body
-            
+            });
         });
-    });
-
-    // Close the modal when clicking the 'x' button
-    closeModal.onclick = function () {
-        modal.style.display = "none";
-        document.body.classList.remove('no-scroll'); // Enable scroll on body
-    };
-
-    // Close the modal when clicking anywhere outside the modal
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-            document.body.classList.remove('no-scroll'); // Enable scroll on body
-        }
-    };
-
-    // Modal Elements
-    const checkoutModal = document.getElementById('checkoutModal');
-    const closeModalButton = document.querySelector('.close-modal');
-    const zebraListContainer = document.querySelector('.zebra-list');
-    const totalPriceElement = document.getElementById('totalPrice');
-    const payNowButton = document.querySelector('.pay-now');
-    const splitCardButton = document.getElementById("splitCartButton");
-    const splitCartConfirmButton = document.getElementById("splitCartConfirm");
-    const goBackButton = document.querySelector('.go-back');
-
-    // Checkout Button Click Event
-    checkOut.addEventListener('click', () => {
-        if (carts.length <= 0) {
-            alert('No items in cart');
-        } else {
-            populateCheckoutModal();
-            checkoutModal.style.display = 'block';
-            document.body.classList.add('no-scroll'); // Disable scroll on body
-        }
-    });
-
-    // Close Modal Button Click Event
-    closeModalButton.addEventListener('click', () => {
-        checkoutModal.style.display = 'none';
-        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
-    });
-
-    // Close Modal When Clicking Outside the Modal
-    window.addEventListener('click', (event) => {
-        if (event.target == checkoutModal) {
-            checkoutModal.style.display = 'none';
-            document.body.classList.remove('no-scroll');
-        }
-    });
-
-    // Function to Populate the Modal with Cart Items
-    function populateCheckoutModal() {
-        zebraListContainer.innerHTML = ''; // Clear previous content
-        let totalPrice = 0;
-        totalQuantity = 0;
-
-        carts.forEach(cart => {
-            const product = getProductByID(cart.product_id);
-            const itemTotalPrice = product.price * cart.quantity;
-            totalPrice += itemTotalPrice;
-            totalQuantity += cart.quantity;
-
-            // Create item element for the zebra list
-            const itemElement = document.createElement('div');
-            itemElement.innerHTML = `
-                <span>${product.name}</span>
-                <span>$${product.price} x ${cart.quantity}</span>
-            `;
-            zebraListContainer.appendChild(itemElement);
-        });
-
-        // Update total price in the modal
-        totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
-        document.getElementById('totalItemsCheckout').textContent = totalQuantity;
-    }
 
     // Helper function to get CSRF token from cookie
     function getCSRFToken() {
@@ -558,13 +458,11 @@
         }
         return cookieValue;
     }
-
-    // Pay Now Button Click Event
+        // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
         // for(let i = 0; i < carts.length; i++) {
         //     console.log(carts[i])
         // }
-
         const orderData = {
             table_number: 2,
             restaurant_id: "507f191e810c19729de860ee",
@@ -607,7 +505,7 @@
         event.preventDefault();
         // Hyjacking the modal to be used by
         checkoutModal.innerHTML =
-        '<div class="modal-checkout-content"> ' +
+        '<div id="splitModal" class="modal-checkout-content"> ' +
             '<span class="close-modal">&times;</span>' +
             '<h2>Checkout</h2>' +
             '<div class="split-cart-selection">' +
@@ -624,7 +522,8 @@
             '</div>' +
         '</div>';
         document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
-    })
+        })
+    }
 
     // Function that changes the button as well as moves back to the main checkout
     function updateSplitPayButtonText(event) {
@@ -645,6 +544,19 @@
         }
     }
 
+    const initApp = () => {
+        //fill productsList
+        listProducts = fillProducts();
+
+        // get cart from memory
+        if(localStorage.getItem('cart')){
+            carts = JSON.parse(localStorage.getItem('cart'));
+            addCartToHTML();
+        }
+        navBarUl.onclick = filterItems;
+        document.getElementById("checkoutBtn").onclick = getCheckoutItems;
+
+    }
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
         let selectionBoxElement = document.getElementById("splitCartSelect");
@@ -653,7 +565,7 @@
         let currentPerson = 1;
         //keeps track of if everyone has paid
         let buildString =
-            '<div class="modal-checkout-content"> ' +
+            '<div id="splitModal" class="modal-checkout-content"> ' +
                 '<span class="close-modal">&times;</span>' +
                 '<h2>Checkout</h2>' +
                 '<div class="zebra-list">';
@@ -689,5 +601,95 @@
         }
         document.getElementById("totalItems").innerHTML = "Items: " + tempItems;
         document.getElementById("payButtonClick").onclick = updateSplitPayButtonText;
+    }
+
+
+    initApp();
+    document.addEventListener("DOMContentLoaded", function () {
+
+    // Get the modal and elements inside it
+    const modal = document.getElementById("itemModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const closeModal = document.querySelector('.close-modal-popup');
+
+
+    // Close the modal when clicking the 'x' button
+    closeModal.onclick = function () {
+        modal.style.display = "none";
+        document.body.classList.remove('no-scroll'); // Enable scroll on body
+    };
+
+    // Close the modal when clicking anywhere outside the modal
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+            document.body.classList.remove('no-scroll'); // Enable scroll on body
+        }
+
+    };
+
+    // Modal Elements
+    const checkoutModal = document.getElementById('checkoutModal');
+    const closeModalButton = document.querySelector('.close-modal');
+    const zebraListContainer = document.querySelector('.zebra-list');
+    const totalPriceElement = document.getElementById('totalPrice');
+
+
+    // Checkout Button Click Event
+    checkOut.addEventListener('click', () => {
+        if (carts.length <= 0) {
+            alert('No items in cart');
+        }
+        else {
+            if (storedModel !== "") {
+                $(document.getElementById("checkoutModal")).replaceWith(storedModel);
+            }
+            populateCheckoutModal();
+            initButtons()
+            checkoutModal.style.display = 'block';
+            document.body.classList.add('no-scroll'); // Disable scroll on body
+            storedModel = $(document.getElementById("checkoutModal")).clone(true)
+        }
+    });
+
+    // Close Modal Button Click Event
+    closeModalButton.addEventListener('click', () => {
+        checkoutModal.style.display = 'none';
+        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
+    });
+
+    // Close Modal When Clicking Outside the Modal
+    window.addEventListener('click', (event) => {
+        if (event.target === checkoutModal) {
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+    });
+
+    // Function to Populate the Modal with Cart Items
+    function populateCheckoutModal() {
+        zebraListContainer.innerHTML = ''; // Clear previous content
+        let totalPrice = 0;
+        let totalQuantity = 0;
+
+        carts.forEach(cart => {
+            const product = getProductByID(cart.product_id);
+            const itemTotalPrice = product.price * cart.quantity;
+            totalPrice += itemTotalPrice;
+            totalQuantity += cart.quantity;
+
+            // Create item element for the zebra list
+            const itemElement = document.createElement('div');
+            itemElement.innerHTML = `
+                <span>${product.name}</span>
+                <span>$${product.price} x ${cart.quantity}</span>
+            `;
+            zebraListContainer.appendChild(itemElement);
+        });
+
+        // Update total price in the modal
+        totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+        document.getElementById('totalItemsCheckout').textContent = totalQuantity;
     }
 });
