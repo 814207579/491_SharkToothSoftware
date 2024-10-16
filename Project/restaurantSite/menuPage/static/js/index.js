@@ -108,24 +108,24 @@
         const openCartButton = document.querySelector('.icon-cart');
         const closeCartButton = document.querySelector('.close');
         const body = document.querySelector('body');
-    
+
         openCartButton.addEventListener('click', function() {
             body.classList.add('showCart');
         });
-    
+
         closeCartButton.addEventListener('click', function() {
             body.classList.remove('showCart');
         });
-    
+
         // Close the cart when clicking outside of it
         window.addEventListener('click', function(event) {
             if (!cartTab.contains(event.target) &&
                 !openCartButton.contains(event.target) &&
-                !checkOut.contains(event.target) && 
+                !checkOut.contains(event.target) &&
                 !clearCart.contains(event.target) &&
                 !checkoutModal.contains(event.target) &&
                 !event.target.classList.contains('plus') &&
-                !event.target.classList.contains('minus')    
+                !event.target.classList.contains('minus')
             ) {
                 body.classList.remove('showCart');
             }
@@ -217,6 +217,22 @@
 
                 let itemTotalPrice = info.price * cart.quantity;
                 totalPrice += itemTotalPrice;
+				let quantityButtonsHTML = '';
+                if (cart.quantity > 1) {
+                    quantityButtonsHTML = `
+                        <span class="minus">-</span>
+                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        <span class="plus">+</span>
+                    `;
+                }
+				else {
+                    quantityButtonsHTML = `
+                        <span class="delete">🗑️</span>
+                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        <span class="plus">+</span>
+                    `;
+                }
+
 
                 newCart.innerHTML =
                     `<div class="image">
@@ -227,9 +243,7 @@
                     </div>
                     
                     <div class="quantity">
-                        <span class="minus">-</span>
-                        <input type="number" class="quantity-input" min="1" max="99" value="${cart.quantity}" />
-                        <span class="plus">+</span>
+                         ${quantityButtonsHTML}
                     </div>
                     <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
                 `;
@@ -237,6 +251,18 @@
             })
         }
         iconCartSpan.textContent = totalQuantity;
+
+		 // validation for the manual input of items in the text box
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('input', function() {
+                let value = parseInt(this.value);
+                // default to 99 if the user tries to add more
+                if (value > 99) {
+                    this.value = 99;
+                }
+            });
+        });
+
 
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
@@ -252,7 +278,19 @@
             }
             changeQuantity(product_id, type);
         }
-    })
+		else if (positionClick.classList.contains('delete')) {
+				let product_id = positionClick.parentElement.parentElement.dataset.id;
+				removeItemFromCart(product_id);
+			}
+		});
+		const removeItemFromCart = (product_id) => {
+			let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
+			if (positionItemInCart >= 0) {
+				carts.splice(positionItemInCart, 1); // Remove the item
+				addCartToMemory();
+				addCartToHTML();
+			}
+		};
     // Existing blur event listener
     listCartHTML.addEventListener('blur', (event) => {
         if (event.target.classList.contains('quantity-input')) {
@@ -498,6 +536,7 @@
     // Go Back Button Click Event
     goBackButton.addEventListener('click', () => {
         checkoutModal.style.display = 'none';
+		document.body.classList.remove('no-scroll');
     });
 
     // Function that modifies the checkout modal to be used as the split cart function

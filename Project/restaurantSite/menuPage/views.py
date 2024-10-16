@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from .models import Order, Table, Restaurant, Person, FoodItem, OrderItem
+from django.db import transaction
+from .models import Order, Table, Restaurant, Person, FoodItem
 from .forms import RestaurantForm, FoodItemForm
 from bson import ObjectId
 from django.http import HttpResponse
@@ -36,14 +37,9 @@ def place_order(request):
             items = data.get('items')
 
             restaurant = Restaurant.objects.get(_id=restaurant_id)
-
             table = Table.objects.get(table_number=table_number, restaurant = restaurant)
 
-            order = Order.objects.create(
-                table=table,
-                restaurant=restaurant,
-            )
-
+            order_items = []
             if items:
                 for item in items:
                     print(item)
@@ -51,10 +47,24 @@ def place_order(request):
                     quantity = item.get('quantity', 1)  # Default quantity to 1 if not provided
                     try:
                         food_item = FoodItem.objects.get(_id=ObjectId(product_id))  # Convert to ObjectId
+
+                        order_items.append({
+                            'food_item_id': str(food_item._id),
+                            'food_item_name': food_item.name,
+                            'food_item_price': str(food_item.food_price),
+                            'quantity': quantity
+                        })
                         # Create an OrderItem instance
-                        OrderItem.objects.create(order=order, food_item=food_item, quantity=quantity)
+                        # OrderItem.objects.create(order=order, food_item=food_item, quantity=quantity)
                     except FoodItem.DoesNotExist:
                         return JsonResponse({'error': f'Food item with ID {product_id} not found.'}, status=404)
+
+            with transaction.atomic():
+                order = Order.objects.create(
+                    table=table,
+                    restaurant=restaurant,
+                    items=order_items
+                )
 
             return JsonResponse({'message': 'Order placed successfully!', 'order_id': str(order._id)}, status=201)
 

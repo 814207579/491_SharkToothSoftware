@@ -47,6 +47,17 @@ body{
 .navbar li{
     margin-right: 30px;
 }
+.logo-title-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align items in the center */
+    margin-left: 20px; /* Add some space to the left */
+}
+
+.title {
+    margin-left: 10px; /* Add space between logo and title */
+    font-size: 34px; /* Adjust font size if needed */
+    color: white;
+}
 
 .underline {
     position: absolute;
@@ -244,7 +255,7 @@ header .icon-cart span{
     max-width: 90vw;
     margin: auto;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 120px;
 }
 
 .listProduct .item img{
@@ -469,6 +480,11 @@ body.showCart .container{
     margin: 0 0 4px 25px;
 }
 
+.listCart .quantity .delete { /* Style for the trash can icon */
+    font-size: 18px;
+    cursor: pointer;
+}
+
 .listCart .item .name {
     grid-area: title;
     font-weight: bold;
@@ -478,23 +494,29 @@ body.showCart .container{
 }
 
 .listCart .quantity span{
-    width: 20px;
+    width: 30px;
     height: auto;
-    color: goldenrod;
-    display: inline-block;
+    color: black;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gold;
+    font-size: 20px;
     cursor: pointer;
-    text-align: center;
-    transition: background-color 0.2s ease;
+    font-weight: bold;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0 8px;
 }
 
-/* To style the input field in shopping cart*/
-.listCart .quantity input[type="number"] {
-    width: 50px; /* Adjust width as needed */
-    font-size: 14px;
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin: 10px 10px 10px;
+.listCart .quantity span:hover  {
+    background-color: brown;
+    transform: scale(1.1);
+    color: white;
+}
+
+.listCart .quantity span:active {
+    transform: scale(0.95);
 }
 
 .listCart .item .totalPrice {
@@ -504,6 +526,26 @@ body.showCart .container{
     color: black;
     font-weight: bold;
     margin: auto;
+}
+
+/* To style the input field in shopping cart*/
+.listCart .quantity input[type="number"] {
+    width: 50px; /* Adjust width as needed */
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    /* margin: 10px 10px 10px; */
+    margin: 0 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3 ease;
+}
+
+.listCart .quantity input[type="number"]:focus {
+    border-color: gold;
+    outline: none;
 }
 
 /* Remove arrows from number input in all browsers */
