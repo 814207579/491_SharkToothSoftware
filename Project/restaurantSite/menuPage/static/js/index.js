@@ -8,6 +8,7 @@
     let checkOut = document.querySelector('.checkOut');
     let listProducts = [];
     let carts = [];
+    let storedModel = "";
 
     // Credit Card Checking methods
     // Used from: https://www.geeksforgeeks.org/program-credit-card-number-validation/
@@ -107,27 +108,20 @@
         const openCartButton = document.querySelector('.icon-cart');
         const closeCartButton = document.querySelector('.close');
         const body = document.querySelector('body');
-        let isCartOpen = Boolean(false);
 
         openCartButton.addEventListener('click', function() {
-            if (!isCartOpen) {
-                body.classList.add('showCart');
-                isCartOpen = true;
-            } else {
-                body.classList.remove('showCart');
-                isCartOpen = false;
-            }
+            body.classList.add('showCart');
         });
-    
+
         closeCartButton.addEventListener('click', function() {
             body.classList.remove('showCart');
         });
-    
+
         // Close the cart when clicking outside of it
         window.addEventListener('click', function(event) {
             if (!cartTab.contains(event.target) &&
                 !openCartButton.contains(event.target) &&
-                !checkOut.contains(event.target) && 
+                !checkOut.contains(event.target) &&
                 !clearCart.contains(event.target) &&
                 !checkoutModal.contains(event.target) &&
                 !event.target.classList.contains('plus') &&
@@ -223,21 +217,22 @@
 
                 let itemTotalPrice = info.price * cart.quantity;
                 totalPrice += itemTotalPrice;
-
-                let quantityButtonsHTML = '';
+				let quantityButtonsHTML = '';
                 if (cart.quantity > 1) {
                     quantityButtonsHTML = `
                         <span class="minus">-</span>
                         <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     `;
-                } else {
+                }
+				else {
                     quantityButtonsHTML = `
                         <span class="delete">🗑️</span>
                         <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
                         <span class="plus">+</span>
                     `;
                 }
+
 
                 newCart.innerHTML =
                     `<div class="image">
@@ -246,8 +241,9 @@
                     <div class="name">
                         ${info.name}
                     </div>
+                    
                     <div class="quantity">
-                        ${quantityButtonsHTML}
+                         ${quantityButtonsHTML}
                     </div>
                     <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
                 `;
@@ -256,11 +252,10 @@
         }
         iconCartSpan.textContent = totalQuantity;
 
-        // validation for the manual input of items in the text box
+		 // validation for the manual input of items in the text box
         document.querySelectorAll('.quantity-input').forEach(input => {
             input.addEventListener('input', function() {
                 let value = parseInt(this.value);
-
                 // default to 99 if the user tries to add more
                 if (value > 99) {
                     this.value = 99;
@@ -268,10 +263,10 @@
             });
         });
 
+
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
-
 
     listCartHTML.addEventListener('click', (event) => {
         let positionClick = event.target;
@@ -283,19 +278,19 @@
             }
             changeQuantity(product_id, type);
         }
-            else if (positionClick.classList.contains('delete')) {
-            let product_id = positionClick.parentElement.parentElement.dataset.id;
-            removeItemFromCart(product_id);
-        }
-    });
-    const removeItemFromCart = (product_id) => {
-        let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
-        if (positionItemInCart >= 0) {
-            carts.splice(positionItemInCart, 1); // Remove the item
-            addCartToMemory();
-            addCartToHTML();
-        }
-    };
+		else if (positionClick.classList.contains('delete')) {
+				let product_id = positionClick.parentElement.parentElement.dataset.id;
+				removeItemFromCart(product_id);
+			}
+		});
+		const removeItemFromCart = (product_id) => {
+			let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
+			if (positionItemInCart >= 0) {
+				carts.splice(positionItemInCart, 1); // Remove the item
+				addCartToMemory();
+				addCartToHTML();
+			}
+		};
     // Existing blur event listener
     listCartHTML.addEventListener('blur', (event) => {
         if (event.target.classList.contains('quantity-input')) {
@@ -332,11 +327,6 @@
                 return;
             }
 
-            //Check for max quantity
-            if (newQuantity > 99) {
-                newQuantity = 99;
-            }
-
             newQuantity = parseInt(newQuantity, 10) || 0;
 
             // Update the quantity in the cart
@@ -350,9 +340,7 @@
         if (positionItemInCart >= 0) {
             switch (type) {
                 case 'plus':
-                    if (carts[positionItemInCart].quantity < 99) {
-                        carts[positionItemInCart].quantity += 1;
-                    }
+                    carts[positionItemInCart].quantity += 1;
                     break;
                 case 'input':
                     if (newQuantity > 0) {
@@ -470,129 +458,28 @@
         }
     }
 
-    const initApp = () => {
-        //fill productsList
-        listProducts = fillProducts();
+    function initButtons() {
+        const items = document.querySelectorAll(".listProduct .item");
+        const payNowButton = document.querySelector('.pay-now');
+        const splitCardButton = document.getElementById("splitCartButton");
+        const splitCartConfirmButton = document.getElementById("splitCartConfirm");
+        const goBackButton = document.querySelector('.go-back');
+        // Add click event listener to each card item
+        items.forEach(function (item) {
+            item.addEventListener("click", function (e) {
+                // Prevent the click event if it is on the "Add To Cart" button
+                if (e.target.classList.contains("addCart")) {
+                    return;
+                }
 
-        // get cart from memory
-        if(localStorage.getItem('cart')){
-            carts = JSON.parse(localStorage.getItem('cart'));
-            addCartToHTML();
-        }
-        
-        navBarUl.onclick = filterItems;
-        document.getElementById("checkoutBtn").onclick = getCheckoutItems;
-    }
+                const itemName = item.querySelector(".foodName").textContent;
+                const itemDescription = item.querySelector(".foodDescription").textContent;
 
-    initApp();
-    document.addEventListener("DOMContentLoaded", function () {
-    // Get all item cards
-    const items = document.querySelectorAll(".listProduct .item");
+                openModal(itemName, itemDescription);
+                document.body.classList.add('no-scroll'); // Disable scroll on body
 
-    // Get the modal and elements inside it
-    const modal = document.getElementById("itemModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalDescription = document.getElementById("modalDescription");
-    const closeModal = document.querySelector('.close-modal-popup');
-
-    // Function to open the modal
-    function openModal(itemName, itemDescription) {
-        modalTitle.textContent = itemName;
-        modalDescription.textContent = itemDescription;
-        modal.style.display = "block";
-    }
-
-    // Add click event listener to each card item
-    items.forEach(function (item) {
-        item.addEventListener("click", function (e) {
-            // Prevent the click event if it is on the "Add To Cart" button
-            if (e.target.classList.contains("addCart")) {
-                return;
-            }
-
-            const itemName = item.querySelector(".foodName").textContent;
-            const itemDescription = item.querySelector(".foodDescription").textContent;
-
-            openModal(itemName, itemDescription);
-            document.body.classList.add('no-scroll'); // Disable scroll on body
-            
+            });
         });
-    });
-
-    // Close the modal when clicking the 'x' button
-    closeModal.onclick = function () {
-        modal.style.display = "none";
-        document.body.classList.remove('no-scroll'); // Enable scroll on body
-    };
-
-    // Close the modal when clicking anywhere outside the modal
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-            document.body.classList.remove('no-scroll'); // Enable scroll on body
-        }
-    };
-
-    // Modal Elements
-    const checkoutModal = document.getElementById('checkoutModal');
-    const closeModalButton = document.querySelector('.close-modal');
-    const zebraListContainer = document.querySelector('.zebra-list');
-    const totalPriceElement = document.getElementById('totalPrice');
-    const payNowButton = document.querySelector('.pay-now');
-    const splitCardButton = document.getElementById("splitCartButton");
-    const splitCartConfirmButton = document.getElementById("splitCartConfirm");
-    const goBackButton = document.querySelector('.go-back');
-
-    // Checkout Button Click Event
-    checkOut.addEventListener('click', () => {
-        if (carts.length <= 0) {
-            alert('No items in cart');
-        } else {
-            populateCheckoutModal();
-            checkoutModal.style.display = 'block';
-            document.body.classList.add('no-scroll'); // Disable scroll on body
-        }
-    });
-
-    // Close Modal Button Click Event
-    closeModalButton.addEventListener('click', () => {
-        checkoutModal.style.display = 'none';
-        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
-    });
-
-    // Close Modal When Clicking Outside the Modal
-    window.addEventListener('click', (event) => {
-        if (event.target == checkoutModal) {
-            checkoutModal.style.display = 'none';
-            document.body.classList.remove('no-scroll');
-        }
-    });
-
-    // Function to Populate the Modal with Cart Items
-    function populateCheckoutModal() {
-        zebraListContainer.innerHTML = ''; // Clear previous content
-        let totalPrice = 0;
-        totalQuantity = 0;
-
-        carts.forEach(cart => {
-            const product = getProductByID(cart.product_id);
-            const itemTotalPrice = product.price * cart.quantity;
-            totalPrice += itemTotalPrice;
-            totalQuantity += cart.quantity;
-
-            // Create item element for the zebra list
-            const itemElement = document.createElement('div');
-            itemElement.innerHTML = `
-                <span>${product.name}</span>
-                <span>$${product.price} x ${cart.quantity}</span>
-            `;
-            zebraListContainer.appendChild(itemElement);
-        });
-
-        // Update total price in the modal
-        totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
-        document.getElementById('totalItemsCheckout').textContent = totalQuantity;
-    }
 
     // Helper function to get CSRF token from cookie
     function getCSRFToken() {
@@ -609,15 +496,11 @@
         }
         return cookieValue;
     }
-
-    // Pay Now Button Click Event
+        // Pay Now Button Click Event
     payNowButton.addEventListener('click', () => {
         // for(let i = 0; i < carts.length; i++) {
         //     console.log(carts[i])
         // }
-
-        payNowButton.disabled = true;
-
         const orderData = {
             table_number: 2,
             restaurant_id: "507f191e810c19729de860ee",
@@ -653,7 +536,7 @@
     // Go Back Button Click Event
     goBackButton.addEventListener('click', () => {
         checkoutModal.style.display = 'none';
-        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
+		document.body.classList.remove('no-scroll');
     });
 
     // Function that modifies the checkout modal to be used as the split cart function
@@ -661,7 +544,7 @@
         event.preventDefault();
         // Hyjacking the modal to be used by
         checkoutModal.innerHTML =
-        '<div class="modal-checkout-content"> ' +
+        '<div id="splitModal" class="modal-checkout-content"> ' +
             '<span class="close-modal">&times;</span>' +
             '<h2>Checkout</h2>' +
             '<div class="split-cart-selection">' +
@@ -678,7 +561,8 @@
             '</div>' +
         '</div>';
         document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
-    })
+        })
+    }
 
     // Function that changes the button as well as moves back to the main checkout
     function updateSplitPayButtonText(event) {
@@ -699,6 +583,19 @@
         }
     }
 
+    const initApp = () => {
+        //fill productsList
+        listProducts = fillProducts();
+
+        // get cart from memory
+        if(localStorage.getItem('cart')){
+            carts = JSON.parse(localStorage.getItem('cart'));
+            addCartToHTML();
+        }
+        navBarUl.onclick = filterItems;
+        document.getElementById("checkoutBtn").onclick = getCheckoutItems;
+
+    }
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
         let selectionBoxElement = document.getElementById("splitCartSelect");
@@ -707,7 +604,7 @@
         let currentPerson = 1;
         //keeps track of if everyone has paid
         let buildString =
-            '<div class="modal-checkout-content"> ' +
+            '<div id="splitModal" class="modal-checkout-content"> ' +
                 '<span class="close-modal">&times;</span>' +
                 '<h2>Checkout</h2>' +
                 '<div class="zebra-list">';
@@ -743,5 +640,95 @@
         }
         document.getElementById("totalItems").innerHTML = "Items: " + tempItems;
         document.getElementById("payButtonClick").onclick = updateSplitPayButtonText;
+    }
+
+
+    initApp();
+    document.addEventListener("DOMContentLoaded", function () {
+
+    // Get the modal and elements inside it
+    const modal = document.getElementById("itemModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const closeModal = document.querySelector('.close-modal-popup');
+
+
+    // Close the modal when clicking the 'x' button
+    closeModal.onclick = function () {
+        modal.style.display = "none";
+        document.body.classList.remove('no-scroll'); // Enable scroll on body
+    };
+
+    // Close the modal when clicking anywhere outside the modal
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+            document.body.classList.remove('no-scroll'); // Enable scroll on body
+        }
+
+    };
+
+    // Modal Elements
+    const checkoutModal = document.getElementById('checkoutModal');
+    const closeModalButton = document.querySelector('.close-modal');
+    const zebraListContainer = document.querySelector('.zebra-list');
+    const totalPriceElement = document.getElementById('totalPrice');
+
+
+    // Checkout Button Click Event
+    checkOut.addEventListener('click', () => {
+        if (carts.length <= 0) {
+            alert('No items in cart');
+        }
+        else {
+            if (storedModel !== "") {
+                $(document.getElementById("checkoutModal")).replaceWith(storedModel);
+            }
+            populateCheckoutModal();
+            initButtons()
+            checkoutModal.style.display = 'block';
+            document.body.classList.add('no-scroll'); // Disable scroll on body
+            storedModel = $(document.getElementById("checkoutModal")).clone(true)
+        }
+    });
+
+    // Close Modal Button Click Event
+    closeModalButton.addEventListener('click', () => {
+        checkoutModal.style.display = 'none';
+        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
+    });
+
+    // Close Modal When Clicking Outside the Modal
+    window.addEventListener('click', (event) => {
+        if (event.target === checkoutModal) {
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+    });
+
+    // Function to Populate the Modal with Cart Items
+    function populateCheckoutModal() {
+        zebraListContainer.innerHTML = ''; // Clear previous content
+        let totalPrice = 0;
+        let totalQuantity = 0;
+
+        carts.forEach(cart => {
+            const product = getProductByID(cart.product_id);
+            const itemTotalPrice = product.price * cart.quantity;
+            totalPrice += itemTotalPrice;
+            totalQuantity += cart.quantity;
+
+            // Create item element for the zebra list
+            const itemElement = document.createElement('div');
+            itemElement.innerHTML = `
+                <span>${product.name}</span>
+                <span>$${product.price} x ${cart.quantity}</span>
+            `;
+            zebraListContainer.appendChild(itemElement);
+        });
+
+        // Update total price in the modal
+        totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+        document.getElementById('totalItemsCheckout').textContent = totalQuantity;
     }
 });
