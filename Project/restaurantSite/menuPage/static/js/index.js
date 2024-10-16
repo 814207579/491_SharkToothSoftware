@@ -459,109 +459,106 @@
     }
 
     function initButtons() {
-        const items = document.querySelectorAll(".listProduct .item");
+        const checkoutModal = document.getElementById('checkoutModal');
         const payNowButton = document.querySelector('.pay-now');
         const splitCardButton = document.getElementById("splitCartButton");
-        const splitCartConfirmButton = document.getElementById("splitCartConfirm");
         const goBackButton = document.querySelector('.go-back');
-        // Add click event listener to each card item
-        items.forEach(function (item) {
-            item.addEventListener("click", function (e) {
-                // Prevent the click event if it is on the "Add To Cart" button
-                if (e.target.classList.contains("addCart")) {
-                    return;
+        const closeModalButton = document.querySelector('.close-modal');
+
+        // Helper function to get CSRF token from cookie
+        function getCSRFToken() {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, 10) === 'csrftoken=') {
+                        cookieValue = cookie.substring(10);
+                        break;
+                    }
                 }
+            }
+            return cookieValue;
+        }
+            // Pay Now Button Click Event
+        payNowButton.addEventListener('click', () => {
+            // for(let i = 0; i < carts.length; i++) {
+            //     console.log(carts[i])
+            // }
+            const orderData = {
+                table_number: 2,
+                restaurant_id: "507f191e810c19729de860ee",
+                items: carts
+            };
 
-                const itemName = item.querySelector(".foodName").textContent;
-                const itemDescription = item.querySelector(".foodDescription").textContent;
+            console.log(JSON.stringify(orderData))
 
-                openModal(itemName, itemDescription);
-                document.body.classList.add('no-scroll'); // Disable scroll on body
-
+            // Send order to backend
+            fetch('place_order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                        alert('Payment successful! Order ID: ' + data.order_id);
+                    checkoutModal.style.display = 'none';
+                    clearItemsInCart();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Failed to create order: ' + error.message);
             });
         });
 
-    // Helper function to get CSRF token from cookie
-    function getCSRFToken() {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, 10) === 'csrftoken=') {
-                    cookieValue = cookie.substring(10);
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-        // Pay Now Button Click Event
-    payNowButton.addEventListener('click', () => {
-        // for(let i = 0; i < carts.length; i++) {
-        //     console.log(carts[i])
-        // }
-        const orderData = {
-            table_number: 2,
-            restaurant_id: "507f191e810c19729de860ee",
-            items: carts
-        };
-
-        console.log(JSON.stringify(orderData))
-
-        // Send order to backend
-        fetch('place_order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            },
-            body: JSON.stringify(orderData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                    alert('Payment successful! Order ID: ' + data.order_id);
-                checkoutModal.style.display = 'none';
-                clearItemsInCart();
-            } else {
-                alert('Error: ' + data.error);
-            }
-        })
-        .catch(error => {
-            alert('Failed to create order: ' + error.message);
+        // Go Back Button Click Event
+        goBackButton.addEventListener('click', () => {
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
         });
-    });
 
-    // Go Back Button Click Event
-    goBackButton.addEventListener('click', () => {
-        checkoutModal.style.display = 'none';
-		document.body.classList.remove('no-scroll');
-    });
-
-    // Function that modifies the checkout modal to be used as the split cart function
-    splitCardButton.addEventListener("click", event => {
-        event.preventDefault();
-        // Hyjacking the modal to be used by
-        checkoutModal.innerHTML =
-        '<div id="splitModal" class="modal-checkout-content"> ' +
-            '<span class="close-modal">&times;</span>' +
-            '<h2>Checkout</h2>' +
-            '<div class="split-cart-selection">' +
-                '<span>How many times would you like to split the cart? </span>' +
-                '<select id="splitCartSelect" class="split-modal-select">' +
-                    '<option value="1">1</option>' +
-                    '<option value="2">2</option>' +
-                    '<option value="3">3</option>' +
-                    '<option value="4">4</option>' +
-                '</select>' +
-                '<div class="modal-footer">' +
-                    '<button id="splitCartConfirm" class="confirm button">Confirm</button>' +
+        // Function that modifies the checkout modal to be used as the split cart function
+        splitCardButton.addEventListener("click", event => {
+            event.preventDefault();
+            // Hyjacking the modal to be used by
+            checkoutModal.innerHTML =
+            '<div id="splitModal" class="modal-checkout-content"> ' +
+                '<span class="close-modal">&times;</span>' +
+                '<h2>Checkout</h2>' +
+                '<div class="split-cart-selection">' +
+                    '<span>How many times would you like to split the cart? </span>' +
+                    '<select id="splitCartSelect" class="split-modal-select">' +
+                        '<option value="1">1</option>' +
+                        '<option value="2">2</option>' +
+                        '<option value="3">3</option>' +
+                        '<option value="4">4</option>' +
+                    '</select>' +
+                    '<div class="modal-footer">' +
+                        '<button id="splitCartConfirm" class="confirm button">Confirm</button>' +
+                    '</div>' +
                 '</div>' +
-            '</div>' +
-        '</div>';
-        document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
+            '</div>';
+            document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
         })
+        // Close Modal Button Click Event
+        closeModalButton.addEventListener('click', () => {
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll'); // Re-enable scroll on body
+        });
+
+        // Close Modal When Clicking Outside the Modal
+        window.addEventListener('click', (event) => {
+            if (event.target === checkoutModal) {
+                checkoutModal.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            }
+        });
     }
 
     // Function that changes the button as well as moves back to the main checkout
@@ -647,30 +644,47 @@
     document.addEventListener("DOMContentLoaded", function () {
 
     // Get the modal and elements inside it
+    const items = document.querySelectorAll(".listProduct .item");
     const modal = document.getElementById("itemModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalDescription = document.getElementById("modalDescription");
     const closeModal = document.querySelector('.close-modal-popup');
-
 
     // Close the modal when clicking the 'x' button
     closeModal.onclick = function () {
         modal.style.display = "none";
         document.body.classList.remove('no-scroll'); // Enable scroll on body
     };
-
-    // Close the modal when clicking anywhere outside the modal
     window.onclick = function (event) {
         if (event.target === modal) {
             modal.style.display = "none";
             document.body.classList.remove('no-scroll'); // Enable scroll on body
         }
+    }
+    function openModal(itemName, itemDescription) {
+        modalTitle.textContent = itemName;
+        modalDescription.textContent = itemDescription;
+        modal.style.display = "block";
+    }
 
-    };
+    // Add click event listener to each card item
+    items.forEach(function (item) {
+        item.addEventListener("click", function (e) {
+            // Prevent the click event if it is on the "Add To Cart" button
+            if (e.target.classList.contains("addCart")) {
+                return;
+            }
+
+            const itemName = item.querySelector(".foodName").textContent;
+            const itemDescription = item.querySelector(".foodDescription").textContent;
+            openModal(itemName, itemDescription);
+            document.body.classList.add('no-scroll'); // Disable scroll on body
+
+        });
+    });
 
     // Modal Elements
     const checkoutModal = document.getElementById('checkoutModal');
-    const closeModalButton = document.querySelector('.close-modal');
     const zebraListContainer = document.querySelector('.zebra-list');
     const totalPriceElement = document.getElementById('totalPrice');
 
@@ -689,20 +703,6 @@
             checkoutModal.style.display = 'block';
             document.body.classList.add('no-scroll'); // Disable scroll on body
             storedModel = $(document.getElementById("checkoutModal")).clone(true)
-        }
-    });
-
-    // Close Modal Button Click Event
-    closeModalButton.addEventListener('click', () => {
-        checkoutModal.style.display = 'none';
-        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
-    });
-
-    // Close Modal When Clicking Outside the Modal
-    window.addEventListener('click', (event) => {
-        if (event.target === checkoutModal) {
-            checkoutModal.style.display = 'none';
-            document.body.classList.remove('no-scroll');
         }
     });
 
