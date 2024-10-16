@@ -6,9 +6,17 @@
     let clearCart = document.querySelector('.clearCart');
     let navBarUl = document.getElementById("navBarUl");
     let checkOut = document.querySelector('.checkOut');
+    let checkoutModal = document.getElementById('checkoutModal');
+    // Modal Elements
+    const zebraListContainer = document.querySelector('.zebra-list');
+    const totalPriceElement = document.getElementById('totalPrice');
+    //Navbar underline
+    const navLinks = document.querySelectorAll('.navbar ul li a.navBarSort');
+    const underline = document.querySelector('.underline');
     let listProducts = [];
     let carts = [];
     let storedModel = "";
+
 
     // Credit Card Checking methods
     // Used from: https://www.geeksforgeeks.org/program-credit-card-number-validation/
@@ -17,71 +25,63 @@
 
     // Return this number if it is a single digit, otherwise,
     // return the sum of the two digits
-    function getDigit(number)
-    {
-    if (number < 9)
-        return number;
-    return Math.floor(number / 10) + number % 10;
+    function getDigit(number) {
+        if (number < 9) {
+            return number;
+        }
+        return Math.floor(number / 10) + number % 10;
     }
 
     // Return the number of digits in d
-    function getSize(d)
-    {
-    let num = d.toString();
-    return num.length;
+    function getSize(d) {
+        let num = d.toString();
+        return num.length;
     }
 
     // Return the first k number of digits from
     // number. If the number of digits in number
     // is less than k, return number.
-    function getPrefix(number,k)
-    {
-    if (getSize(number) > k)
-    {
-        let num = number.toString();
-        return parseInt(num.substring(0, k));
-    }
-    return number;
+    function getPrefix(number,k) {
+        if (getSize(number) > k) {
+            let num = number.toString();
+            return parseInt(num.substring(0, k));
+        }
+        return number;
     }
 
     // Return true if the digit d is a prefix for number
-    function prefixMatched(number,d)
-    {
-    return getPrefix(number, getSize(d)) === d;
+    function prefixMatched(number,d) {
+        return getPrefix(number, getSize(d)) === d;
     }
 
     // Get the result from Step 2
-    function sumOfDoubleEvenPlace(number)
-    {
-    let sum = 0;
-    let num = number.toString() ;
-    for (let i = getSize(number) - 2; i >= 0; i -= 2)
-        sum += getDigit((num.charCodeAt(i) - '0'.charCodeAt(0)) * 2);
-
-    return sum;
+    function sumOfDoubleEvenPlace(number) {
+        let sum = 0;
+        let num = number.toString() ;
+        for (let i = getSize(number) - 2; i >= 0; i -= 2){
+            sum += getDigit((num.charCodeAt(i) - '0'.charCodeAt(0)) * 2);
+        }
+        return sum;
     }
 
     // Return sum of odd-place digits in number
-    function sumOfOddPlace(number)
-    {
-    let sum = 0;
-    let num = number.toString();
-    for (let i = getSize(number) - 1; i >= 0; i -= 2)
-        sum += num.charCodeAt(i) - '0'.charCodeAt(0);
-    return sum;
+    function sumOfOddPlace(number) {
+        let sum = 0;
+        let num = number.toString();
+        for (let i = getSize(number) - 1; i >= 0; i -= 2) {
+            sum += num.charCodeAt(i) - '0'.charCodeAt(0);
+        }
+        return sum;
     }
 
     // Return true if the card number is valid
-    function isValid(number)
-    {
-    return (getSize(number) >= 13 &&
-            getSize(number) <= 16) &&
+    function isValid(number) {
+    return (getSize(number) >= 13 && getSize(number) <= 16) &&
         (prefixMatched(number, 4) ||
-        prefixMatched(number, 5) ||
-        prefixMatched(number, 37) ||
-        prefixMatched(number, 6)) &&
-        ((sumOfDoubleEvenPlace(number) +
-        sumOfOddPlace(number)) % 10 === 0);
+         prefixMatched(number, 5) ||
+         prefixMatched(number, 37) ||
+         prefixMatched(number, 6)) &&
+        ((sumOfDoubleEvenPlace(number) + sumOfOddPlace(number)) % 10 === 0);
     }
 
     iconCart.addEventListener('click', () => {
@@ -93,44 +93,6 @@
     clearCart.addEventListener('click', () => {
         clearItemsInCart();
     })
-    // checkOut.addEventListener('click', () => {
-    //     //CHeck if items are in cart
-    //     if(carts.length <= 0){
-    //         alert('No items in cart');
-    //     } else {
-    //         clearItemsInCart();
-    //         alert('Thank you for your purchase');
-    //     }
-    // })
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const cartTab = document.querySelector('.cartTab');
-        const openCartButton = document.querySelector('.icon-cart');
-        const closeCartButton = document.querySelector('.close');
-        const body = document.querySelector('body');
-
-        openCartButton.addEventListener('click', function() {
-            body.classList.add('showCart');
-        });
-
-        closeCartButton.addEventListener('click', function() {
-            body.classList.remove('showCart');
-        });
-
-        // Close the cart when clicking outside of it
-        window.addEventListener('click', function(event) {
-            if (!cartTab.contains(event.target) &&
-                !openCartButton.contains(event.target) &&
-                !checkOut.contains(event.target) &&
-                !clearCart.contains(event.target) &&
-                !checkoutModal.contains(event.target) &&
-                !event.target.classList.contains('plus') &&
-                !event.target.classList.contains('minus')
-            ) {
-                body.classList.remove('showCart');
-            }
-        });
-    });
 
 
     //init for filling listProduct objects based on database
@@ -153,7 +115,6 @@
             currObject.image = $(foodList[i]).find('img.image.foodImage').attr('src');
             productArr.push(currObject);
         }
-
         return productArr;
     }
 
@@ -174,23 +135,24 @@
         for (let i = 0; i < carts.length; i++) {
             totalPrice += carts[i].total;
         }
-
         return totalPrice;
     }
 
     const addToCart = (product_id) => {
         let positionThisProductInCart = carts.findIndex((value) => value.product_id === product_id);
-        if(carts.length <= 0){
+        if(carts.length <= 0) {
             carts = [{
                 product_id: product_id,
                 quantity: 1
             }]
-        }else if(positionThisProductInCart < 0){
+        }
+        else if(positionThisProductInCart < 0){
             carts.push({
                 product_id: product_id,
                 quantity: 1
             });
-        }else{
+        }
+        else {
             carts[positionThisProductInCart].quantity += 1;
         }
         addCartToHTML();
@@ -273,7 +235,7 @@
         if(positionClick.classList.contains('minus') || positionClick.classList.contains('plus')){
             let product_id = positionClick.parentElement.parentElement.dataset.id;
             let type = 'minus';
-            if(positionClick.classList.contains('plus')){
+            if (positionClick.classList.contains('plus')){
                 type = 'plus';
             }
             changeQuantity(product_id, type);
@@ -326,7 +288,6 @@
                 event.target.value = currentItem ? currentItem.quantity : 1;
                 return;
             }
-
             newQuantity = parseInt(newQuantity, 10) || 0;
 
             // Update the quantity in the cart
@@ -345,7 +306,8 @@
                 case 'input':
                     if (newQuantity > 0) {
                         carts[positionItemInCart].quantity = newQuantity;
-                    } else {
+                    }
+                    else {
                         carts.splice(positionItemInCart, 1); // Remove item if quantity is 0
                     }
                     break;
@@ -353,7 +315,8 @@
                     let valueChange = carts[positionItemInCart].quantity - 1;
                     if (valueChange > 0) {
                         carts[positionItemInCart].quantity = valueChange;
-                    } else {
+                    }
+                    else {
                         carts.splice(positionItemInCart, 1);
                     }
                     break;
@@ -364,7 +327,7 @@
     }
 
 
-    const clearItemsInCart = () => {
+    function clearItemsInCart() {
         carts = [];
         addCartToHTML();
         addCartToMemory()
@@ -391,10 +354,6 @@
             $($(navBarUl).children().children()[i]).css("box-shadow", "none")
         }
     }
-
-    //Navbar underline
-    const navLinks = document.querySelectorAll('.navbar ul li a.navBarSort');
-    const underline = document.querySelector('.underline');
 
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
@@ -458,28 +417,38 @@
         }
     }
 
-    function initButtons() {
-        const items = document.querySelectorAll(".listProduct .item");
-        const payNowButton = document.querySelector('.pay-now');
-        const splitCardButton = document.getElementById("splitCartButton");
-        const splitCartConfirmButton = document.getElementById("splitCartConfirm");
-        const goBackButton = document.querySelector('.go-back');
-        // Add click event listener to each card item
-        items.forEach(function (item) {
-            item.addEventListener("click", function (e) {
-                // Prevent the click event if it is on the "Add To Cart" button
-                if (e.target.classList.contains("addCart")) {
-                    return;
+    function sendOrderToDB(tableNumber) {
+        const orderData = {
+            table_number: tableNumber,
+            restaurant_id: "507f191e810c19729de860ee",
+            items: carts
+        };
+
+        console.log(JSON.stringify(orderData))
+
+        // Send order to backend
+        fetch('place_order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify(orderData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert('Payment successful! Order ID: ' + data.order_id);
+                    checkoutModal.style.display = 'none';
+                    clearItemsInCart();
+                } else {
+                    alert('Error: ' + data.error);
                 }
-
-                const itemName = item.querySelector(".foodName").textContent;
-                const itemDescription = item.querySelector(".foodDescription").textContent;
-
-                openModal(itemName, itemDescription);
-                document.body.classList.add('no-scroll'); // Disable scroll on body
-
+            })
+            .catch(error => {
+                alert('Failed to create order: ' + error.message);
             });
-        });
+    }
 
     // Helper function to get CSRF token from cookie
     function getCSRFToken() {
@@ -496,72 +465,58 @@
         }
         return cookieValue;
     }
-        // Pay Now Button Click Event
-    payNowButton.addEventListener('click', () => {
-        // for(let i = 0; i < carts.length; i++) {
-        //     console.log(carts[i])
-        // }
-        const orderData = {
-            table_number: 2,
-            restaurant_id: "507f191e810c19729de860ee",
-            items: carts
-        };
 
-        console.log(JSON.stringify(orderData))
+    function initButtons() {
+        const payNowButton = document.querySelector('.pay-now');
+        const splitCardButton = document.getElementById("splitCartButton");
+        const goBackButton = document.querySelector('.go-back');
+        const closeModalButton = document.querySelector('.close-modal');
 
-        // Send order to backend
-        fetch('place_order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            },
-            body: JSON.stringify(orderData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                    alert('Payment successful! Order ID: ' + data.order_id);
-                checkoutModal.style.display = 'none';
-                clearItemsInCart();
-            } else {
-                alert('Error: ' + data.error);
-            }
-        })
-        .catch(error => {
-            alert('Failed to create order: ' + error.message);
+
+            // Pay Now Button Click Event
+        payNowButton.addEventListener('click', () => {
+            sendOrderToDB(2);
         });
-    });
 
-    // Go Back Button Click Event
-    goBackButton.addEventListener('click', () => {
-        checkoutModal.style.display = 'none';
-		document.body.classList.remove('no-scroll');
-    });
+        // Go Back Button Click Event
+        goBackButton.addEventListener('click', () => {
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        });
 
-    // Function that modifies the checkout modal to be used as the split cart function
-    splitCardButton.addEventListener("click", event => {
-        event.preventDefault();
-        // Hyjacking the modal to be used by
-        checkoutModal.innerHTML =
-        '<div id="splitModal" class="modal-checkout-content"> ' +
-            '<span class="close-modal">&times;</span>' +
-            '<h2>Checkout</h2>' +
-            '<div class="split-cart-selection">' +
-                '<span>How many times would you like to split the cart? </span>' +
-                '<select id="splitCartSelect" class="split-modal-select">' +
-                    '<option value="1">1</option>' +
-                    '<option value="2">2</option>' +
-                    '<option value="3">3</option>' +
-                    '<option value="4">4</option>' +
-                '</select>' +
-                '<div class="modal-footer">' +
-                    '<button id="splitCartConfirm" class="confirm button">Confirm</button>' +
+        // Function that modifies the checkout modal to be used as the split cart function
+        splitCardButton.addEventListener("click", event => {
+            event.preventDefault();
+            // Hijacking the modal to be used by
+            checkoutModal.innerHTML =
+            '<div id="splitModal" class="modal-checkout-content"> ' +
+                '<span class="close-modal">&times;</span>' +
+                '<h2>Checkout</h2>' +
+                '<div class="split-cart-selection">' +
+                    '<span>How many times would you like to split the cart? </span>' +
+                    '<select id="splitCartSelect" class="split-modal-select">' +
+                        '<option value="1">1</option>' +
+                        '<option value="2">2</option>' +
+                        '<option value="3">3</option>' +
+                        '<option value="4">4</option>' +
+                    '</select>' +
+                    '<div class="modal-footer">' +
+                        '<button id="splitCartConfirm" class="confirm button">Confirm</button>' +
+                    '</div>' +
                 '</div>' +
-            '</div>' +
-        '</div>';
-        document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
+            '</div>';
+            document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
         })
+        // Close Modal Button Click Event
+        closeModalButton.addEventListener('click', () => {
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll'); // Re-enable scroll on body
+        });
+
+        // Close Modal When Clicking Outside the Modal
+        window.addEventListener('click', (event) => {
+
+        });
     }
 
     // Function that changes the button as well as moves back to the main checkout
@@ -569,7 +524,6 @@
         let totalPayments = document.getElementById("totalNumberOfPayments").value;
         let payButton = document.getElementById("payButtonValue");
         alert("Thank you for paying Person " + payButton.value);
-        console.log(totalPayments)
         if (payButton.value < totalPayments) {
             payButton.value = Number(payButton.value) + 1;
             document.getElementById("payButtonClick").innerHTML = "Person " + payButton.value + " Pay";
@@ -577,9 +531,9 @@
         }
         // Change the modal back to normal
         else {
+            sendOrderToDB(2);
             alert("Thank you for your purchase.");
             clearItemsInCart();
-            location.reload();
         }
     }
 
@@ -595,7 +549,108 @@
         navBarUl.onclick = filterItems;
         document.getElementById("checkoutBtn").onclick = getCheckoutItems;
 
+        // Get the modal and elements inside it
+        const items = document.querySelectorAll(".listProduct .item");
+        const modal = document.getElementById("itemModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalDescription = document.getElementById("modalDescription");
+        const closeModal = document.querySelector('.close-modal-popup');
+
+        // Close the modal when clicking the 'x' button
+        closeModal.onclick = function () {
+            modal.style.display = "none";
+            document.body.classList.remove('no-scroll'); // Enable scroll on body
+        };
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                document.body.classList.remove('no-scroll'); // Enable scroll on body
+            }
+        }
+        function openModal(itemName, itemDescription) {
+            modalTitle.textContent = itemName;
+            modalDescription.textContent = itemDescription;
+            modal.style.display = "block";
+        }
+
+        // Add click event listener to each card item
+        items.forEach(function (item) {
+            item.addEventListener("click", function (e) {
+                // Prevent the click event if it is on the "Add To Cart" button
+                if (e.target.classList.contains("addCart")) {
+                    return;
+                }
+
+                const itemName = item.querySelector(".foodName").textContent;
+                const itemDescription = item.querySelector(".foodDescription").textContent;
+                openModal(itemName, itemDescription);
+                document.body.classList.add('no-scroll'); // Disable scroll on body
+            });
+        });
+
+
+        // Checkout Button Click Event
+        checkOut.addEventListener('click', () => {
+            if (carts.length <= 0) {
+                alert('No items in cart');
+            }
+            else {
+                if (storedModel !== "") {
+                    $(document.getElementById("checkoutModal")).replaceWith(storedModel);
+                }
+                populateCheckoutModal();
+                initButtons()
+                checkoutModal.style.display = 'block';
+                checkoutModal = document.getElementById('checkoutModal')
+                document.body.classList.add('no-scroll'); // Disable scroll on body
+                storedModel = $(document.getElementById("checkoutModal")).clone(true)
+            }
+        });
+
+        // Function to Populate the Modal with Cart Items
+        function populateCheckoutModal() {
+            zebraListContainer.innerHTML = ''; // Clear previous content
+            let totalPrice = 0;
+            let totalQuantity = 0;
+
+            carts.forEach(cart => {
+                const product = getProductByID(cart.product_id);
+                const itemTotalPrice = product.price * cart.quantity;
+                totalPrice += itemTotalPrice;
+                totalQuantity += cart.quantity;
+
+                // Create item element for the zebra list
+                const itemElement = document.createElement('div');
+                itemElement.innerHTML = `
+                <span>${product.name}</span>
+                <span>$${product.price} x ${cart.quantity}</span>
+            `;
+                zebraListContainer.appendChild(itemElement);
+            });
+
+            // Update total price in the modal
+            totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+            document.getElementById('totalItemsCheckout').textContent = totalQuantity;
+        }
+
+        // Close the cart when clicking outside of it
+        window.addEventListener('click', function(event) {
+            // Closes modal
+            if (event.target === checkoutModal) {
+                checkoutModal.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            }
+            const body = document.querySelector('body');
+            // Checking to make sure outside the cart is clicked
+            if (!$(iconCart).find("*").toArray().includes(event.target) &&
+                !$(document.getElementById("cartModal")).find("*").toArray().includes(event.target) &&
+                // These are the plus/minus since they don't want to work
+                !event.target.classList.contains("plus") && !event.target.classList.contains("minus")) {
+                    body.classList.remove('showCart');
+            }
+        });
     }
+
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
         let selectionBoxElement = document.getElementById("splitCartSelect");
@@ -642,93 +697,7 @@
         document.getElementById("payButtonClick").onclick = updateSplitPayButtonText;
     }
 
-
-    initApp();
     document.addEventListener("DOMContentLoaded", function () {
-
-    // Get the modal and elements inside it
-    const modal = document.getElementById("itemModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalDescription = document.getElementById("modalDescription");
-    const closeModal = document.querySelector('.close-modal-popup');
-
-
-    // Close the modal when clicking the 'x' button
-    closeModal.onclick = function () {
-        modal.style.display = "none";
-        document.body.classList.remove('no-scroll'); // Enable scroll on body
-    };
-
-    // Close the modal when clicking anywhere outside the modal
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-            document.body.classList.remove('no-scroll'); // Enable scroll on body
-        }
-
-    };
-
-    // Modal Elements
-    const checkoutModal = document.getElementById('checkoutModal');
-    const closeModalButton = document.querySelector('.close-modal');
-    const zebraListContainer = document.querySelector('.zebra-list');
-    const totalPriceElement = document.getElementById('totalPrice');
-
-
-    // Checkout Button Click Event
-    checkOut.addEventListener('click', () => {
-        if (carts.length <= 0) {
-            alert('No items in cart');
-        }
-        else {
-            if (storedModel !== "") {
-                $(document.getElementById("checkoutModal")).replaceWith(storedModel);
-            }
-            populateCheckoutModal();
-            initButtons()
-            checkoutModal.style.display = 'block';
-            document.body.classList.add('no-scroll'); // Disable scroll on body
-            storedModel = $(document.getElementById("checkoutModal")).clone(true)
-        }
+        initApp();
     });
 
-    // Close Modal Button Click Event
-    closeModalButton.addEventListener('click', () => {
-        checkoutModal.style.display = 'none';
-        document.body.classList.remove('no-scroll'); // Re-enable scroll on body
-    });
-
-    // Close Modal When Clicking Outside the Modal
-    window.addEventListener('click', (event) => {
-        if (event.target === checkoutModal) {
-            checkoutModal.style.display = 'none';
-            document.body.classList.remove('no-scroll');
-        }
-    });
-
-    // Function to Populate the Modal with Cart Items
-    function populateCheckoutModal() {
-        zebraListContainer.innerHTML = ''; // Clear previous content
-        let totalPrice = 0;
-        let totalQuantity = 0;
-
-        carts.forEach(cart => {
-            const product = getProductByID(cart.product_id);
-            const itemTotalPrice = product.price * cart.quantity;
-            totalPrice += itemTotalPrice;
-            totalQuantity += cart.quantity;
-
-            // Create item element for the zebra list
-            const itemElement = document.createElement('div');
-            itemElement.innerHTML = `
-                <span>${product.name}</span>
-                <span>$${product.price} x ${cart.quantity}</span>
-            `;
-            zebraListContainer.appendChild(itemElement);
-        });
-
-        // Update total price in the modal
-        totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
-        document.getElementById('totalItemsCheckout').textContent = totalQuantity;
-    }
-});
