@@ -346,7 +346,7 @@ svg{
 
 .cartTab{
     width: 400px;
-    height: 865px;
+    height: calc(100vh - 100px);
     background: linear-gradient(to top right, whitesmoke, gray);
     color: #333; /* Darker text for readability */
     position: fixed;
