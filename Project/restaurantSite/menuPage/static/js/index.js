@@ -334,15 +334,12 @@
     }
 
     function getCheckoutItems(event) {
-        //console.log(carts);
         event.preventDefault()
 
         //loop over each cart item
         for(let i = 0; i < carts.length; i++) {
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
-
-        //console.log(carts);
     }
 
     function clearFoodItemsFiler() {
@@ -473,9 +470,16 @@
         const closeModalButton = document.querySelector('.close-modal');
 
 
-            // Pay Now Button Click Event
+        // Pay Now Button Click Event
         payNowButton.addEventListener('click', () => {
             sendOrderToDB(2);
+        });
+
+        // Close Modal Button Click Event
+        closeModalButton.addEventListener('click', () => {
+            console.log("test");
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll'); // Re-enable scroll on body
         });
 
         // Go Back Button Click Event
@@ -489,8 +493,8 @@
             event.preventDefault();
             // Hijacking the modal to be used by
             checkoutModal.innerHTML =
-            '<div id="splitModal" class="modal-checkout-content"> ' +
-                '<span class="close-modal">&times;</span>' +
+            '<div class="modal-checkout-content"> ' +
+                '<span id="closeModal" class="close-modal">&times;</span>' +
                 '<h2>Checkout</h2>' +
                 '<div class="split-cart-selection">' +
                     '<span>How many times would you like to split the cart? </span>' +
@@ -506,17 +510,13 @@
                 '</div>' +
             '</div>';
             document.getElementById("splitCartConfirm").onclick = splitCartModalUpdate
+            const closeModalButton = document.getElementById('closeModal');
+            // Close Modal Button Click Event
+            closeModalButton.addEventListener('click', () => {
+                checkoutModal.style.display = 'none';
+                document.body.classList.remove('no-scroll'); // Re-enable scroll on body
+            });
         })
-        // Close Modal Button Click Event
-        closeModalButton.addEventListener('click', () => {
-            checkoutModal.style.display = 'none';
-            document.body.classList.remove('no-scroll'); // Re-enable scroll on body
-        });
-
-        // Close Modal When Clicking Outside the Modal
-        window.addEventListener('click', (event) => {
-
-        });
     }
 
     // Function that changes the button as well as moves back to the main checkout
@@ -601,7 +601,7 @@
                 populateCheckoutModal();
                 initButtons()
                 checkoutModal.style.display = 'block';
-                checkoutModal = document.getElementById('checkoutModal')
+                checkoutModal = document.getElementById('checkoutModal');
                 document.body.classList.add('no-scroll'); // Disable scroll on body
                 storedModel = $(document.getElementById("checkoutModal")).clone(true)
             }
@@ -659,8 +659,8 @@
         let currentPerson = 1;
         //keeps track of if everyone has paid
         let buildString =
-            '<div id="splitModal" class="modal-checkout-content"> ' +
-                '<span class="close-modal">&times;</span>' +
+            '<div class="modal-checkout-content"> ' +
+                '<span id="closeModal" class="close-modal">&times;</span>' +
                 '<h2>Checkout</h2>' +
                 '<div class="zebra-list">';
 
@@ -688,6 +688,12 @@
             '</div>';
 
         checkoutModal.innerHTML = buildString;
+        const closeModalButton = document.getElementById('closeModal');
+        // Close Modal Button Click Event
+        closeModalButton.addEventListener('click', () => {
+            checkoutModal.style.display = 'none';
+            document.body.classList.remove('no-scroll'); // Re-enable scroll on body
+        });
         document.getElementById("totalPrice").innerHTML = `$${getTotalPrice().toLocaleString()}`;
         let tempItems = 0;
         for (let i = 0; i < carts.length; i++) {
