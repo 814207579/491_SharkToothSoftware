@@ -88,12 +88,14 @@
         body.classList.toggle('showCart')
     })
     closeCart.addEventListener('click', () => {
-        body.classList.toggle('showCart')
+        body.classList.remove('showCart')
     })
     clearCart.addEventListener('click', () => {
         clearItemsInCart();
     })
 
+    //FIXME: Create an animation where the card would slide in and out the side of the window
+    //FIXME: Substitue instances of toggle('showCart') with a custom function that would slide the card in and out
 
     //init for filling listProduct objects based on database
     function fillProducts() {
@@ -651,7 +653,7 @@
                 !$(document.getElementById("cartModal")).find("*").toArray().includes(event.target) &&
                 // These are the plus/minus since they don't want to work
                 !event.target.classList.contains("plus") && !event.target.classList.contains("minus")) {
-                    body.classList.remove('showCart');
+                    body.classList.remove('showCart')
             }
         });
     }

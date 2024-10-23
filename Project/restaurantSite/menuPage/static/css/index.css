@@ -354,7 +354,7 @@ svg{
     top: 100px;
     display: flex;
     flex-direction: column; /* Simplify layout with flexbox */
-    transition: left 0.3s ease;
+    transition: right 0.5s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
     z-index: 1000; /* Ensure it stays above other elements */
 }
