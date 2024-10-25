@@ -476,14 +476,14 @@
         qrCodeDiv.innerHTML=""; // clear any existing QR code
         new QRCode(qrCodeDiv, {
             text: `https://sharktoothrestaurant.com?table=${tableNumber}`,
-            width: 128,
-            height: 128,
+            width: 512,
+            height: 512,
         });
     }
 
-    // Generate QR code for Table 1
-    generateQRCode(5);
-
+    // Generate QR code for Table Number
+    // generateQRCode(6);
+    
     function getTableNumberFromURL(){
         const urlParams = new URLSearchParams(window.location.search);
         const tableNumber = urlParams.get('table');  // get 'table' parameter from URL
@@ -579,9 +579,6 @@
     }
 
     const initApp = () => {
-
-        // update table number displau when the page loads
-        document.addEventListener('DOMContentLoaded', updateTableNumberDisplay);
 
         //fill productsList
         listProducts = fillProducts();
@@ -695,6 +692,7 @@
             }
         });
     }
+    
 
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
@@ -750,5 +748,6 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         initApp();
+        updateTableNumberDisplay();
     });
 
