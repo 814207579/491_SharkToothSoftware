@@ -470,6 +470,34 @@
         return cookieValue;
     }
 
+    // GENERATING QR CODES AND TABLE NUMBERS
+    function generateQRCode(tableNumber) {
+        const qrCodeDiv = document.getElementById('qrcode');
+        qrCodeDiv.innerHTML=""; // clear any existing QR code
+        new QRCode(qrCodeDiv, {
+            text: `http://127.0.0.1:8000/menuPage?table=${tableNumber}`,
+            width: 128,
+            height: 128,
+        });
+    }
+
+    // Generate QR code for Table 1
+    generateQRCode(1);
+
+    function getTableNumberFromURL(){
+        const urlParams = new URLSearchParams(window.location.search);
+        const tableNumber = urlParams.get('table');  // get 'table' parameter from URL
+        return tableNumber ? parseInt(tableNumber) : null; // return as integer or null 
+    }
+
+    function updateTableNumberDisplay(){
+        const tableNumber = getTableNumberFromURL();
+        if (tableNumber) {
+            const tableNumberDisplay = document.getElementById('table-number-display');
+            tableNumberDisplay.textContent = tableNumber;
+        }
+    }
+
     function initButtons() {
         const payNowButton = document.querySelector('.pay-now');
         const splitCardButton = document.getElementById("splitCartButton");
@@ -479,7 +507,13 @@
 
         // Pay Now Button Click Event
         payNowButton.addEventListener('click', () => {
-            sendOrderToDB(2);
+            const tableNumber = getTableNumberFromURL();
+            if (tableNumber) {
+                sendOrderToDB(tableNumber);
+            } else {
+                alert("Table number not found!");
+            }
+            // sendOrderToDB(2);
         });
 
         // Close Modal Button Click Event
@@ -545,6 +579,10 @@
     }
 
     const initApp = () => {
+
+        // update table number displau when the page loads
+        document.addEventListener('DOMContentLoaded', updateTableNumberDisplay);
+
         //fill productsList
         listProducts = fillProducts();
 
