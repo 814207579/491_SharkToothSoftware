@@ -10,6 +10,14 @@ body{
     overflow: hidden;
 }
 
+.table-number {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+
 .navbar{
     width: 100%; /* Occupy full width */
     height: 100px; /* Adjust height as needed */
