@@ -475,14 +475,14 @@
         const qrCodeDiv = document.getElementById('qrcode');
         qrCodeDiv.innerHTML=""; // clear any existing QR code
         new QRCode(qrCodeDiv, {
-            text: `http://127.0.0.1:8000/menuPage?table=${tableNumber}`,
+            text: `https://sharktoothrestaurant.com?table=${tableNumber}`,
             width: 128,
             height: 128,
         });
     }
 
     // Generate QR code for Table 1
-    generateQRCode(1);
+    generateQRCode(5);
 
     function getTableNumberFromURL(){
         const urlParams = new URLSearchParams(window.location.search);
