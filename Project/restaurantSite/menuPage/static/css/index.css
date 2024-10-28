@@ -10,6 +10,14 @@ body{
     overflow: hidden;
 }
 
+.table-number {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+
 .navbar{
     width: 100%; /* Occupy full width */
     height: 100px; /* Adjust height as needed */
@@ -354,7 +362,7 @@ svg{
     top: 100px;
     display: flex;
     flex-direction: column; /* Simplify layout with flexbox */
-    transition: left 0.3s ease;
+    transition: right 0.5s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
     z-index: 1000; /* Ensure it stays above other elements */
 }

@@ -88,12 +88,14 @@
         body.classList.toggle('showCart')
     })
     closeCart.addEventListener('click', () => {
-        body.classList.toggle('showCart')
+        body.classList.remove('showCart')
     })
     clearCart.addEventListener('click', () => {
         clearItemsInCart();
     })
 
+    //FIXME: Create an animation where the card would slide in and out the side of the window
+    //FIXME: Substitue instances of toggle('showCart') with a custom function that would slide the card in and out
 
     //init for filling listProduct objects based on database
     function fillProducts() {
@@ -468,6 +470,34 @@
         return cookieValue;
     }
 
+    // GENERATING QR CODES AND TABLE NUMBERS
+    function generateQRCode(tableNumber) {
+        const qrCodeDiv = document.getElementById('qrcode');
+        qrCodeDiv.innerHTML=""; // clear any existing QR code
+        new QRCode(qrCodeDiv, {
+            text: `https://sharktoothrestaurant.com?table=${tableNumber}`,
+            width: 512,
+            height: 512,
+        });
+    }
+
+    // Generate QR code for Table Number
+    // generateQRCode(6);
+    
+    function getTableNumberFromURL(){
+        const urlParams = new URLSearchParams(window.location.search);
+        const tableNumber = urlParams.get('table');  // get 'table' parameter from URL
+        return tableNumber ? parseInt(tableNumber) : null; // return as integer or null 
+    }
+
+    function updateTableNumberDisplay(){
+        const tableNumber = getTableNumberFromURL();
+        if (tableNumber) {
+            const tableNumberDisplay = document.getElementById('table-number-display');
+            tableNumberDisplay.textContent = tableNumber;
+        }
+    }
+
     function initButtons() {
         const payNowButton = document.querySelector('.pay-now');
         const splitCardButton = document.getElementById("splitCartButton");
@@ -477,7 +507,13 @@
 
         // Pay Now Button Click Event
         payNowButton.addEventListener('click', () => {
-            sendOrderToDB(2);
+            const tableNumber = getTableNumberFromURL();
+            if (tableNumber) {
+                sendOrderToDB(tableNumber);
+            } else {
+                alert("Table number not found!");
+            }
+            // sendOrderToDB(2);
         });
 
         // Close Modal Button Click Event
@@ -543,6 +579,7 @@
     }
 
     const initApp = () => {
+
         //fill productsList
         listProducts = fillProducts();
 
@@ -651,10 +688,11 @@
                 !$(document.getElementById("cartModal")).find("*").toArray().includes(event.target) &&
                 // These are the plus/minus since they don't want to work
                 !event.target.classList.contains("plus") && !event.target.classList.contains("minus")) {
-                    body.classList.remove('showCart');
+                    body.classList.remove('showCart')
             }
         });
     }
+    
 
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
@@ -710,5 +748,6 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         initApp();
+        updateTableNumberDisplay();
     });
 
