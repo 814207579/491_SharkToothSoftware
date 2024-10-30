@@ -1,0 +1,24 @@
+name: Upload Static Files to GCS
+
+on:
+  push:
+    branches:
+      - main  # Replace with your target branch if different
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: 'latest'
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Upload to Google Cloud Storage
+      run: |
+        gsutil -m rsync -r ./static gs://sharktoothrestaurant.com/
