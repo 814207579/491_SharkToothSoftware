@@ -19,6 +19,8 @@ jobs:
         version: 'latest'
         service_account_key: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Upload to Google Cloud Storage
-      run: |
-        gsutil -m rsync -r ./restaurantSite gs://sharktoothrestaurant.com/
+    - name: upload-folder
+      uses: google-github-actions/upload-cloud-storage@v2
+      with:
+        path: ./Project/restaurantSite
+        destination: sharktoothrestaurant.com
