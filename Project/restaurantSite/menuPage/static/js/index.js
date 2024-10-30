@@ -695,7 +695,9 @@
             if (!$(iconCart).find("*").toArray().includes(event.target) &&
                 !$(document.getElementById("cartModal")).find("*").toArray().includes(event.target) &&
                 // These are the plus/minus since they don't want to work
-                !event.target.classList.contains("plus") && !event.target.classList.contains("minus")) {
+                // Also added the trash can icon to not close the cart
+                !event.target.classList.contains("plus") && !event.target.classList.contains("minus") &&
+                !event.target.classList.contains("delete")) {
                     body.classList.remove('showCart')
             }
         });
