@@ -59,7 +59,7 @@ jobs:
         with:
           service_account: 'my-service-account@sharktoothrestaurant.iam.gserviceaccount.com'
           workload_identity_provider: 'projects/971985029201/locations/global/workloadIdentityPools/github-auth/providers/my-repo'
-          
+
       - name: 'Deploy to Cloud Run'
         uses: 'google-github-actions/deploy-cloudrun@33553064113a37d688aa6937bacbdc481580be17' # google-github-actions/deploy-cloudrun@v2
         with:
