@@ -20,8 +20,6 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: sharktoothrestaurant  # Replace with your actual GCP project ID
 
-    - name: upload-folder
-      uses: google-github-actions/upload-cloud-storage@v2
-      with:
-        path: ./Project/restaurantSite
-        destination: gs://sharktoothrestaurant.com/
+    - name: Upload to Google Cloud Storage
+      run: |
+        gsutil -m rsync -r ./restaurantSite gs://sharktoothrestaurant.com/
