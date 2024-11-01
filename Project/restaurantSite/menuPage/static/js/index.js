@@ -166,64 +166,81 @@
     }
 
     const addCartToHTML = () => {
-        listCartHTML.innerHTML = '';
+        listCartHTML.innerHTML = ''; // Clear existing cart items
         let totalQuantity = 0;
         let totalPrice = 0;
 
-        if(carts.length > 0){
+        if (carts.length > 0) {
             carts.forEach(cart => {
-                totalQuantity = totalQuantity + cart.quantity;
+                totalQuantity += cart.quantity;
                 let newCart = document.createElement('div');
                 newCart.classList.add('item');
                 newCart.dataset.id = cart.product_id;
                 let positionProduct = listProducts.findIndex(value => value.id === cart.product_id);
                 let info = listProducts[positionProduct];
-
                 let itemTotalPrice = info.price * cart.quantity;
                 totalPrice += itemTotalPrice;
-				let quantityButtonsHTML = '';
-                if (cart.quantity > 1) {
-                    quantityButtonsHTML = `
-                        <span class="minus">-</span>
-                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+
+                // 1. Create the dropdown
+                let quantityDropdown = document.createElement('select');
+                quantityDropdown.className = 'quantity-select';
+                for (let i = 1; i <= 99; i++) {
+                    let option = document.createElement('option');
+                    option.value = i;
+                    option.text = i;
+                    if (i === cart.quantity) {
+                        option.selected = true;
+                    }
+                    quantityDropdown.appendChild(option);
+                }
+
+                // 2. Add event listener immediately *before* inserting into DOM
+                quantityDropdown.addEventListener('change', function() {
+                    changeQuantity(cart.product_id, 'input', parseInt(this.value, 10));
+                });
+
+                // 3. Construct the quantity controls HTML with *only* dropdown
+                let quantityControlsHTML = '';
+                if (cart.quantity > 1) {  // If quantity > 1, show minus button
+                    quantityControlsHTML = `
+                        <span class="minus">-</span> 
+                        ${quantityDropdown.outerHTML}
                         <span class="plus">+</span>
                     `;
-                }
-				else {
-                    quantityButtonsHTML = `
+                } else { // If quantity is 1, show delete button
+                    quantityControlsHTML = `
                         <span class="delete">🗑️</span>
-                        <input type="number" class="quantity-input" min="1" value="${cart.quantity}" />
+                        ${quantityDropdown.outerHTML}
                         <span class="plus">+</span>
                     `;
                 }
 
 
-                newCart.innerHTML =
-                    `<div class="image">
+                // 4. Use the quantityControlsHTML in newCart.innerHTML
+                newCart.innerHTML = `
+                    <div class="image">
                         <img src="${info.image}" alt="Error: Image Not Found">
                     </div>
                     <div class="name">
                         ${info.name}
                     </div>
-                    
                     <div class="quantity">
-                         ${quantityButtonsHTML}
+                        ${quantityControlsHTML}
                     </div>
                     <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
                 `;
+
                 listCartHTML.appendChild(newCart);
-            })
+
+
+            });
         }
         iconCartSpan.textContent = totalQuantity;
 
 		 // validation for the manual input of items in the text box
-        document.querySelectorAll('.quantity-input').forEach(input => {
-            input.addEventListener('input', function() {
-                let value = parseInt(this.value);
-                // default to 99 if the user tries to add more
-                if (value > 99) {
-                    this.value = 99;
-                }
+        document.querySelectorAll('.quantity-select').forEach(select => {
+                select.addEventListener('change', function() {
+                   changeQuantity(select.parentElement.parentElement.dataset.id, 'input', parseInt(this.value, 10));
             });
         });
 
@@ -300,38 +317,29 @@
 
     const changeQuantity = (product_id, type, newQuantity = 1) => {
         let positionItemInCart = carts.findIndex((value) => value.product_id === product_id);
+
         if (positionItemInCart >= 0) {
+            let cartItem = carts[positionItemInCart];
+
             switch (type) {
                 case 'plus':
-                    newQuantity = carts[positionItemInCart].quantity + 1;
-                    if (newQuantity < 100) {
-                        carts[positionItemInCart].quantity = newQuantity;
-                    } else {
-                        carts[positionItemInCart].quantity = 99;
-                    }
+                    cartItem.quantity += 1; // Directly increment quantity
                     break;
-                case 'input':
-                    if (newQuantity > 0) {
-                        carts[positionItemInCart].quantity = newQuantity;
-                    }
-                    else {
-                        carts.splice(positionItemInCart, 1); // Remove item if quantity is 0
-                    }
-                    break;
-                default:
-                    let valueChange = carts[positionItemInCart].quantity - 1;
-                    if (valueChange > 0) {
-                        carts[positionItemInCart].quantity = valueChange;
-                    }
-                    else {
-                        carts.splice(positionItemInCart, 1);
-                    }
+                case 'minus':
+                     cartItem.quantity -= 1; // Directly decrement quantity
+                     break;
+                case 'input': // Handles both dropdown and input changes
+                    cartItem.quantity = newQuantity;
                     break;
             }
+
+            cartItem.quantity = Math.max(1, cartItem.quantity); // Ensure quantity is at least 1
+            cartItem.quantity = Math.min(99, cartItem.quantity); // Ensure quantity is at most 99
+
+            addCartToMemory();
+            addCartToHTML();
         }
-        addCartToMemory();
-        addCartToHTML();
-    }
+    };
 
 
     function clearItemsInCart() {
@@ -687,7 +695,9 @@
             if (!$(iconCart).find("*").toArray().includes(event.target) &&
                 !$(document.getElementById("cartModal")).find("*").toArray().includes(event.target) &&
                 // These are the plus/minus since they don't want to work
-                !event.target.classList.contains("plus") && !event.target.classList.contains("minus")) {
+                // Also added the trash can icon to not close the cart
+                !event.target.classList.contains("plus") && !event.target.classList.contains("minus") &&
+                !event.target.classList.contains("delete")) {
                     body.classList.remove('showCart')
             }
         });
