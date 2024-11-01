@@ -31,4 +31,4 @@ jobs:
 
     - name: Upload to Google Cloud Storage
       run: |
-        gsutil -m rsync -r ./Project/restaurantSite gs://sharktoothrestaurant.com/
+        gsutil -m rsync -r ./Project/restaurantSite gs://sharktoothrestaurant.com/MainSite
