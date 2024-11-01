@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: 'google-github-actions/auth@v2'
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
       with:
         service_account: 'my-service-account@sharktoothrestaurant.iam.gserviceaccount.com'
         workload_identity_provider: 'projects/971985029201/locations/global/workloadIdentityPools/github-auth/providers/my-repo'
-
-    - name: Checkout code
-      uses: actions/checkout@v3
 
     - name: Setup Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
