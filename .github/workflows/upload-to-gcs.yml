@@ -9,6 +9,10 @@ jobs:
   upload:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'        # Allow read access to the repository
+      id-token: 'write'       # Allow writing the identity token
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
