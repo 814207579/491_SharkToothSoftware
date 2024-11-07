@@ -8,6 +8,8 @@ from bson import ObjectId
 from django.http import HttpResponse
 import random
 import json
+import win32print
+import win32ui
 
 def getPerson():
     person = Person.objects.all()
@@ -65,6 +67,36 @@ def place_order(request):
                     restaurant=restaurant,
                     items=order_items
                 )
+
+            PRINTER = "POS-80C"
+            # ESC/POS commands for text formatting and cutting
+            CUT_PAPER = b'\x1D\x56\x42\x00'  # ESC/POS command to cut the paper
+            LINE_FEED = b'\n'  # Line feed to move to the next line
+
+            text = (
+                "Hello, welcome to our restaurant!\n"
+                "Thank you for visiting.\n"
+                "Here is your order:\n\n"
+                "1x Burger - $5.99\n"
+                "2x Fries - $3.00\n"
+                "1x Soda - $1.50\n\n"
+                "Total: $10.49\n"
+                "---------------------\n"
+                "Enjoy your meal!\n"
+            )
+
+            formatted_text = text.encode('utf-8') + LINE_FEED * 3  # Add some spacing before cut
+
+            hPrinter = win32print.OpenPrinter(PRINTER)
+            try:
+                hJob = win32print.StartDocPrinter(hPrinter, 1, ("Test print", None, "RAW"))
+                win32print.StartPagePrinter(hPrinter)
+                win32print.WritePrinter(hPrinter, formatted_text)  # Print the formatted text
+                win32print.WritePrinter(hPrinter, CUT_PAPER)
+                win32print.EndPagePrinter(hPrinter)
+                win32print.EndDocPrinter(hPrinter)
+            finally:
+                win32print.ClosePrinter(hPrinter)
 
             return JsonResponse({'message': 'Order placed successfully!', 'order_id': str(order._id)}, status=201)
 
