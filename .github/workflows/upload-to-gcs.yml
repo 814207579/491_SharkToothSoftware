@@ -1,0 +1,34 @@
+name: Upload Static Files to GCS
+
+on:
+  push:
+    branches:
+      - main  # Replace with your target branch if different
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'        # Allow read access to the repository
+      id-token: 'write'       # Allow writing the identity token
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        service_account: 'my-service-account@sharktoothrestaurant.iam.gserviceaccount.com'
+        workload_identity_provider: 'projects/971985029201/locations/global/workloadIdentityPools/github-auth/providers/my-repo'
+
+    - name: Setup Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: 'latest'
+        project_id: sharktoothrestaurant  # Replace with your actual GCP project ID
+
+    - name: Upload to Google Cloud Storage
+      run: |
+        gsutil -m rsync -r ./Project/restaurantSite gs://sharktoothrestaurant.com/MainSite

@@ -10,6 +10,14 @@ body{
     overflow: hidden;
 }
 
+.table-number {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+
 .navbar{
     width: 100%; /* Occupy full width */
     height: 100px; /* Adjust height as needed */
@@ -528,40 +536,28 @@ body.showCart .container{
     margin: auto;
 }
 
-/* To style the input field in shopping cart*/
-.listCart .quantity input[type="number"] {
-    width: 50px; /* Adjust width as needed */
+/* To style the select dropdown in shopping cart*/
+.listCart .quantity select {
+    width: 55px; /* Adjust width as needed */
     font-size: 16px;
     text-align: center;
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 5px;
     background-color: #f9f9f9;
-    /* margin: 10px 10px 10px; */
-    margin: 0 8px;
+    margin: 0 8px; /* Consistent margin with other elements */
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3 ease;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none; /* Remove default dropdown arrow in WebKit browsers */
+    -moz-appearance: none; /* Remove default dropdown arrow in Firefox */
+    appearance: none; /* Remove default dropdown arrow in other browsers */
 }
 
-.listCart .quantity input[type="number"]:focus {
+.listCart .quantity select:focus {
     border-color: gold;
     outline: none;
 }
 
-/* Remove arrows from number input in all browsers */
-.listCart .quantity input[type="number"] {
-    -moz-appearance: textfield; /* Firefox */
-    -webkit-appearance: none; /* Chrome, Safari, Edge */
-    appearance: textfield; /* Standard syntax */
-    margin: 0; /* Removes default margin */
-}
-
-/* Removes spinners for input[type="number"] in Chrome, Safari, Edge, and Opera */
-.listCart .quantity input[type="number"]::-webkit-outer-spin-button,
-.listCart .quantity input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 
 .listCart .totalPrice {
     margin-left: 10px; /* Add space between the quantity and the price */
