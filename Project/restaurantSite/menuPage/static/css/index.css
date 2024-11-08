@@ -19,12 +19,14 @@ body{
 
 .navbar {
     display: flex;
+    position: fixed;
     align-items: center;
     justify-content: space-around;
     width: 100%;
     background-color: #333;
     padding: 0;
     height: 80px;
+    z-index: 999;
 }
 
 .navbar ul {
@@ -70,11 +72,11 @@ body{
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 3px;
+    height: 4px;
     background-color: gold;
     width: 0; /* Initially 0 width */
     transition: left 0.3s ease, width 0.3s ease;
-} 
+}
 
 h1{
     text-align: center;
