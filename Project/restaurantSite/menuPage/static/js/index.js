@@ -186,11 +186,11 @@
                 quantityDropdown.className = 'quantity-select';
                 for (let i = 1; i <= 99; i++) {
                     let option = document.createElement('option');
+                    if (i === cart.quantity) {
+                        option.setAttribute('selected', '');
+                    }
                     option.value = i;
                     option.text = i;
-                    if (i === cart.quantity) {
-                        option.selected = true;
-                    }
                     quantityDropdown.appendChild(option);
                 }
 
