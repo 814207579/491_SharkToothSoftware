@@ -1,0 +1,29 @@
+name: 'Deploy to Cloud Run from Source'
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: 'sharktooth-434603' # TODO: update to your Google Cloud project ID
+  REGION: 'us-west2' # TODO: update to your region
+  SERVICE: 'sharktooth' # TODO: update to your service name
+
+jobs:
+  deploy:
+    runs-on: 'ubuntu-latest'
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/971985029201/locations/global/workloadIdentityPools/github-auth/providers/my-repo'
+          service_account: 'my-service-account@sharktoothrestaurant.iam.gserviceaccount.com'
+
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-appengine@v2'
