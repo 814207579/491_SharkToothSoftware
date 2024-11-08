@@ -27,3 +27,5 @@ jobs:
 
       - id: 'deploy'
         uses: 'google-github-actions/deploy-appengine@v2'
+        with:
+          deliverables: "./.github/workflows/app.yaml"
