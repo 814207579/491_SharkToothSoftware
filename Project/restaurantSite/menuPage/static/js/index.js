@@ -215,7 +215,6 @@
                     `;
                 }
 
-
                 // 4. Use the quantityControlsHTML in newCart.innerHTML
                 newCart.innerHTML = `
                     <div class="image">
@@ -231,11 +230,16 @@
                 `;
 
                 listCartHTML.appendChild(newCart);
-
-
             });
         }
         iconCartSpan.textContent = totalQuantity;
+
+        // validation for the manual input of items in the text box
+        document.querySelectorAll('.quantity-select').forEach(select => {
+                select.addEventListener('change', function() {
+                   changeQuantity(select.parentElement.parentElement.dataset.id, 'input', parseInt(this.value, 10));
+            });
+        });
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
