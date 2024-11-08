@@ -1,6 +1,6 @@
 body{
     background: linear-gradient(to top right, whitesmoke, gray);
-    padding-top: 40px;
+    /* padding-top: 40px; */
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
@@ -13,48 +13,47 @@ body{
 .table-number {
     flex-grow: 1;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #fff;
 }
 
-
-.navbar{
-    width: 100%; /* Occupy full width */
-    height: 100px; /* Adjust height as needed */
-    background-color: #333333;
-    position: fixed;
-    top: 0;
-    left: 0;
+.navbar {
     display: flex;
-    border-bottom: 2px solid #000000;
-    /*padding-top: 20px;*/
-    z-index: 999;
-}
-
-.navbar ul{
-    list-style-type: none;
-    justify-content: space-evenly;
-    color: #000000;
-    font-weight: bold;
-    margin: 0;
-    padding-right: 200px;
-    overflow: hidden;
     align-items: center;
-    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background-color: #333;
+    padding: 0;
+    height: 80px;
 }
 
-.navbar a{
+.navbar ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.navbar a {
     color: white;
     text-decoration: none;
-    padding-top: 2px;
-    display: block;
-    text-align: center;
-    font-size: 20px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: background-color 0.3s;
 }
 
-.navbar li{
-    margin-right: 30px;
+
+.navbar a:hover, .navbar a.active {
+    background-color: goldenrod;
 }
+
+.navbar li {
+    margin: 0;
+}
+
 .logo-title-container {
     display: flex; /* Use flexbox for alignment */
     align-items: center; /* Vertically align items in the center */
@@ -67,7 +66,7 @@ body{
     color: white;
 }
 
-.underline {
+ .underline {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -75,7 +74,7 @@ body{
     background-color: gold;
     width: 0; /* Initially 0 width */
     transition: left 0.3s ease, width 0.3s ease;
-}
+} 
 
 h1{
     text-align: center;
@@ -291,6 +290,7 @@ header .icon-cart span{
     justify-content: space-between;
     transition: box-shadow 0.3s ease;
     text-align: center;
+    
 }
 
 .listProduct .item:hover {
@@ -341,6 +341,7 @@ header .icon-cart span{
     border: none;
     cursor: pointer;
     align-self: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .listProduct .item button:hover{
@@ -354,12 +355,12 @@ svg{
 
 .cartTab{
     width: 400px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
     background: linear-gradient(to top right, whitesmoke, gray);
     color: #333; /* Darker text for readability */
     position: fixed;
     right: -400px;
-    top: 100px;
+    top: 80px;
     display: flex;
     flex-direction: column; /* Simplify layout with flexbox */
     transition: right 0.5s ease;
