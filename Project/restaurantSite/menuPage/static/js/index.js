@@ -239,7 +239,8 @@
                 select.addEventListener('change', function() {
                    changeQuantity(select.parentElement.parentElement.dataset.id, 'input', parseInt(this.value, 10));
             });
-        });
+        })
+
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
