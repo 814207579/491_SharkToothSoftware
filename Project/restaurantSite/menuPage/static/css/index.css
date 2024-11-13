@@ -11,10 +11,14 @@ body{
 }
 
 .table-number {
-    flex-grow: 1;
+    position: sticky;
+    top: 80px;
+    background-color: transparent;
     text-align: center;
     font-size: 2rem;
     color: #fff;
+    padding:10px 0;
+    z-index: 1000;
 }
 
 .navbar {
@@ -47,6 +51,10 @@ body{
     transition: background-color 0.3s;
 }
 
+.navbar li a[href*="#"]
+{
+    font-size: 1.2rem;
+}
 
 .navbar a:hover, .navbar a.active {
     background-color: goldenrod;
