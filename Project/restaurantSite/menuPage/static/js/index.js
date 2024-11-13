@@ -701,6 +701,34 @@
                     body.classList.remove('showCart')
             }
         });
+
+        // Settings Button Functionality
+        const settingsButton = document.getElementById('settingsButton');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettings = document.querySelector('.close-settings');
+        const colorChangeInput = document.getElementById('colorChange');
+    
+        // Open settings modal on button click
+        settingsButton.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+    
+        // Close settings modal on 'x' click
+        closeSettings.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+        });
+    
+        // Close modal when clicking outside of content
+        window.addEventListener('click', (event) => {
+            if (event.target === settingsModal) {
+                settingsModal.style.display = 'none';
+            }
+        });
+    
+        // Change website color
+        colorChangeInput.addEventListener('input', (event) => {
+            document.documentElement.style.setProperty('--main-color', event.target.value);
+        });       
     }
     
 
