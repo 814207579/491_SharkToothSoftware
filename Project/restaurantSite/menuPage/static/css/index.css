@@ -10,12 +10,25 @@ body{
 }
 
 /* enable/disable body scroll when modal is open */
-.no-scroll{
+.no-scroll
+{
     overflow: hidden;
 }
 
+.table-number-container {
+    display: flex;
+    justify-content: center; /* Center the table number */
+    align-items: center;
+    width: 100%;
+    background-color: transparent;
+    padding: 10px 0;
+    margin-bottom: 1px; /* Add margin below container */
+    position: relative;
+    top: 90px;
+
+}
+
 .table-number {
-    flex-grow: 1;
     text-align: center;
     font-size: 2rem;
     color: #fff;
@@ -23,12 +36,14 @@ body{
 
 .navbar {
     display: flex;
+    position: fixed;
     align-items: center;
     justify-content: space-around;
     width: 100%;
     background-color: #333;
     padding: 0;
     height: 80px;
+    z-index: 999;
 }
 
 .navbar ul {
@@ -49,10 +64,10 @@ body{
     transition: background-color 0.3s;
 }
 
-.navbar li a[href*="#"]{
+.navbar li a[href*="#"]
+{
     font-size: 1.2rem;
 }
-
 
 .navbar a:hover, .navbar a.active {
     background-color: goldenrod;
@@ -78,11 +93,16 @@ body{
     position: absolute;
     bottom: 0;
     left: 0;
+<<<<<<< HEAD
+    height: 4px;
+    background-color: gold;
+=======
     height: 3px;
     background-color: brown;
+>>>>>>> bc98cae9f95128bf9491efe98fe05738dca8e8b1
     width: 0; /* Initially 0 width */
     transition: left 0.3s ease, width 0.3s ease;
-} 
+}
 
 h1{
     text-align: center;
