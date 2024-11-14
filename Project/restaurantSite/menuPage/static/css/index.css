@@ -10,8 +10,21 @@ body{
 }
 
 /* enable/disable body scroll when modal is open */
-.no-scroll{
+.no-scroll
+{
     overflow: hidden;
+}
+
+.table-number-container {
+    display: flex;
+    justify-content: center; /* Center the table number */
+    align-items: center;  /* Vertically center the content */
+    width: 100%;         /* Full width */
+    background-color: #333; /* Match navbar background */
+    padding: 10px 0;      /* Add some padding top/bottom */
+    margin-bottom: 20px; /* Add margin below container */
+    margin-top: -10px;
+
 }
 
 .table-number {
