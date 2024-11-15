@@ -1,0 +1,764 @@
+body{
+    background: linear-gradient(to top right, whitesmoke, gray);
+    /* padding-top: 40px; */
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+/* enable/disable body scroll when modal is open */
+.no-scroll{
+    overflow: hidden;
+}
+
+.table-number {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 2rem;
+    color: #fff;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    background-color: #333;
+    padding: 0;
+    height: 80px;
+}
+
+.navbar ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: background-color 0.3s;
+}
+
+
+.navbar a:hover, .navbar a.active {
+    background-color: goldenrod;
+}
+
+.navbar li {
+    margin: 0;
+}
+
+.logo-title-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align items in the center */
+    margin-left: 20px; /* Add some space to the left */
+}
+
+.title {
+    margin-left: 10px; /* Add space between logo and title */
+    font-size: 34px; /* Adjust font size if needed */
+    color: white;
+}
+
+ .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: gold;
+    width: 0; /* Initially 0 width */
+    transition: left 0.3s ease, width 0.3s ease;
+} 
+
+h1{
+    text-align: center;
+    color: black;
+}
+
+/*This is where the title should be*/
+header{
+    justify-content: space-between;
+    padding-top: 80px;
+    padding-bottom: 20px;
+    height: 180px;
+    text-align: center;
+}
+
+header .title{
+    font-size: 48px; /* Adjust the font size as needed */
+    font-weight: bold;
+}
+
+header .icon-cart{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    top: -15px;
+    margin-left: 75%;
+    z-index: 1005;
+    color: white;
+}
+
+header .icon-cart:hover{
+    cursor: pointer;
+}
+
+header .icon-cart span{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    /* background-color: red; */
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    z-index: 1005;
+}
+
+/*.container{*/
+/*    width: 900px;*/
+/*    max-width: 90vw;*/
+/*    height: 550px;*/
+/*    background-position: center;*/
+/*    !*border: 5px solid black;*!*/
+/*    !*!*border-radius: 10px;*!*/
+/*    !*overflow: hidden;*!*/
+/*    margin: 0 0;*/
+/*    padding-top: 20px;*/
+
+/*    position: relative;*/
+/*    align-items: stretch;*/
+/*}*/
+
+/*.container img {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover;*/
+
+/*    transition: opacity 0.3s ease;*/
+/*    display: block;*/
+/*}*/
+
+/*.container img:hover {*/
+/*    box-shadow: 0 0 20px rgba(0,0,0,0.5);*/
+/*    opacity: 0.7;*/
+/*}*/
+
+/* CHECKOUT MODAL (pop-up window) */
+.checkout-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-checkout-content {
+    background: linear-gradient(to top right, whitesmoke, gray);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px; /* Max width for larger screens */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal-popup {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-modal:hover,
+.close-modal:focus,
+.close-modal-popup:hover,
+.close-modal-popup:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.zebra-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.zebra-list div:nth-child(even) {
+    background-color: lightgray; /* Zebra striping */
+}
+
+.zebra-list div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 0.5px solid rgba(122, 122, 122, 0.185);
+}
+
+.total-footer {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.total-footer p{
+    margin: 0;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    background-color: gold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-footer button:hover {
+    background-color: brown;
+    color: white
+}
+/* END CHECKOUT MODAL */
+
+.container{
+    width: 900px;
+    max-width: 90vw;
+    margin: auto;
+    text-align: center;
+    padding-top: 120px;
+}
+
+.listProduct .item img{
+    margin: auto;
+    border-radius: 10%;
+    width: 170px;
+    height: 170px; 
+    object-fit: cover;
+    background-color: #9b9999cc;
+}
+
+.listProduct{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.listProduct .item{
+    background-color: #d6d6d6ab;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+    text-align: center;
+    
+}
+
+.listProduct .item:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.listProduct .item .foodName{
+    font-weight: bold;
+    font-size: large;
+    margin: auto;
+    padding: 5px 0; /* Add padding for spacing */
+    line-height: 1.2; /*Adjust line-height for vertical centering */
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+/* foodPrice */
+.listProduct .item .foodPrice {
+    margin-bottom: 10px;
+    font-size: larger;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.listProduct .item .foodDescription{
+    margin-bottom: 10px;
+    text-align: center;
+    display: none;
+}
+
+.listProduct .item .price{
+    letter-spacing: 3px;
+    font-size: small;
+    margin-top: auto;
+}
+
+.listProduct .item button{
+    background-color: gold;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 20px;
+    /*margin-top: 10px;*/
+    border: none;
+    cursor: pointer;
+    align-self: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.listProduct .item button:hover{
+    background-color: brown;
+    color: white;
+}
+
+svg{
+    width: 30px;
+}
+
+.cartTab{
+    width: 400px;
+    height: calc(100vh - 80px);
+    background: linear-gradient(to top right, whitesmoke, gray);
+    color: #333; /* Darker text for readability */
+    position: fixed;
+    right: -400px;
+    top: 80px;
+    display: flex;
+    flex-direction: column; /* Simplify layout with flexbox */
+    transition: right 0.5s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+
+body.showCart .cartTab{
+    right: 0;
+}
+
+body.showCart .container{
+    transform: translate(0px);
+}
+
+.cartTab h1{
+    padding: 20px;
+    margin: 0;
+    font-weight: bold;
+    background: linear-gradient(to top right, whitesmoke, gray);
+    border-bottom: 5px solid black;
+}
+
+.cartTab .cartButtons{
+    display: flex;
+    justify-content: space-around; /* Better alignment */
+    padding: 15px 20px;
+    border: 1px solid slategray; /* Add top border for separation */
+}
+
+.cartTab .cartButtons button{
+    background-color: gold; /* Distinct color for buttons */
+    color: black;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 0 1px;
+    transition: background-color 0.2s ease;
+}
+
+.cartTab .cartButtons button:hover{
+    background-color: brown; /* Distinct color for buttons */
+    color: white;
+}
+
+.cartTab .cartButtons .checkOut {
+    background-color: gold;
+}
+
+.cartTab .cartButtons .checkOut:hover{
+    background-color: brown; /* Distinct color for buttons */
+}
+
+.cartTab .cartButtons .close{
+    background-color: gold;
+      /* Light background for contrast */
+    color: black; /* Darker text for readability */
+}
+
+.cartTab .cartButtons .close:hover{
+    background-color: brown ; /* Distinct color for buttons */
+    color: white;
+}
+
+.cartTab .listCart {
+    overflow-y: auto; /* Allow scrolling for long lists */
+    padding: 5px;
+    flex-grow: 1; /* Take up remaining space */
+}
+
+.cartTab .listCart .item img{
+    grid-area: image;
+    width: 90px;
+    height: 90px;
+    border-radius: 5px; /* Rounded corners for images */
+    object-fit: cover; /* Maintain aspect ratio */
+    margin: 10px 10px;
+}
+
+/* Total Price and Items in Cart */
+.cartSummary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: #030c1f;
+    border-top: 1px solid slategray;
+    margin-top: 10px; 
+    max-width: 100%;
+    font-weight: bold;
+}
+
+.totalPriceAllItems {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.totalQuantityAllItems {
+    text-align: left;
+    flex-shrink: 0;
+}
+
+.cartTab .listCart .item{
+    display: grid;
+    grid-template-areas:
+        "title image"
+        "buttons price";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid slategray; /* Add bottom border for separation */
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.listCart .item .quantity {
+    grid-area: buttons;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 0 4px 25px;
+}
+
+.listCart .quantity .delete { /* Style for the trash can icon */
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.listCart .item .name {
+    grid-area: title;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: left;
+    margin-left: 15px;
+}
+
+.listCart .quantity span{
+    width: 30px;
+    height: auto;
+    color: black;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gold;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0 8px;
+}
+
+.listCart .quantity span:hover  {
+    background-color: brown;
+    transform: scale(1.1);
+    color: white;
+}
+
+.listCart .quantity span:active {
+    transform: scale(0.95);
+}
+
+.listCart .item .totalPrice {
+    grid-area: price;
+    text-align: right;
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+    margin: auto;
+}
+
+/* To style the select dropdown in shopping cart*/
+.listCart .quantity select {
+    width: 55px; /* Adjust width as needed */
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    margin: 0 8px; /* Consistent margin with other elements */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none; /* Remove default dropdown arrow in WebKit browsers */
+    -moz-appearance: none; /* Remove default dropdown arrow in Firefox */
+    appearance: none; /* Remove default dropdown arrow in other browsers */
+}
+
+.listCart .quantity select:focus {
+    border-color: gold;
+    outline: none;
+}
+
+
+.listCart .totalPrice {
+    margin-left: 10px; /* Add space between the quantity and the price */
+}
+
+.listCart .item:nth-child(even){
+    background-color: lightgray;
+}
+
+.listCart{
+    overflow: auto;
+}
+
+.listCart::-webkit-scrollbar{
+    width: 0;
+}
+
+.menu-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    z-index: 1;
+}
+
+.content:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.accordion-button:hover{
+    background-color: green;
+}
+
+.image-wrapper {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+overflow: hidden;
+}
+
+.logo{
+    position: fixed;
+    top: 1%;
+    left: 1%;
+    z-index: 1001; /* Ensure the logo is above other elements*/
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.modal-content {
+    background: linear-gradient(to top right, whitesmoke, gray);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.item-modal-title{
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+.item-modal-description{
+    font-size: 18px;
+    color: #3d3d3d;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.close {
+    color: #aaa;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Desktop website responsive stuff  */
+@media screen and (min-width: 1000px){
+    .listProduct{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* This section is use for the mobile responsive view  */
+@media screen and (min-width: 480px) and (max-width: 1000px){
+    .listProduct{
+        grid-template-columns: repeat(2, 1fr);
+        font-size: 50px;
+    }
+    .addCart {
+        font-size: 30px;
+    }
+    .listProduct .item .foodPrice {
+        font-size: 40px;
+    }
+    .listProduct .item .foodName {
+        font-size: 35px;
+    }
+    .listProduct .item img {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 767px){
+    .cartTab {
+        width: 100%;
+        height: 100%;
+        right: -100%; /* Initially hide the cartTab off-screen */
+        top: 0; /* Adjust top to cover the full screen */
+    }
+
+    .navbar {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .navbar ul {
+        flex-direction: row;
+        width: 100%;
+        padding: 0;
+    }
+
+    .icon-cart {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+
+    body.showCart .cartTab {
+        right: 0; /* Slide in the cartTab when open */
+    }
+
+    .quantity {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .totalPrice {
+        font-size: 1.2em;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+}
