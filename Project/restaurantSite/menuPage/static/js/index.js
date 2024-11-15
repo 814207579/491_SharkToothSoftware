@@ -702,7 +702,6 @@
         const settingsButton = document.getElementById('settingsButton');
         const settingsModal = document.getElementById('settingsModal');
         const closeSettings = document.querySelector('.close-settings');
-        const colorChangeInput = document.getElementById('colorChange');
     
         // Open settings modal on button click
         settingsButton.addEventListener('click', () => {
@@ -721,13 +720,53 @@
             }
         });
     
-        // Change website color
-        colorChangeInput.addEventListener('input', (event) => {
-            document.documentElement.style.setProperty('--main-color', event.target.value);
-        });       
+        const themes = [
+            {
+                name: "Default",
+                backgroundColor: "#f0f0f0",
+                textColor: "#333",
+                buttonColor: "goldenrod",
+                buttonHoverColor: "brown",
+                hoverTextColor: "white",
+                zebraColor: "#e0e0e0"
+            },
+            {
+                name: "Dark Mode",
+                backgroundColor: "#333",
+                textColor: "#f0f0f0",
+                buttonColor: "#555",
+                buttonHoverColor: "#777",
+                hoverTextColor: "#fff",
+                zebraColor: "#2b2b2b"
+            },
+            {
+                name: "Light Blue",
+                backgroundColor: "#e0f7fa",
+                textColor: "#292C2C",
+                buttonColor: "#00838f",
+                buttonHoverColor: "#004d40",
+                hoverTextColor: "#FFFFFF",
+                zebraColor: "#b2ebf2"
+            }
+        ]
+
+        document.getElementById('applyTheme').addEventListener('click', () => {
+            const selectedThemeIndex = document.getElementById('themeSelect').value;
+            applyTheme(themes[selectedThemeIndex]);
+            settingsModal.style.display = 'none'; // Close modal after applying theme
+        });
+        
+        function applyTheme(theme) {
+            document.documentElement.style.setProperty('--main-background-color', theme.backgroundColor);
+            document.documentElement.style.setProperty('--main-text-color', theme.textColor);
+            document.documentElement.style.setProperty('--button-color', theme.buttonColor);
+            document.documentElement.style.setProperty('--button-hover-color', theme.buttonHoverColor);
+            document.documentElement.style.setProperty('--hover-text-color', theme.hoverTextColor);
+            document.documentElement.style.setProperty('--zebra-color', theme.zebraColor || 'lightgray'); // Optional fallback
+            document.documentElement.style.setProperty('--border-color', theme.borderColor || 'rgba(122, 122, 122, 0.5)'); // Optional fallback
+        }        
     }
     
-
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
         let selectionBoxElement = document.getElementById("splitCartSelect");
