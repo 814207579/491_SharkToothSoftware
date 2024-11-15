@@ -27,8 +27,8 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
-          service_account: 'my-service-account@sharktoothrestaurant.iam.gserviceaccount.com'
           workload_identity_provider: 'projects/971985029201/locations/global/workloadIdentityPools/github-auth/providers/my-repo'
+          service_account: 'my-service-account@sharktoothrestaurant.iam.gserviceaccount.com'
 
       # Step 3: Setup Google Cloud SDK
       - name: Setup Google Cloud SDK
@@ -42,4 +42,6 @@ jobs:
         uses: 'google-github-actions/deploy-appengine@v2'
         with:
           project_id: "sharktoothrestaurant"
+          region:  "us-central"
+          service: "default"
           working_directory: "./Project/restaurantSite/"
