@@ -1,3 +1,4 @@
+    
     let iconCart = document.querySelector('.icon-cart');
     let closeCart = document.querySelector('.close');
     let body = document.querySelector('body');
@@ -706,11 +707,15 @@
         // Open settings modal on button click
         settingsButton.addEventListener('click', () => {
             settingsModal.style.display = 'flex';
+            settingsModal.setAttribute('aria-expanded', 'true');
+            settingsModal.querySelector('button').focus() // Focus on the first button inside the modal
         });
     
         // Close settings modal on 'x' click
         closeSettings.addEventListener('click', () => {
             settingsModal.style.display = 'none';
+            settingsModal.setAttribute('aria-expanded', 'false');
+            settingsButton.focus(); // Return focus to the settings button
         });
     
         // Close modal when clicking outside of content
@@ -719,36 +724,6 @@
                 settingsModal.style.display = 'none';
             }
         });
-    
-        const themes = [
-            {
-                name: "Default",
-                backgroundColor: "#f0f0f0",
-                textColor: "#333",
-                buttonColor: "goldenrod",
-                buttonHoverColor: "brown",
-                hoverTextColor: "white",
-                zebraColor: "#e0e0e0"
-            },
-            {
-                name: "Dark Mode",
-                backgroundColor: "#333",
-                textColor: "#f0f0f0",
-                buttonColor: "#555",
-                buttonHoverColor: "#777",
-                hoverTextColor: "#fff",
-                zebraColor: "#2b2b2b"
-            },
-            {
-                name: "Light Blue",
-                backgroundColor: "#e0f7fa",
-                textColor: "#292C2C",
-                buttonColor: "#00838f",
-                buttonHoverColor: "#004d40",
-                hoverTextColor: "#FFFFFF",
-                zebraColor: "#b2ebf2"
-            }
-        ]
 
         document.getElementById('applyTheme').addEventListener('click', () => {
             const selectedThemeIndex = document.getElementById('themeSelect').value;
@@ -762,6 +737,8 @@
             document.documentElement.style.setProperty('--button-color', theme.buttonColor);
             document.documentElement.style.setProperty('--button-hover-color', theme.buttonHoverColor);
             document.documentElement.style.setProperty('--hover-text-color', theme.hoverTextColor);
+            document.documentElement.style.setProperty('--navbar-bg-color', theme.navbarBgColor || '#333'); // Default fallback
+            document.documentElement.style.setProperty('--navbar-hover-bg-color', theme.navbarHoverBgColor || theme.buttonColor);
             document.documentElement.style.setProperty('--zebra-color', theme.zebraColor || 'lightgray'); // Optional fallback
             document.documentElement.style.setProperty('--border-color', theme.borderColor || 'rgba(122, 122, 122, 0.5)'); // Optional fallback
         }        
