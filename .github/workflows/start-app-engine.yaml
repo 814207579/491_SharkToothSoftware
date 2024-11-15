@@ -6,13 +6,13 @@ on:
       - main
 
 env:
-  PROJECT_ID: 'sharktooth-434603'
-  REGION: 'us-west2'
-  SERVICE: 'sharktooth'
+  PROJECT_ID: 'sharktoothrestaurant'
+  REGION: 'us-central'
+  SERVICE: 'default'
 
 jobs:
   deploy:
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu22'
 
     permissions:
       contents: 'read'
@@ -35,7 +35,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           version: 'latest'
-          project_id: ${{ env.PROJECT_ID }}
+          project_id: "sharktoothrestaurant"
 
       # Step 4: Deploy to App Engine
       - id: 'deploy'
