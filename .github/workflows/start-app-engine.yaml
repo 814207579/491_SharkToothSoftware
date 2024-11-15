@@ -1,4 +1,4 @@
-name: 'Start App engine'
+name: 'Start App Engine'
 
 on:
   push:
@@ -6,24 +6,41 @@ on:
       - main
 
 env:
-  PROJECT_ID: 'sharktooth-434603'
-  REGION: 'us-west2'
-  SERVICE: 'sharktooth'
+  PROJECT_ID: 'sharktoothrestaurant'
+  REGION: 'us-central'
+  SERVICE: 'default'
 
 jobs:
   deploy:
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu22'
 
     permissions:
       contents: 'read'
       id-token: 'write'
 
     steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Authenticate to Google Cloud
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: 'projects/971985029201/locations/global/workloadIdentityPools/github-auth/providers/my-repo'
           service_account: 'my-service-account@sharktoothrestaurant.iam.gserviceaccount.com'
 
+      # Step 3: Setup Google Cloud SDK
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: 'latest'
+          project_id: "sharktoothrestaurant"
+
+      # Step 4: Deploy to App Engine
       - id: 'deploy'
         uses: 'google-github-actions/deploy-appengine@v2'
+        with:
+          project_id: "sharktoothrestaurant"
+          region:  "us-central"
+          service: "default"
