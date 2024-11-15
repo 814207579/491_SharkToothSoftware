@@ -44,4 +44,4 @@ jobs:
           project_id: "sharktoothrestaurant"
           region:  "us-central"
           service: "default"
-          working_directory: "./Project/restaurantSite/"
+          app_yaml_path: ./Project/restaurantSite/app.yaml
