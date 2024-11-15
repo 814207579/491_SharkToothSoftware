@@ -12,7 +12,7 @@ env:
 
 jobs:
   deploy:
-    runs-on: 'ubuntu22'
+    runs-on: 'ubuntu-latest'
 
     permissions:
       contents: 'read'
@@ -44,3 +44,4 @@ jobs:
           project_id: "sharktoothrestaurant"
           region:  "us-central"
           service: "default"
+          app_yaml_path: ./Project/restaurantSite/app.yaml
