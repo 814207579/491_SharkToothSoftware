@@ -6,6 +6,7 @@ from .models import Order, Table, Restaurant, Person, FoodItem
 from .forms import RestaurantForm, FoodItemForm
 from bson import ObjectId
 from django.http import HttpResponse
+from django.conf import settings
 import random
 import json
 
@@ -17,6 +18,11 @@ def getFoodItems():
     foodItems = FoodItem.objects.all()
     return foodItems
 
+def getImageSource():
+    imageStoreagePath = settings.IMAGE_STORAGE
+    print("Test", imageStoreagePath)
+    return imageStoreagePath
+
 # Create your views here.
 def index(request):
     print(request.path)
@@ -25,7 +31,8 @@ def index(request):
     myArr = ["One", "Two", "Three"]
     foodArr = getFoodItems()
     imageResolution = [random.random()*800, random.random()*800]
-    return render(request, "index.html", {"array": myArr, "imageSizes": imageResolution, "foodItems": foodArr})
+    imagesVar = getImageSource()
+    return render(request, "index.html", {"array": myArr, "imageSizes": imageResolution, "foodItems": foodArr, "images": imagesVar})
 
 @csrf_exempt
 def place_order(request):
