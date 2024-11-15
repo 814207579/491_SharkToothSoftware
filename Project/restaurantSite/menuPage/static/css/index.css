@@ -1,12 +1,35 @@
 :root{
-    --main-color: linear-gradient(to top right, whitesmoke, gray); 
+    --main-color: linear-gradient(to top right, whitesmoke, gray); /* Legacy fallback */
+    --main-background-color: whitesmoke;
+    --main-text-color: #333;
+    --button-color: goldenrod;
+    --button-hover-color: brown;
+    --hover-text-color: white;
+    --navbar-bg-color: #333;
+    --navbar-hover-bg-color: var(--button-color);
+    --zebra-color: #e0e0e0;
+    --border-color: rgba(122, 122, 122, 0.5);
+    --cart-bg-color: var(--main-background-color);
+    --cart-text-color: var(--main-text-color); 
+    --modal-bg-color: var(--main-background-color); 
+    --modal-text-color: var(--main-text-color); 
 }
 
 body{
-    background: var(--main-color);
+    background: var(--main-background-color);
+    color: var(--main-text-color);
     /* padding-top: 40px; */
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+}
+
+button {
+    background-color: var(--button-color);
+    color: var(--hover-text-color);
+}
+
+button:hover{
+    background-color: var(--button-hover-color);
 }
 
 /* enable/disable body scroll when modal is open */
@@ -31,7 +54,7 @@ body{
 .table-number {
     text-align: center;
     font-size: 2rem;
-    color: #fff;
+    /* color: var(--hover-text-color); */
 }
 
 .navbar {
@@ -40,7 +63,7 @@ body{
     align-items: center;
     justify-content: space-around;
     width: 100%;
-    background-color: #333;
+    background-color: var(--navbar-bg-color);
     padding: 0;
     height: 80px;
     z-index: 999;
@@ -55,7 +78,7 @@ body{
 
 
 .navbar a {
-    color: white;
+    color: var(--hover-text-color);
     text-decoration: none;
     padding: 0 20px;
     display: flex;
@@ -70,7 +93,7 @@ body{
 }
 
 .navbar a:hover, .navbar a.active {
-    background-color: goldenrod;
+    background-color: var(--navbar-hover-bg-color);
 }
 
 .navbar li {
@@ -93,20 +116,15 @@ body{
     position: absolute;
     bottom: 0;
     left: 0;
-<<<<<<< HEAD
-    height: 4px;
-    background-color: gold;
-=======
     height: 3px;
-    background-color: brown;
->>>>>>> bc98cae9f95128bf9491efe98fe05738dca8e8b1
+    background-color: var(--button-hover-color);
     width: 0; /* Initially 0 width */
     transition: left 0.3s ease, width 0.3s ease;
 }
 
 h1{
     text-align: center;
-    color: black;
+    color: var(--main-text-color);
 }
 
 /*This is where the title should be*/
@@ -121,6 +139,8 @@ header{
 header .title{
     font-size: 48px; /* Adjust the font size as needed */
     font-weight: bold;
+    color: var(--hover-text-color);
+
 }
 
 header .icon-cart{
@@ -130,7 +150,7 @@ header .icon-cart{
     top: -15px;
     margin-left: 75%;
     z-index: 1005;
-    color: white;
+    color: var(--hover-text-color);
 }
 
 header .icon-cart:hover{
@@ -144,7 +164,7 @@ header .icon-cart span{
     /* background-color: red; */
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--hover-text-color);
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -195,7 +215,8 @@ header .icon-cart span{
 }
 
 .modal-checkout-content {
-    background: linear-gradient(to top right, whitesmoke, gray);
+    background: var(--modal-bg-color);
+    color: var(--modal-text-color);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -209,7 +230,7 @@ header .icon-cart span{
 }
 
 .close-modal {
-    color: #aaa;
+    color: var(--main-text-color);
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -217,7 +238,7 @@ header .icon-cart span{
 }
 
 .close-modal-popup {
-    color: #aaa;
+    color: var(--main-text-color);
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -231,7 +252,7 @@ header .icon-cart span{
 .close-modal:focus,
 .close-modal-popup:hover,
 .close-modal-popup:focus {
-    color: black;
+    color: var(--button-hover-color);
     text-decoration: none;
     cursor: pointer;
 }
@@ -243,14 +264,17 @@ header .icon-cart span{
 }
 
 .zebra-list div:nth-child(even) {
-    background-color: lightgray; /* Zebra striping */
+    background-color: var(--zebra-color);
+    color: var(--cart-text-color)
 }
 
 .zebra-list div {
+    background-color: var(--cart-bg-color); /* Matches cart */
+    color: var(--cart-text-color);
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    border: 0.5px solid rgba(122, 122, 122, 0.185);
+    border: 0.5px solid var(--border-color);
 }
 
 .total-footer {
@@ -272,16 +296,16 @@ header .icon-cart span{
 
 .modal-footer button {
     padding: 10px 20px;
-    background-color: gold;
-    color: black;
+    background-color: var(--button-color);
+    color: var(--hover-text-color);
     border: none;
     cursor: pointer;
     border-radius: 5px;
 }
 
 .modal-footer button:hover {
-    background-color: brown;
-    color: white
+    background-color: var(--button-hover-color);
+    color: var(--hover-text-color);
 }
 /* END CHECKOUT MODAL */
 
@@ -299,7 +323,7 @@ header .icon-cart span{
     width: 170px;
     height: 170px; 
     object-fit: cover;
-    background-color: #9b9999cc;
+    background-color: var(--main-color);
 }
 
 .listProduct{
@@ -309,7 +333,7 @@ header .icon-cart span{
 }
 
 .listProduct .item{
-    background-color: #d6d6d6ab;
+    background-color: var(--main-color);
     padding: 20px;
     border-radius: 20px;
     position: relative;
@@ -356,7 +380,8 @@ header .icon-cart span{
 
 /* Settings Modal Content */
 .settings-modal-content {
-    background: linear-gradient(to top right, whitesmoke, gray);
+    background: var(--modal-bg-color);
+    color: var(--modal-text-color);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -375,7 +400,7 @@ header .icon-cart span{
 .settings-modal h2 {
     font-size: 32px;
     font-weight: bold;
-    color: #333;
+    color: var(--main-text-color);
     margin-bottom: 20px;
     text-transform: capitalize;
     letter-spacing: 1px;
@@ -384,22 +409,11 @@ header .icon-cart span{
 /* Settings Modal Description */
 .settings-modal label {
     font-size: 18px;
-    color: #3d3d3d;
+    color: var(--main-text-color);
     line-height: 1.6;
     margin-bottom: 20px;
     padding: 0 10px;
     display: block;
-}
-
-/* Settings Modal Input */
-.settings-modal input[type="color"] {
-    margin-top: 10px;
-    padding: 8px;
-    width: 80%;
-    max-width: 150px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 /* Close Button */
@@ -441,8 +455,8 @@ header .icon-cart span{
 }
 
 .listProduct .item button{
-    background-color: gold;
-    color: black;
+    background-color: var(--button-color);
+    color: var(--hover-text-color);
     padding: 5px 10px;
     border-radius: 20px;
     /*margin-top: 10px;*/
@@ -453,8 +467,8 @@ header .icon-cart span{
 }
 
 .listProduct .item button:hover{
-    background-color: brown;
-    color: white;
+    background-color: var(--button-hover-color);
+    color: var(--hover-text-color);
 }
 
 svg{
@@ -464,8 +478,8 @@ svg{
 .cartTab{
     width: 400px;
     height: calc(100vh - 80px);
-    background: linear-gradient(to top right, whitesmoke, gray);
-    color: #333; /* Darker text for readability */
+    background: var(--cart-bg-color);
+    color: var(--cart-text-color);
     position: fixed;
     right: -400px;
     top: 80px;
@@ -489,7 +503,7 @@ body.showCart .container{
     padding: 20px;
     margin: 0;
     font-weight: bold;
-    background: linear-gradient(to top right, whitesmoke, gray);
+    background: var(--main-background-color);
     border-bottom: 5px solid black;
 }
 
@@ -501,8 +515,8 @@ body.showCart .container{
 }
 
 .cartTab .cartButtons button{
-    background-color: gold; /* Distinct color for buttons */
-    color: black;
+    background-color: var(--button-color); /* Distinct color for buttons */
+    color: var(--main-text-color);
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
@@ -513,30 +527,32 @@ body.showCart .container{
 }
 
 .cartTab .cartButtons button:hover{
-    background-color: brown; /* Distinct color for buttons */
-    color: white;
+    background-color: var(--button-hover-color); /* Distinct color for buttons */
+    color: var(--hover-text-color);
 }
 
 .cartTab .cartButtons .checkOut {
-    background-color: gold;
+    background-color: var(--button-color);
 }
 
 .cartTab .cartButtons .checkOut:hover{
-    background-color: brown; /* Distinct color for buttons */
+    background-color: var(--button-hover-color); /* Distinct color for buttons */
 }
 
 .cartTab .cartButtons .close{
-    background-color: gold;
+    background-color: var(--button-color);
       /* Light background for contrast */
-    color: black; /* Darker text for readability */
+    color: var(--main-text-color); /* Darker text for readability */
 }
 
 .cartTab .cartButtons .close:hover{
-    background-color: brown ; /* Distinct color for buttons */
-    color: white;
+    background-color: var(--button-hover-color) ; /* Distinct color for buttons */
+    color: var(--hover-text-color);
 }
 
 .cartTab .listCart {
+    background: var(--main-background-color);
+    color: var(--main-text-color);
     overflow-y: auto; /* Allow scrolling for long lists */
     padding: 5px;
     flex-grow: 1; /* Take up remaining space */
@@ -557,7 +573,7 @@ body.showCart .container{
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    color: #030c1f;
+    color: var(--main-color);
     border-top: 1px solid slategray;
     margin-top: 10px; 
     max-width: 100%;
@@ -613,11 +629,11 @@ body.showCart .container{
 .listCart .quantity span{
     width: 30px;
     height: auto;
-    color: black;
+    color: var(--main-text-color);
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-color: gold;
+    background-color: var(--button-color);
     font-size: 20px;
     cursor: pointer;
     font-weight: bold;
@@ -627,9 +643,9 @@ body.showCart .container{
 }
 
 .listCart .quantity span:hover  {
-    background-color: brown;
+    background-color: var(--button-hover-color);
     transform: scale(1.1);
-    color: white;
+    color: var(--hover-text-color);
 }
 
 .listCart .quantity span:active {
@@ -640,7 +656,7 @@ body.showCart .container{
     grid-area: price;
     text-align: right;
     font-size: 18px;
-    color: black;
+    color: var(--main-text-color);
     font-weight: bold;
     margin: auto;
 }
@@ -673,7 +689,8 @@ body.showCart .container{
 }
 
 .listCart .item:nth-child(even){
-    background-color: lightgray;
+    background-color: var(--zebra-color);
+    color: var(--cart-text-color)
 }
 
 .listCart{
@@ -685,7 +702,7 @@ body.showCart .container{
 }
 
 .menu-item {
-    background-color: #ffffff;
+    background-color: var(--main-color);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
@@ -742,7 +759,7 @@ overflow: hidden;
 }
 
 .modal-content {
-    background: linear-gradient(to top right, whitesmoke, gray);
+    background: var(--main-color);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -760,7 +777,7 @@ overflow: hidden;
 .item-modal-title{
     font-size: 32px;
     font-weight: bold;
-    color: #333;
+    color: var(--main-text-color);
     margin-bottom: 20px;
     text-transform: capitalize;
     letter-spacing: 1px;
@@ -768,7 +785,7 @@ overflow: hidden;
 
 .item-modal-description{
     font-size: 18px;
-    color: #3d3d3d;
+    color: var(--main-text-color);
     line-height: 1.6;
     margin-bottom: 30px;
     padding: 0 10px;
