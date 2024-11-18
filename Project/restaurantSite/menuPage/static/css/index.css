@@ -918,8 +918,8 @@ overflow: hidden;
         height: 200px;
         /* width: 100%;
         /* height: auto; */
-        max-width: 300px; 
-        margin: 0 auto; 
+        max-width: 300px;
+        margin: 0 auto;
     }
 
     .logo-title-container{
@@ -1045,6 +1045,27 @@ overflow: hidden;
     .quantity,
     .foodName,
     .foodPrice {
+        font-size: 14px;
+    }
+    .listProduct {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .listProduct .item {
+        padding: 10px;
+    }
+
+    .listProduct .item img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .listProduct .item .foodName,
+    .listProduct .item .foodPrice,
+    .listProduct .item .addCart {
         font-size: 14px;
     }
 }
