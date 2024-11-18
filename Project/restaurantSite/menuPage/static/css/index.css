@@ -918,8 +918,8 @@ overflow: hidden;
         height: 200px;
         /* width: 100%;
         /* height: auto; */
-        max-width: 300px; 
-        margin: 0 auto; 
+        max-width: 300px;
+        margin: 0 auto;
     }
 
     .logo-title-container{
@@ -1046,5 +1046,26 @@ overflow: hidden;
     .foodName,
     .foodPrice {
         font-size: 14px;
+    }
+    .listProduct {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Key change */
+        gap: 10px; /* Adjust gap as needed */
+        padding: 10px; /* Add padding for better spacing */
+    }
+
+    .listProduct .item {
+        padding: 10px; /* Reduce padding on cards */
+    }
+
+    .listProduct .item img {
+        width: 100%; /* Make images responsive */
+        height: auto;
+        border-radius: 8px; /* Soften image corners */
+    }
+
+    .listProduct .item .foodName,
+    .listProduct .item .foodPrice,
+    .listProduct .item .addCart {
+        font-size: 14px; /* Reduce font size for better fit */
     }
 }
