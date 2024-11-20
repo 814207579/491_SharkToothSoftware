@@ -80,26 +80,35 @@ def place_order(request):
             CUT_PAPER = b'\x1D\x56\x42\x00'  # ESC/POS command to cut the paper
             LINE_FEED = b'\n'  # Line feed to move to the next line
 
-            text = (
-                "Hello, welcome to our restaurant!\n"
-                "Thank you for visiting.\n"
-                "Here is your order:\n\n"
-                "1x Burger - $5.99\n"
-                "2x Fries - $3.00\n"
-                "1x Soda - $1.50\n\n"
-                "Total: $10.49\n"
-                "---------------------\n"
-                "Enjoy your meal!\n"
-            )
+            order_text = ("Hello, welcome to our restaurant!\n"
+                          "Thank you for visiting.\n\n"
+                          "Here is your order:\n\n")
 
-            formatted_text = text.encode('utf-8') + LINE_FEED * 3  # Add some spacing before cut
+            total_price = 0.0
+            for item in order_items:
+                food_name = item['food_item_name']
+                food_price = float(item['food_item_price'])
+                quantity = item['quantity']
+                item_total = food_price * quantity
+                total_price += item_total
+                order_text += f"{quantity}x {food_name} - ${item_total:.2f}\n"
+
+            order_text += ("\n"
+                           f"Total: ${total_price:.2f}\n"
+                           "---------------------\n"
+                           "Enjoy your meal!\n")
+
+            print(order_text)
+
+            # Convert the text to bytes and add spacing before cutting
+            formatted_text = order_text.encode('utf-8') + LINE_FEED * 3
 
             hPrinter = win32print.OpenPrinter(PRINTER)
             try:
                 hJob = win32print.StartDocPrinter(hPrinter, 1, ("Test print", None, "RAW"))
                 win32print.StartPagePrinter(hPrinter)
                 win32print.WritePrinter(hPrinter, formatted_text)  # Print the formatted text
-                win32print.WritePrinter(hPrinter, CUT_PAPER)
+                win32print.WritePrinter(hPrinter, CUT_PAPER)       # Send cut paper command
                 win32print.EndPagePrinter(hPrinter)
                 win32print.EndDocPrinter(hPrinter)
             finally:
