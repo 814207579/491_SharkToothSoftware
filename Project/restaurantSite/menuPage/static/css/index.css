@@ -95,7 +95,7 @@ button:hover{
     font-size: 1.2rem;
 }
 
-.navbar a:hover, .navbar a.active {
+.navbar a:hover:not(.logo-title-container), .navbar a.active {
     background-color: var(--navbar-hover-bg-color);
 }
 
