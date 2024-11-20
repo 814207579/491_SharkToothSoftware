@@ -1,4 +1,4 @@
-    
+
     let iconCart = document.querySelector('.icon-cart');
     let closeCart = document.querySelector('.close');
     let body = document.querySelector('body');
@@ -86,17 +86,16 @@
     }
 
     iconCart.addEventListener('click', () => {
+        document.getElementById("cartModal").removeAttribute("hidden")
         body.classList.toggle('showCart')
     })
     closeCart.addEventListener('click', () => {
         body.classList.remove('showCart')
+        body.classList.add("hidden")
     })
     clearCart.addEventListener('click', () => {
         clearItemsInCart();
     })
-
-    //FIXME: Create an animation where the card would slide in and out the side of the window
-    //FIXME: Substitue instances of toggle('showCart') with a custom function that would slide the card in and out
 
     //init for filling listProduct objects based on database
     function fillProducts() {
@@ -488,11 +487,14 @@
 
     // Generate QR code for Table Number
     // generateQRCode(6);
-    
+
     function getTableNumberFromURL(){
         const urlParams = new URLSearchParams(window.location.search);
-        const tableNumber = urlParams.get('table');  // get 'table' parameter from URL
-        return tableNumber ? parseInt(tableNumber) : null; // return as integer or null 
+        let tableNumber = urlParams.get('table');  // get 'table' parameter from URL
+        if (tableNumber > 5) {
+            tableNumber = 404
+        }
+        return tableNumber ? parseInt(tableNumber) : 404; // return as integer or null
     }
 
     function updateTableNumberDisplay(){
@@ -703,21 +705,21 @@
         const settingsButton = document.getElementById('settingsButton');
         const settingsModal = document.getElementById('settingsModal');
         const closeSettings = document.querySelector('.close-settings');
-    
+
         // Open settings modal on button click
         settingsButton.addEventListener('click', () => {
             settingsModal.style.display = 'flex';
             settingsModal.setAttribute('aria-expanded', 'true');
             settingsModal.querySelector('button').focus() // Focus on the first button inside the modal
         });
-    
+
         // Close settings modal on 'x' click
         closeSettings.addEventListener('click', () => {
             settingsModal.style.display = 'none';
             settingsModal.setAttribute('aria-expanded', 'false');
             settingsButton.focus(); // Return focus to the settings button
         });
-    
+
         // Close modal when clicking outside of content
         window.addEventListener('click', (event) => {
             if (event.target === settingsModal) {
@@ -730,7 +732,7 @@
             applyTheme(themes[selectedThemeIndex]);
             settingsModal.style.display = 'none'; // Close modal after applying theme
         });
-        
+
         function applyTheme(theme) {
             document.documentElement.style.setProperty('--main-background-color', theme.backgroundColor);
             document.documentElement.style.setProperty('--main-text-color', theme.textColor);
@@ -741,9 +743,9 @@
             document.documentElement.style.setProperty('--navbar-hover-bg-color', theme.navbarHoverBgColor || theme.buttonColor);
             document.documentElement.style.setProperty('--zebra-color', theme.zebraColor || 'lightgray'); // Optional fallback
             document.documentElement.style.setProperty('--border-color', theme.borderColor || 'rgba(122, 122, 122, 0.5)'); // Optional fallback
-        }        
+        }
     }
-    
+
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
         let selectionBoxElement = document.getElementById("splitCartSelect");
