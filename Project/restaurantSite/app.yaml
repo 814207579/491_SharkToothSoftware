@@ -1,0 +1,19 @@
+runtime: python
+env: flex
+entrypoint: python manage.py runserver 0.0.0.0:$PORT
+
+runtime_config:
+    operating_system: "ubuntu22"
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: "restaurantSite.settings"  # Replace with your project settings
+  SECRET_KEY: 'django-insecure-b#h=+3u$@l&3j&swir_ze*rp1#tad7)6usq!_%pghef($q$c77'  # For production, store secrets in Google Secret Manager
+  GS_BUCKET_NAME: "restaurantSite"  # Reference to your storage bucket
+  IMAGE_STORAGE: "https://storage.googleapis.com/sharktoothrestaurant.com/MainSite/menuPage/static/"
+
+handlers:
+- url: /static
+  static_dir: static/
+
+- url: /.*
+  script: auto

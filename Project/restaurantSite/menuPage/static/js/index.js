@@ -1,3 +1,4 @@
+    
     let iconCart = document.querySelector('.icon-cart');
     let closeCart = document.querySelector('.close');
     let body = document.querySelector('body');
@@ -186,11 +187,11 @@
                 quantityDropdown.className = 'quantity-select';
                 for (let i = 1; i <= 99; i++) {
                     let option = document.createElement('option');
+                    if (i === cart.quantity) {
+                        option.setAttribute('selected', '');
+                    }
                     option.value = i;
                     option.text = i;
-                    if (i === cart.quantity) {
-                        option.selected = true;
-                    }
                     quantityDropdown.appendChild(option);
                 }
 
@@ -215,7 +216,6 @@
                     `;
                 }
 
-
                 // 4. Use the quantityControlsHTML in newCart.innerHTML
                 newCart.innerHTML = `
                     <div class="image">
@@ -231,19 +231,16 @@
                 `;
 
                 listCartHTML.appendChild(newCart);
-
-
             });
         }
         iconCartSpan.textContent = totalQuantity;
 
-		 // validation for the manual input of items in the text box
+        // validation for the manual input of items in the text box
         document.querySelectorAll('.quantity-select').forEach(select => {
                 select.addEventListener('change', function() {
                    changeQuantity(select.parentElement.parentElement.dataset.id, 'input', parseInt(this.value, 10));
             });
-        });
-
+        })
 
         document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
@@ -701,9 +698,52 @@
                     body.classList.remove('showCart')
             }
         });
+
+        // Settings Button Functionality
+        const settingsButton = document.getElementById('settingsButton');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettings = document.querySelector('.close-settings');
+    
+        // Open settings modal on button click
+        settingsButton.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+            settingsModal.setAttribute('aria-expanded', 'true');
+            settingsModal.querySelector('button').focus() // Focus on the first button inside the modal
+        });
+    
+        // Close settings modal on 'x' click
+        closeSettings.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+            settingsModal.setAttribute('aria-expanded', 'false');
+            settingsButton.focus(); // Return focus to the settings button
+        });
+    
+        // Close modal when clicking outside of content
+        window.addEventListener('click', (event) => {
+            if (event.target === settingsModal) {
+                settingsModal.style.display = 'none';
+            }
+        });
+
+        document.getElementById('applyTheme').addEventListener('click', () => {
+            const selectedThemeIndex = document.getElementById('themeSelect').value;
+            applyTheme(themes[selectedThemeIndex]);
+            settingsModal.style.display = 'none'; // Close modal after applying theme
+        });
+        
+        function applyTheme(theme) {
+            document.documentElement.style.setProperty('--main-background-color', theme.backgroundColor);
+            document.documentElement.style.setProperty('--main-text-color', theme.textColor);
+            document.documentElement.style.setProperty('--button-color', theme.buttonColor);
+            document.documentElement.style.setProperty('--button-hover-color', theme.buttonHoverColor);
+            document.documentElement.style.setProperty('--hover-text-color', theme.hoverTextColor);
+            document.documentElement.style.setProperty('--navbar-bg-color', theme.navbarBgColor || '#333'); // Default fallback
+            document.documentElement.style.setProperty('--navbar-hover-bg-color', theme.navbarHoverBgColor || theme.buttonColor);
+            document.documentElement.style.setProperty('--zebra-color', theme.zebraColor || 'lightgray'); // Optional fallback
+            document.documentElement.style.setProperty('--border-color', theme.borderColor || 'rgba(122, 122, 122, 0.5)'); // Optional fallback
+        }        
     }
     
-
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {
         let selectionBoxElement = document.getElementById("splitCartSelect");
