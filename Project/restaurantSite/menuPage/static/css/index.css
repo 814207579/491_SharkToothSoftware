@@ -561,6 +561,8 @@ svg{
     transition: right 0.5s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
     z-index: 1000; /* Ensure it stays above other elements */
+    border: solid;
+    border-color: var(--border-color);
 }
 
 
@@ -702,7 +704,7 @@ body.showCart .container{
 .listCart .quantity span{
     width: 30px;
     height: auto;
-    color: var(--main-text-color);
+    color: var(--cart-bg-color);
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -933,7 +935,7 @@ overflow: hidden;
     }
 
     .title {
-        font-size: 18px;
+        font-size: 25px;
         margin-top: 5px;
     }
 }
@@ -979,14 +981,14 @@ overflow: hidden;
         justify-content: flex-start;
     }
 
-    .navbar a {
-        padding: 0px 10px; /* Adjust padding for better spacing on small screens */
-        font-size: 1rem;
-        text-align: center;
-        width: 100%;
-        margin: 5px 0;
-        transition: background-color 0.3s ease;
-    }
+    /* .navbar a { */
+        /* padding: 0px 10px; Adjust padding for better spacing on small screens */
+        /* font-size: 1rem; */
+        /* text-align: center; */
+        /* width: 100%; */
+        /* margin: 5px 0; */
+        /* transition: background-color 0.3s ease; */
+    /* } */
 
     .navbar a:hover {
         background-color: var(--navbar-hover-bg-color); /* Light background color on hover */
