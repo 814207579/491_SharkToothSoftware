@@ -90,6 +90,7 @@ button:hover{
     transition: background-color 0.3s;
 }
 
+/* navbar tabs */
 .navbar li a[href*="#"]
 {
     font-size: 1.2rem;
@@ -545,7 +546,7 @@ header .icon-cart span{
 }
 
 svg{
-    width: 30px;
+    width: 2rem;
 }
 
 .cartTab{
@@ -916,6 +917,10 @@ overflow: hidden;
         white-space: nowrap;
     }
 
+    .navbar li a[href*="#"]{
+        font-size: 1.5rem;
+    }
+
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
         /* font-size: 50px; */
@@ -924,15 +929,15 @@ overflow: hidden;
 
     .addCart {
         /* font-size: 30px; */
-        font-size: 18px;
+        font-size: 1.5rem;
     }
     .listProduct .item .foodPrice {
         /* font-size: 40px; */
-        font-size: 20px;
+        font-size: 2rem;
     }
     .listProduct .item .foodName {
         /* font-size: 35px; */
-        font-size: 18px;
+        font-size: 2rem;
     }
     .listProduct .item img {
         width: 200px;
@@ -950,12 +955,87 @@ overflow: hidden;
     }
 
     .logo-image{
-        width: 50px;
+        width: 5.5rem;
     }
 
     .title {
-        font-size: 25px;
+        font-size: 2rem;
         margin-top: 5px;
+    }
+
+    .table-number-container{
+        font-size: inherit;
+    }
+
+    .settings-modal h2{
+        font-size: inherit;
+    }
+
+    .theme-selection label{
+        font-size: inherit;
+    }
+
+    .settings-modal-content{
+        font-size: 2rem;
+        width: 40rem;
+        height: 20rem;
+    }
+
+    .close-settings{
+        font-size: 2.3rem;
+    }
+
+    .settings-button{
+        width: 4rem;
+        height: 4rem;
+    }
+
+    #themeSelect{
+        width: 140px;
+        height: 60px;
+        padding: 8px;
+        font-size: 20px;
+    }
+
+    .item-modal-title{
+        font-size: 2rem;
+    }
+
+    .item-modal-description{
+        font-size: 1.8rem;
+    }
+
+    .close-modal-popup{
+        font-size: 2rem;
+    }
+
+    .listCart .item .name{
+        font-size: 1.4rem;
+    }
+
+    .listCart .item .totalPrice{
+        font-size: 1.4rem;
+    }
+
+    .listCart .quantity select{
+        font-size: 1.3rem;
+    }
+
+    .listCart .quantity span{
+        font-size: 1.3rem;
+    }
+
+    .cartTab .listCart .item img{
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .cartSummary{
+        font-size: 1.4rem;
+    }
+
+    .cartTab .cartButtons button{
+        font-size: 1.3rem;
     }
 }
 
