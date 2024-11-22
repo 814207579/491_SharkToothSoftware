@@ -490,18 +490,19 @@
 
     function getTableNumberFromURL(){
         const urlParams = new URLSearchParams(window.location.search);
-        let tableNumber = urlParams.get('table');  // get 'table' parameter from URL
-        if (tableNumber > 5) {
-            tableNumber = 404
-        }
+        const tableNumber = urlParams.get('table');  // get 'table' parameter from URL
         return tableNumber ? parseInt(tableNumber) : 404; // return as integer or null
+
     }
 
     function updateTableNumberDisplay(){
         const tableNumber = getTableNumberFromURL();
+        const tableNumberDisplay = document.getElementById('table-number-display');
         if (tableNumber) {
-            const tableNumberDisplay = document.getElementById('table-number-display');
-            tableNumberDisplay.textContent = tableNumber;
+            tableNumberDisplay.textContent = tableNumber.toString();
+        }
+        else {
+            tableNumberDisplay.textContent = 404;
         }
     }
 
