@@ -973,7 +973,7 @@ overflow: hidden;
 
     .navbar {
         width: 100%;
-        height: 80px;
+        height: 90px;
         flex-direction: column;
         align-items: center;
         padding: 0 10px;
@@ -993,22 +993,12 @@ overflow: hidden;
         justify-content: flex-start;
     }
 
-    /* .navbar a { */
-        /* padding: 0px 10px; Adjust padding for better spacing on small screens */
-        /* font-size: 1rem; */
-        /* text-align: center; */
-        /* width: 100%; */
-        /* margin: 5px 0; */
-        /* transition: background-color 0.3s ease; */
-    /* } */
-
-    .navbar a:hover {
-        background-color: var(--navbar-hover-bg-color); /* Light background color on hover */
-        color: var(--hover-text-color); /* Darken the text on hover for visibility */
-    }
-
-    .underline {
-        width: 100%; /* Full width underline on mobile */
+    .navbar a {
+        padding: 0px 10px; /* Adjust padding for better spacing on small screens */
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+        transition: background-color 0.3s ease;
     }
 
     .icon-cart {
