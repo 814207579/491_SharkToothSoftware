@@ -878,29 +878,48 @@ overflow: hidden;
 }
 
 /* Desktop website responsive stuff  */
-@media screen and (min-width: 1000px){
+@media screen and (min-width: 1024px){
     .listProduct{
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 /* This section is use for the mobile responsive view  */
-@media screen and (min-width: 480px) and (max-width: 1000px){
+@media (min-width: 768px) and (max-width: 1023px)
+{
     .navbar {
-        height: 60px;
+        height: 80px;
+        justify-content: space-around;
+        padding: 0 20px;
     }
+
     .navbar ul {
-        display: flex;
         flex-direction: row;
-        align-items: center;
-        width: 100%;
-        justify-content: space-between;
+        justify-content: space-around;
+        overflow-x: auto;
+        padding: 0;
     }
+
+    .navbar li {
+        margin: 0 10px;
+        white-space: nowrap;
+    }
+
+     .navbar a {
+        font-size: 1.1rem;
+        padding: 0 15px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
         /* font-size: 50px; */
         font-size: 16px;
     }
+
     .addCart {
         /* font-size: 30px; */
         font-size: 18px;
@@ -938,17 +957,10 @@ overflow: hidden;
     }
 }
 
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
 @media (max-width: 767px){
+    .title{
+        display: none;
+    }
     .cartTab {
         width: 100%;
         height: 100%;
@@ -959,7 +971,7 @@ overflow: hidden;
 
     .navbar {
         width: 100%;
-        height: 70px;
+        height: 80px;
         flex-direction: column;
         align-items: center;
         padding: 0 10px;
@@ -1069,3 +1081,13 @@ overflow: hidden;
         font-size: 14px;
     }
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
