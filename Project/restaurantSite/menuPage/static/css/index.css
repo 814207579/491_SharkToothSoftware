@@ -95,7 +95,7 @@ button:hover{
     font-size: 1.2rem;
 }
 
-.navbar a:hover, .navbar a.active {
+.navbar a:hover:not(.logo-title-container), .navbar a.active {
     background-color: var(--navbar-hover-bg-color);
 }
 
@@ -561,6 +561,8 @@ svg{
     transition: right 0.5s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
     z-index: 1000; /* Ensure it stays above other elements */
+    border: solid;
+    border-color: var(--border-color);
 }
 
 
@@ -702,7 +704,7 @@ body.showCart .container{
 .listCart .quantity span{
     width: 30px;
     height: auto;
-    color: var(--main-text-color);
+    color: var(--cart-bg-color);
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -952,7 +954,7 @@ overflow: hidden;
     }
 
     .title {
-        font-size: 18px;
+        font-size: 25px;
         margin-top: 5px;
     }
 }
