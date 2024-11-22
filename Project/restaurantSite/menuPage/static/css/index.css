@@ -592,7 +592,7 @@ body.showCart .container{
 
 .cartTab .cartButtons button{
     background-color: var(--button-color); /* Distinct color for buttons */
-    color: var(--main-text-color);
+    color: var(--hover-text-color);
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
@@ -617,8 +617,7 @@ body.showCart .container{
 
 .cartTab .cartButtons .close{
     background-color: var(--button-color);
-      /* Light background for contrast */
-    color: var(--main-text-color); /* Darker text for readability */
+    color: var(--hover-text-color);
 }
 
 .cartTab .cartButtons .close:hover{
@@ -969,6 +968,7 @@ overflow: hidden;
 
     .settings-modal h2{
         font-size: inherit;
+        margin-bottom: 2.5rem;
     }
 
     .theme-selection label{
@@ -976,9 +976,10 @@ overflow: hidden;
     }
 
     .settings-modal-content{
-        font-size: 2rem;
+        font-size: x-large;
         width: 40rem;
-        height: 20rem;
+        height: 17rem;
+        max-width: 600px;
     }
 
     .close-settings{
@@ -991,7 +992,7 @@ overflow: hidden;
     }
 
     #themeSelect{
-        width: 140px;
+        width: 200px;
         height: 60px;
         padding: 8px;
         font-size: 20px;
@@ -1036,6 +1037,12 @@ overflow: hidden;
 
     .cartTab .cartButtons button{
         font-size: 1.3rem;
+    }
+
+    .modal-checkout-content{
+        font-size: x-large;
+        max-width: 800px;
+        width: 80%; 
     }
 }
 
