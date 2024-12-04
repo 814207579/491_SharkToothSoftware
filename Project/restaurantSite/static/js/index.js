@@ -491,11 +491,11 @@
 
     // Generate QR code for Table Number
     // generateQRCode(6);
-    
+
     function getTableNumberFromURL(){
         const urlParams = new URLSearchParams(window.location.search);
         const tableNumber = urlParams.get('table');  // get 'table' parameter from URL
-        return tableNumber ? parseInt(tableNumber) : null; // return as integer or null 
+        return tableNumber ? parseInt(tableNumber) : null; // return as integer or null
     }
 
     function updateTableNumberDisplay(){
@@ -545,7 +545,7 @@
             '<div class="modal-checkout-content"> ' +
                 '<span id="closeModal" class="close-modal">&times;</span>' +
                 '<h2>Checkout</h2>' +
-                '<div class="split-cart-selection">' +
+                '<div class="split-cart-selection theme-selection">' +
                     '<span>How many times would you like to split the cart? </span>' +
                     '<select id="splitCartSelect" class="split-modal-select">' +
                         '<option value="1">1</option>' +
@@ -702,7 +702,7 @@
             }
         });
     }
-    
+
 
     // Updates the cart to be the split up cart
     function splitCartModalUpdate() {

@@ -1,4 +1,5 @@
-// themes.js
+// Add themes as you wish following the formats below
+
 const themes = [
     {
         name: "Default",

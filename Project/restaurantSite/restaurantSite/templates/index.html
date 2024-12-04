@@ -15,8 +15,8 @@
 
     <nav class="navbar" id="navBarUl">
         <div class="logo-title-container">
-            <a href="{% url 'index' %}" class="logo-link">
-                <img src="{{images}}/Images/among-us-shark-skin-pack.png"
+            <a href="{% url 'index' %}" class="logo-link logo-title-container">
+                <img src="{% static '/images/among-us-shark-skin-pack.png' %}"
                      alt="Error: Image not showing"
                      class="logo-image">
             </a>
@@ -25,7 +25,7 @@
         <!-- <div id="qrcode"></div> -->
         <ul>
             <li><a href="#appetizers" class="navBarSort" data-tab="dessert">Dessert</a></li>
-            <li><a href="#food" class="navBarSort active" data-tab="food">Food</a></li>
+            <li><a href="#food" class="navBarSort" data-tab="food">Food</a></li>
             <li><a href="#drinks" class="navBarSort" data-tab="drinks">Drinks</a></li>
             <li>
                 <a href="#cartTab" class="icon-cart">
@@ -48,8 +48,8 @@
             {% for item in foodItems %}
                 <div class="item">
                     <input type="hidden" class="idField" value="{{item.pk}}"/>
-                    {% with foodItem=item.food_thumbnail %}
-                        <img class="image foodImage" src="{{ images }}{{ foodItem }}" alt="Food Thumbnail">
+                    {% with test=item.food_thumbnail %}
+                        <img class="image foodImage" src="{% static test %}" alt="Food Thumbnail">
                     {% endwith %}
                     <h2 class="foodName">{{item.name}}</h2>
                     <div class="foodPrice">${{item.food_price}}</div>
@@ -68,7 +68,7 @@
         <div class="listCart">
             <div class="item">
                 <div class="image">
-                     <img src="{{ images }}/Images/amongus.png" alt="Error: Image Not Found">
+                     <img src="{% static '/images/amongus.png' %}" alt="Error: Image Not Found">
                 </div>
                 <div class="name">
                     NAME

@@ -90,12 +90,13 @@ button:hover{
     transition: background-color 0.3s;
 }
 
+/* navbar tabs */
 .navbar li a[href*="#"]
 {
     font-size: 1.2rem;
 }
 
-.navbar a:hover, .navbar a.active {
+.navbar a:hover:not(.logo-title-container), .navbar a.active {
     background-color: var(--navbar-hover-bg-color);
 }
 
@@ -545,7 +546,7 @@ header .icon-cart span{
 }
 
 svg{
-    width: 30px;
+    width: 2rem;
 }
 
 .cartTab{
@@ -561,6 +562,8 @@ svg{
     transition: right 0.5s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
     z-index: 1000; /* Ensure it stays above other elements */
+    border: solid;
+    border-color: var(--border-color);
 }
 
 
@@ -589,7 +592,7 @@ body.showCart .container{
 
 .cartTab .cartButtons button{
     background-color: var(--button-color); /* Distinct color for buttons */
-    color: var(--main-text-color);
+    color: var(--hover-text-color);
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
@@ -614,8 +617,7 @@ body.showCart .container{
 
 .cartTab .cartButtons .close{
     background-color: var(--button-color);
-      /* Light background for contrast */
-    color: var(--main-text-color); /* Darker text for readability */
+    color: var(--hover-text-color);
 }
 
 .cartTab .cartButtons .close:hover{
@@ -702,7 +704,7 @@ body.showCart .container{
 .listCart .quantity span{
     width: 30px;
     height: auto;
-    color: var(--main-text-color);
+    color: var(--cart-bg-color);
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -878,40 +880,63 @@ overflow: hidden;
 }
 
 /* Desktop website responsive stuff  */
-@media screen and (min-width: 1000px){
+@media screen and (min-width: 1024px){
     .listProduct{
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 /* This section is use for the mobile responsive view  */
-@media screen and (min-width: 480px) and (max-width: 1000px){
+@media (min-width: 768px) and (max-width: 1023px)
+{
     .navbar {
-        height: 60px;
+        height: 80px;
+        justify-content: space-around;
+        padding: 0 20px;
     }
+
     .navbar ul {
-        display: flex;
         flex-direction: row;
-        align-items: center;
-        width: 100%;
-        justify-content: space-between;
+        justify-content: space-around;
+        overflow-x: auto;
+        padding: 0;
     }
+
+    .navbar li {
+        margin: 0 10px;
+        white-space: nowrap;
+    }
+
+     .navbar a {
+        font-size: 1.1rem;
+        padding: 0 15px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .navbar li a[href*="#"]{
+        font-size: 1.5rem;
+    }
+
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
         /* font-size: 50px; */
         font-size: 16px;
     }
+
     .addCart {
         /* font-size: 30px; */
-        font-size: 18px;
+        font-size: 1.5rem;
     }
     .listProduct .item .foodPrice {
         /* font-size: 40px; */
-        font-size: 20px;
+        font-size: 2rem;
     }
     .listProduct .item .foodName {
         /* font-size: 35px; */
-        font-size: 18px;
+        font-size: 2rem;
     }
     .listProduct .item img {
         width: 200px;
@@ -929,26 +954,102 @@ overflow: hidden;
     }
 
     .logo-image{
-        width: 50px;
+        width: 5.5rem;
     }
 
     .title {
-        font-size: 18px;
+        font-size: 2rem;
         margin-top: 5px;
     }
-}
 
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+    .table-number-container{
+        font-size: inherit;
     }
-    to {
-        opacity: 1;
+
+    .settings-modal h2{
+        font-size: inherit;
+        margin-bottom: 2.5rem;
+    }
+
+    .theme-selection label{
+        font-size: inherit;
+    }
+
+    .settings-modal-content{
+        font-size: x-large;
+        width: 40rem;
+        height: 17rem;
+        max-width: 600px;
+    }
+
+    .close-settings{
+        font-size: 2.3rem;
+    }
+
+    .settings-button{
+        width: 4rem;
+        height: 4rem;
+    }
+
+    #themeSelect{
+        width: 200px;
+        height: 60px;
+        padding: 8px;
+        font-size: 20px;
+    }
+
+    .item-modal-title{
+        font-size: 2rem;
+    }
+
+    .item-modal-description{
+        font-size: 1.8rem;
+    }
+
+    .close-modal-popup{
+        font-size: 2rem;
+    }
+
+    .listCart .item .name{
+        font-size: 1.4rem;
+    }
+
+    .listCart .item .totalPrice{
+        font-size: 1.4rem;
+    }
+
+    .listCart .quantity select{
+        font-size: 1.3rem;
+    }
+
+    .listCart .quantity span{
+        font-size: 1.3rem;
+    }
+
+    .cartTab .listCart .item img{
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .cartSummary{
+        font-size: 1.4rem;
+    }
+
+    .cartTab .cartButtons button{
+        font-size: 1.3rem;
+    }
+
+    .modal-checkout-content{
+        font-size: x-large;
+        max-width: 800px;
+        width: 80%; 
     }
 }
 
 @media (max-width: 767px){
+    .title{
+        display: none;
+    }
     .cartTab {
         width: 100%;
         height: 100%;
@@ -959,7 +1060,7 @@ overflow: hidden;
 
     .navbar {
         width: 100%;
-        height: 70px;
+        height: 90px;
         flex-direction: column;
         align-items: center;
         padding: 0 10px;
@@ -984,17 +1085,7 @@ overflow: hidden;
         font-size: 1rem;
         text-align: center;
         width: 100%;
-        margin: 5px 0;
         transition: background-color 0.3s ease;
-    }
-
-    .navbar a:hover {
-        background-color: var(--navbar-hover-bg-color); /* Light background color on hover */
-        color: var(--hover-text-color); /* Darken the text on hover for visibility */
-    }
-
-    .underline {
-        width: 100%; /* Full width underline on mobile */
     }
 
     .icon-cart {
@@ -1069,3 +1160,13 @@ overflow: hidden;
         font-size: 14px;
     }
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
