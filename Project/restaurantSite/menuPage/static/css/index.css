@@ -689,7 +689,7 @@ body.showCart .container{
 }
 
 .listCart .quantity .delete { /* Style for the trash can icon */
-    font-size: 18px;
+    font-size: 1.3rem;
     cursor: pointer;
 }
 
@@ -1011,11 +1011,11 @@ overflow: hidden;
     }
 
     .listCart .item .name{
-        font-size: 1.4rem;
+        font-size: 1.7rem;
     }
 
     .listCart .item .totalPrice{
-        font-size: 1.4rem;
+        font-size: 1.7rem;
     }
 
     .listCart .quantity select{
@@ -1024,25 +1024,31 @@ overflow: hidden;
 
     .listCart .quantity span{
         font-size: 1.3rem;
+        height: 2.7rem;
+        width: 2.7rem;
     }
 
     .cartTab .listCart .item img{
-        width: 7rem;
-        height: 7rem;
+        width: 8.5rem;
+        height: 8.5rem;
     }
 
     .cartSummary{
-        font-size: 1.4rem;
+        font-size: 1.7rem;
     }
 
     .cartTab .cartButtons button{
-        font-size: 1.3rem;
+        font-size: 1.4rem;
     }
 
     .modal-checkout-content{
         font-size: x-large;
         max-width: 800px;
         width: 80%; 
+    }
+
+    svg{
+        width: 2.5rem;
     }
 }
 
