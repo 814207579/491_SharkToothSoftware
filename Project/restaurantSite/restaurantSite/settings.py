@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-b#h=+3u$@l&3j&swir_ze*rp1#tad7)6usq!_%pghef($q$c77
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://four91-sharktoothsoftware.onrender.com", "four91-sharktoothsoftware.onrender.com", "https://sharktoothrestaurant.uc.r.appspot.com", "127.0.0.1", "sharktoothrestaurant.uc.r.appspot.com"]
+ALLOWED_HOSTS = ["sharktoothrestaurant.com/", "https://sharktoothrestaurant.com/", "https://four91-sharktoothsoftware.onrender.com", "four91-sharktoothsoftware.onrender.com", "https://sharktoothrestaurant.uc.r.appspot.com", "127.0.0.1", "sharktoothrestaurant.uc.r.appspot.com"]
 
 
 # Application definition
