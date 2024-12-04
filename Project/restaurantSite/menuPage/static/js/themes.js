@@ -85,4 +85,52 @@ const themes = [
         zebraColor: "#1A2232", 
         borderColor: "#FF4747" 
     },
+    {
+        name: "Color Unfriendly",
+        backgroundColor: "#ff00ff",
+        textColor: "#00ff00",
+        buttonColor: "#0000ff",
+        buttonHoverColor: "#ff0000",
+        hoverTextColor: "#ffff00",
+        navbarBgColor: "#ff00ff",
+        navbarHoverBgColor: "#00ffff",
+        zebraColor: "#0000ff",
+        borderColor: "#ff0000"
+    },
+    {
+        name: "Static",
+        backgroundColor: "#cccccc",
+        textColor: "#999999",
+        buttonColor: "#aaaaaa",
+        buttonHoverColor: "#bbbbbb",
+        hoverTextColor: "#dddddd",
+        navbarBgColor: "#cccccc",
+        navbarHoverBgColor: "#eeeeee",
+        zebraColor: "#eeeeee",
+        borderColor: "#666666"
+    },
+    {
+        name: "Bubblegum",
+        backgroundColor: "#ff69b4",
+        textColor: "#000000",
+        buttonColor: "#333333",
+        buttonHoverColor: "#ff69b4",
+        hoverTextColor: "#ff69b4",
+        navbarBgColor: "#000000",
+        navbarHoverBgColor: "#ff69b4",
+        zebraColor: "#000000",
+        borderColor: "#ff69b4"
+    },
+    {
+        name: "Cosmic Drift",
+        backgroundColor: "#000b33",
+        textColor: "#ffffff",
+        buttonColor: "#3a86ff",
+        buttonHoverColor: "#8338ec",
+        hoverTextColor: "#ff006e",
+        navbarBgColor: "#240046",
+        navbarHoverBgColor: "#3a86ff",
+        zebraColor: "#240046",
+        borderColor: "#8338ec"
+    }
 ];
