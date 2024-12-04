@@ -9,6 +9,8 @@ from django.http import HttpResponse
 from django.conf import settings
 import random
 import json
+import win32print
+import win32ui
 
 def getPerson():
     person = Person.objects.all()
