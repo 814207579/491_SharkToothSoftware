@@ -1021,11 +1021,11 @@ overflow: hidden;
     }
 
     .listCart .item .name{
-        font-size: 1.4rem;
+        font-size: 3rem;
     }
 
     .listCart .item .totalPrice{
-        font-size: 1.4rem;
+        font-size: 2rem;
     }
 
     .listCart .quantity select{
@@ -1115,7 +1115,7 @@ overflow: hidden;
     }
 
     .totalPrice {
-        font-size: 1.2em;
+        font-size: 2em;
     }
 
     .btn {
