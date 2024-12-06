@@ -951,10 +951,11 @@ overflow: hidden;
 @media (max-width: 767px){
     .cartTab {
         width: 100%;
-        height: 100%;
+        height: 100hv;
         right: -100%; /* Initially hide the cartTab off-screen */
         top: 0; /* Adjust top to cover the full screen */
         position: fixed;
+        overflow-y: auto;
     }
 
     .navbar {
