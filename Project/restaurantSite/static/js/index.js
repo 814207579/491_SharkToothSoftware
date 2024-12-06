@@ -606,6 +606,14 @@
         const modalDescription = document.getElementById("modalDescription");
         const closeModal = document.querySelector('.close-modal-popup');
 
+        // Fix for cart not fully covering background on mobile scroll
+        let cartModal = document.getElementById('cartModal');
+        window.addEventListener('scroll', function() {
+            if (body.classList.contains('showCart')) { // Only apply fix when cart is open
+                cartModal.style.top = window.scrollY + 'px';  // Adjust top position on scroll
+            }
+        });
+
         // Close the modal when clicking the 'x' button
         closeModal.onclick = function () {
             modal.style.display = "none";
