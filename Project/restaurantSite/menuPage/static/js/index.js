@@ -88,6 +88,7 @@
     iconCart.addEventListener('click', () => {
         document.getElementById("cartModal").removeAttribute("hidden")
         body.classList.toggle('showCart')
+        document.body.classList.add('no-scroll'); // Enable scroll on body
     })
     closeCart.addEventListener('click', () => {
         body.classList.remove('showCart')
