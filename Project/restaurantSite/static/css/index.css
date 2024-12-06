@@ -1004,6 +1004,7 @@ overflow: hidden;
 
     body.showCart .cartTab {
         right: 0; /* Slide in the cartTab when open */
+        top: 0;
     }
 
     .quantity {
