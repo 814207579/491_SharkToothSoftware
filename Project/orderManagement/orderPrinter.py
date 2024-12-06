@@ -2,13 +2,15 @@ from pymongo import MongoClient
 from pymongo.errors import OperationFailure
 import win32print
 
-def print_receipt(order):
+def print_receipt(order, table_number):
     PRINTER = "POS-80C"  # Adjust to your printer's name
     CUT_PAPER = b'\x1D\x56\x42\x00'  # ESC/POS command to cut the paper
     LINE_FEED = b'\n'  # Line feed to move to the next line
 
-    order_text = ("Hello, welcome to our restaurant!\n"
-                  "Thank you for visiting.\n\n"
+    # Prepare the receipt text
+    order_text = (f"Hello, welcome to our restaurant!\n"
+                  f"Thank you for visiting.\n\n"
+                  f"Table Number: {table_number}\n"
                   "Here is your order:\n\n")
 
     total_price = 0.0
@@ -33,8 +35,8 @@ def print_receipt(order):
     try:
         hJob = win32print.StartDocPrinter(hPrinter, 1, ("Receipt", None, "RAW"))
         win32print.StartPagePrinter(hPrinter)
-        win32print.WritePrinter(hPrinter, formatted_text)  # Print the formatted text
-        win32print.WritePrinter(hPrinter, CUT_PAPER)       # Send cut paper command
+        win32print.WritePrinter(hPrinter, formatted_text)
+        win32print.WritePrinter(hPrinter, CUT_PAPER)
         win32print.EndPagePrinter(hPrinter)
         win32print.EndDocPrinter(hPrinter)
     finally:
@@ -44,14 +46,26 @@ def watch_collection(uri, database_name, collection_name):
     client = MongoClient(uri)
     db = client[database_name]
     collection = db[collection_name]
+    tables_collection = db["menuPage_table"]
 
     try:
         print(f"Watching for new orders in '{database_name}.{collection_name}'...")
         with collection.watch() as stream:
             for change in stream:
                 if change["operationType"] == "insert":
+                    order = change["fullDocument"]
+                    table_id = order.get("table")
+
+                    try:
+                        # Fetch the table number from the tables collection
+                        table = tables_collection.find_one({"_id": ObjectId(table_id)})
+                        table_number = table["table_number"] if table else "Unknown"
+                    except Exception as e:
+                        print(f"Error fetching table: {e}")
+                        table_number = "Unknown"
+
                     print("New order detected. Printing receipt...")
-                    print_receipt(change["fullDocument"])
+                    print_receipt(order, table_number)
     except OperationFailure as e:
         print("Change Stream not supported or failed:", e)
     except Exception as e:
@@ -59,12 +73,11 @@ def watch_collection(uri, database_name, collection_name):
     finally:
         client.close()
 
-
 if __name__ == "__main__":
     # MongoDB connection URI
-    uri = "mongodb+srv://Admin:Admin@cluster0.yl3tbkn.mongodb.net/"  # Replace with your connection string
-    database_name = "restaurant_db"  # Replace with your database name
-    collection_name = "menuPage_order"  # Replace with your collection name
+    uri = "mongodb+srv://Admin:Admin@cluster0.yl3tbkn.mongodb.net/"
+    database_name = "restaurant_db"
+    collection_name = "menuPage_order"
 
     # Start watching the collection
     watch_collection(uri, database_name, collection_name)
