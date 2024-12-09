@@ -12,7 +12,8 @@
     --cart-bg-color: var(--main-background-color);
     --cart-text-color: var(--main-text-color); 
     --modal-bg-color: var(--main-background-color); 
-    --modal-text-color: var(--main-text-color); 
+    --modal-text-color: var(--main-text-color);
+
 }
 
 body{
@@ -885,10 +886,17 @@ overflow: hidden;
         display: none;
     }
     .logo-image{
-        width: 4rem;
+        width: 6rem;
         height: auto;
         object-fit: contain;
         display: block;
+    }
+
+    .settings-button{
+        bottom: 10px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
     }
 
     .logo-title-container{
@@ -907,13 +915,15 @@ overflow: hidden;
         height: 90px;
         display: flex;
         align-items: center;
-        padding: 0 15px;
+        /* padding: 0 15px; */
         justify-content: space-between;
         background-color: var(--navbar-bg-color); /* Ensure navbar is visible */
         position: fixed;
         top: 0;
         left: 0;
         z-index: 1000;
+        flex-direction: row;
+        flex-wrap: nowrap;
     }
 
     .navbar ul {
@@ -929,7 +939,7 @@ overflow: hidden;
         text-align: center;
         font-size: 1rem;
         transition: background-color 0.3s ease;
-        font-size: 1.1rem;
+        font-size: 1rem;
         padding: 0 10px;
         height: 5.6rem;
     }
@@ -984,6 +994,7 @@ overflow: hidden;
     .foodName,
     .foodPrice {
         font-size: 14px;
+        font-weight: 600;
     }
     .listProduct {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -997,7 +1008,7 @@ overflow: hidden;
 
     .listProduct .item img {
         width: 100%;
-        height: auto;
+        /* height: auto; */
         border-radius: 8px;
     }
 
@@ -1005,6 +1016,20 @@ overflow: hidden;
     .listProduct .item .foodPrice,
     .listProduct .item .addCart {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 424px){
+    .logo-title-container{
+        display: none;
+    }
+
+    .navbar a{
+        padding: 0 6px 0 4px;
+    }
+
+    .listProduct{
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
