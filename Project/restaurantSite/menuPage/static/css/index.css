@@ -585,7 +585,7 @@ body.showCart .container{
 
 .cartTab .cartButtons{
     display: flex;
-    justify-content: space-around; /* Better alignment */
+    justify-content: space-evenly; /* Better alignment */
     padding: 15px 20px;
     border: 1px solid slategray; /* Add top border for separation */
 }
@@ -879,16 +879,143 @@ overflow: hidden;
     cursor: pointer;
 }
 
-/* Desktop website responsive stuff  */
+/* This is for the mobile view of the website */
+@media (max-width: 767px){
+    .title{
+        display: none;
+    }
+    .logo-image{
+        width: 4rem;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    .logo-title-container{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .navbar li a[href*="#"] {
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    .navbar {
+        width: 100%;
+        height: 90px;
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        justify-content: space-between;
+        background-color: var(--navbar-bg-color); /* Ensure navbar is visible */
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .navbar ul {
+        display: flex;
+        justify-content: center;
+        list-style-type: none;
+        flex-grow: 1;
+        padding: 0;
+        margin: 0;
+    }
+
+    .navbar a {
+        text-align: center;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+        font-size: 1.1rem;
+        padding: 0 10px;
+        height: 5.6rem;
+    }
+
+    .cartTab {
+        width: 100%;
+        height: 100vh;
+        right: -100%; /* Initially hide the cartTab off-screen */
+        top: 0; /* Adjust top to cover the full screen */
+        position: fixed;
+        overflow-y: auto;
+    }
+
+    .icon-cart {
+        align-self: flex-end;
+    }
+
+     body.showCart {
+         position: fixed; /* Prevent background scrolling */
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%; /* Ensure body covers entire viewport */
+         overflow: hidden; /* Hide any background overflow */
+     }
+
+    body.showCart .cartTab {
+        right: 0; /* Slide in the cartTab when open */
+    }
+
+    .quantity {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .totalPrice {
+        font-size: 1.2em;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        padding: 10px;
+
+    }
+
+    .totalPrice,
+    .quantity,
+    .foodName,
+    .foodPrice {
+        font-size: 14px;
+    }
+    .listProduct {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .listProduct .item {
+        padding: 10px;
+    }
+
+    .listProduct .item img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .listProduct .item .foodName,
+    .listProduct .item .foodPrice,
+    .listProduct .item .addCart {
+        font-size: 14px;
+    }
+}
+
+/* Desktop (Default) website responsive stuff  */
 @media screen and (min-width: 1024px){
     .listProduct{
         grid-template-columns: repeat(4, 1fr);
     }
-
-
 }
 
-/* This section is use for the mobile responsive view  */
+/* This section is used for the Tables/Laptops */
 @media (min-width: 768px) and (max-width: 1023px)
 {
     .cartTab {
@@ -927,32 +1054,26 @@ overflow: hidden;
     }
 
     .navbar li a[href*="#"]{
-        font-size: 1.5rem;
+        font-size: x-large;
     }
 
     .listProduct{
-        grid-template-columns: repeat(2, 1fr);
-        /* font-size: 50px; */
+        grid-template-columns: repeat(3, 1fr);
         font-size: 16px;
     }
 
     .addCart {
-        /* font-size: 30px; */
         font-size: 1.5rem;
     }
     .listProduct .item .foodPrice {
-        /* font-size: 40px; */
         font-size: 2rem;
     }
     .listProduct .item .foodName {
-        /* font-size: 35px; */
         font-size: 2rem;
     }
     .listProduct .item img {
         width: 200px;
         height: 200px;
-        /* width: 100%;
-        /* height: auto; */
         max-width: 300px;
         margin: 0 auto;
     }
@@ -964,12 +1085,15 @@ overflow: hidden;
     }
 
     .logo-image{
-        width: 5.5rem;
+        width: 8.5rem;
+        margin-left: -45px;
     }
 
     .title {
+        display: none;
         font-size: 2rem;
         margin-top: 5px;
+        margin-left: -45px;
     }
 
     .table-number-container{
@@ -997,8 +1121,8 @@ overflow: hidden;
     }
 
     .settings-button{
-        width: 4rem;
-        height: 4rem;
+        width: 5rem;
+        height: 5rem;
     }
 
     #themeSelect{
@@ -1009,46 +1133,56 @@ overflow: hidden;
     }
 
     .item-modal-title{
-        font-size: 2rem;
+        font-size: xx-large;
     }
 
     .item-modal-description{
-        font-size: 1.8rem;
+        font-size: x-large;
     }
 
     .close-modal-popup{
-        font-size: 2rem;
+        font-size: 2.8rem;
     }
 
     .listCart .item .name{
-        font-size: 1.7rem;
+        font-size: xx-large;
     }
 
     .listCart .item .totalPrice{
-        font-size: 1.7rem;
+        font-size: xx-large;
+    }
+
+    .listCart .item .quantity{
+        justify-content: space-around;
+        padding: 0 5rem 1rem 2rem;
     }
 
     .listCart .quantity select{
-        font-size: 1.3rem;
+        font-size: 2.3rem;
     }
 
     .listCart .quantity span{
-        font-size: 1.3rem;
-        height: 2.7rem;
-        width: 2.7rem;
+        font-size: 2.7rem;
+        height: 4rem;
+        width: 4rem;
+    }
+
+    .listCart .quantity .delete{
+        font-size: 2.3rem;
     }
 
     .cartTab .listCart .item img{
-        width: 8.5rem;
-        height: 8.5rem;
+        width: 12rem;
+        height: 11rem;
+        margin: 20px 50px;
     }
 
     .cartSummary{
-        font-size: 1.7rem;
+        font-size: xx-large;
     }
 
     .cartTab .cartButtons button{
-        font-size: 1.4rem;
+        font-size: xx-large;
     }
 
     .modal-checkout-content{
@@ -1059,130 +1193,6 @@ overflow: hidden;
 
     svg{
         width: 2.5rem;
-    }
-}
-
-@media (max-width: 767px){
-    .title{
-        display: none;
-    }
-    .cartTab {
-        width: 100%;
-        height: 100%;
-        right: -100%; /* Initially hide the cartTab off-screen */
-        top: 0; /* Adjust top to cover the full screen */
-        position: fixed;
-    }
-
-    .navbar {
-        width: 100%;
-        height: 90px;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 10px;
-        background-color: var(--navbar-bg-color); /* Ensure navbar is visible */
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-    }
-
-    .navbar ul {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        justify-content: flex-start;
-    }
-
-    .navbar a {
-        padding: 0px 10px; /* Adjust padding for better spacing on small screens */
-        font-size: 1rem;
-        text-align: center;
-        width: 100%;
-        transition: background-color 0.3s ease;
-    }
-
-    .icon-cart {
-        align-self: flex-end;
-        margin-top: 10px;
-    }
-
-     body.showCart {
-         position: fixed; /* Prevent background scrolling */
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100%; /* Ensure body covers entire viewport */
-         overflow: hidden; /* Hide any background overflow */
-     }
-
-    body.showCart .cartTab {
-        right: 0; /* Slide in the cartTab when open */
-    }
-
-    .quantity {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
-
-    .totalPrice {
-        font-size: 1.2em;
-    }
-
-    .btn {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
-    }
-
-    .btn {
-        padding: 10px;
-    }
-
-    .logo-title-container{
-        margin-left: 0;
-        padding: 0;
-    }
-
-    .logo-image{
-        width: 60px;
-    }
-
-    .title {
-        font-size: 20px;
-        margin-left: 5px;
-    }
-
-    .totalPrice,
-    .quantity,
-    .foodName,
-    .foodPrice {
-        font-size: 14px;
-    }
-    .listProduct {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .listProduct .item {
-        padding: 10px;
-    }
-
-    .listProduct .item img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .listProduct .item .foodName,
-    .listProduct .item .foodPrice,
-    .listProduct .item .addCart {
-        font-size: 14px;
     }
 }
 
