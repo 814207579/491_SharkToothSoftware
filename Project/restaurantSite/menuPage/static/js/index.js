@@ -366,20 +366,50 @@
 
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            // 1. Remove 'active' class from all links
-            navLinks.forEach(l => l.classList.remove('active'));
+            // Check if the clicked link is already active
+            if (this.classList.contains('active')) {
+                // Remove the 'active' class and reset the underline
+                this.classList.remove('active');
+                underline.style.left = '0';
+                underline.style.width = '0';
+                showAllFoodItems();
+            } else {
+                // 1. Remove 'active' class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
 
-            // 2. Add 'active' class to the clicked link
-            this.classList.add('active');
+                // 2. Add 'active' class to the clicked link
+                this.classList.add('active');
 
-            // 3. Position underline
-            const linkRect = this.getBoundingClientRect();
-            underline.style.left = linkRect.left + 'px';
-            underline.style.width = linkRect.width + 'px';
-
-            filterItems(event);
+                // 3. Position underline
+                const linkRect = this.getBoundingClientRect();
+                underline.style.left = linkRect.left + 'px';
+                underline.style.width = linkRect.width + 'px';
+            }
         });
     });
+
+    function attemptFilter(event) {
+        if($(event.target).hasClass("currentFilter")) {
+            showAllFoodItems(event);
+            $(event.target).removeClass("currentFilter");
+        }
+        else {
+            // Remove the active filters from the other ones
+            navLinks.forEach(link => {
+                $(link).removeClass("currentFilter")
+            });
+            $(event.target).addClass("currentFilter");
+            filterItems(event);
+        }
+    }
+
+    function showAllFoodItems(event) {
+        let foodList = $(".listProduct").find("div.item");
+        for (let i = 0; i < foodList.length; i++) {
+            let foodType = $(foodList[i]).find('.foodType').val().trim()
+            $(foodList[i]).show()
+        }
+    }
 
     function filterItems(event) {
         // prevent default behavior of the anchor tag
@@ -390,8 +420,6 @@
         }
         //Get clicked item
         let clickedItem = $(event.target).text();
-        //Navbar sort items
-        let navBarSortItems = $(".navBarSort");
         //If the clickedItem ends with s we need to remove it
         if (clickedItem.toLowerCase().endsWith("s")) {
             clickedItem = clickedItem.slice(0, -1)
@@ -401,13 +429,6 @@
 
         //Var to know if we need to show or hide them
         let show = false;
-        //Fix the show
-        if ($(event.target).hasClass("Selected")) {
-            show = true;
-            // Remove all selected
-            navBarSortItems.removeClass("Selected")
-            navBarSortItems.attr('style', '');
-        }
 
         //Functionality of showing/hiding
         for (let i = 0; i < foodList.length; i++) {
@@ -600,7 +621,7 @@
             carts = JSON.parse(localStorage.getItem('cart'));
             addCartToHTML();
         }
-        navBarUl.onclick = filterItems;
+        navBarUl.onclick = attemptFilter;
         document.getElementById("checkoutBtn").onclick = getCheckoutItems;
 
         // Get the modal and elements inside it
