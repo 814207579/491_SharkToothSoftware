@@ -9,7 +9,7 @@
     let checkOut = document.querySelector('.checkOut');
     let checkoutModal = document.getElementById('checkoutModal');
     // Modal Elements
-    const zebraListContainer = document.querySelector('.zebra-list');
+    const zebraListContainer = document.getElementById('cartFoodList');
     const totalPriceElement = document.getElementById('totalPrice');
     //Navbar underline
     const navLinks = document.querySelectorAll('.navbar ul li a.navBarSort');
@@ -226,7 +226,7 @@
                     <div class="quantity">
                         ${quantityControlsHTML}
                     </div>
-                    <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
+                    <div class="totalPrice">$${itemTotalPrice.toFixed(2).toLocaleString()}</div>
                 `;
 
                 listCartHTML.appendChild(newCart);
@@ -241,7 +241,7 @@
             });
         })
 
-        document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
+        document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toFixed(2).toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
 
@@ -341,7 +341,9 @@
     function clearItemsInCart() {
         carts = [];
         addCartToHTML();
-        addCartToMemory()
+        addCartToMemory();
+        // Add the scroll back
+        document.body.classList.remove('no-scroll');
     }
 
     function getCheckoutItems(event) {
@@ -351,6 +353,7 @@
         for(let i = 0; i < carts.length; i++) {
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
+
     }
 
     function clearFoodItemsFiler() {
@@ -365,20 +368,50 @@
 
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            // 1. Remove 'active' class from all links
-            navLinks.forEach(l => l.classList.remove('active'));
+            // Check if the clicked link is already active
+            if (this.classList.contains('active')) {
+                // Remove the 'active' class and reset the underline
+                this.classList.remove('active');
+                underline.style.left = '0';
+                underline.style.width = '0';
+                showAllFoodItems();
+            } else {
+                // 1. Remove 'active' class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
 
-            // 2. Add 'active' class to the clicked link
-            this.classList.add('active');
+                // 2. Add 'active' class to the clicked link
+                this.classList.add('active');
 
-            // 3. Position underline
-            const linkRect = this.getBoundingClientRect();
-            underline.style.left = linkRect.left + 'px';
-            underline.style.width = linkRect.width + 'px';
-
-            filterItems(event);
+                // 3. Position underline
+                const linkRect = this.getBoundingClientRect();
+                underline.style.left = linkRect.left + 'px';
+                underline.style.width = linkRect.width + 'px';
+            }
         });
     });
+
+    function attemptFilter(event) {
+        if($(event.target).hasClass("currentFilter")) {
+            showAllFoodItems(event);
+            $(event.target).removeClass("currentFilter");
+        }
+        else {
+            // Remove the active filters from the other ones
+            navLinks.forEach(link => {
+                $(link).removeClass("currentFilter")
+            });
+            $(event.target).addClass("currentFilter");
+            filterItems(event);
+        }
+    }
+
+    function showAllFoodItems(event) {
+        let foodList = $(".listProduct").find("div.item");
+        for (let i = 0; i < foodList.length; i++) {
+            let foodType = $(foodList[i]).find('.foodType').val().trim()
+            $(foodList[i]).show()
+        }
+    }
 
     function filterItems(event) {
         // prevent default behavior of the anchor tag
@@ -389,8 +422,6 @@
         }
         //Get clicked item
         let clickedItem = $(event.target).text();
-        //Navbar sort items
-        let navBarSortItems = $(".navBarSort");
         //If the clickedItem ends with s we need to remove it
         if (clickedItem.toLowerCase().endsWith("s")) {
             clickedItem = clickedItem.slice(0, -1)
@@ -400,13 +431,6 @@
 
         //Var to know if we need to show or hide them
         let show = false;
-        //Fix the show
-        if ($(event.target).hasClass("Selected")) {
-            show = true;
-            // Remove all selected
-            navBarSortItems.removeClass("Selected")
-            navBarSortItems.attr('style', '');
-        }
 
         //Functionality of showing/hiding
         for (let i = 0; i < foodList.length; i++) {
@@ -572,16 +596,18 @@
     function updateSplitPayButtonText(event) {
         let totalPayments = document.getElementById("totalNumberOfPayments").value;
         let payButton = document.getElementById("payButtonValue");
-        alert("Thank you for paying Person " + payButton.value);
+        let currentCost = document.getElementById("totalPrice").innerHTML.replace('Subtotal: $', '');
+        let newCost = (totalPayments - payButton.value) * (Math.round((getTotalPrice() * 100) / 100)/totalPayments).toFixed(2);
+        alert("Thank you for making payment " + payButton.value);
         if (payButton.value < totalPayments) {
             payButton.value = Number(payButton.value) + 1;
-            document.getElementById("payButtonClick").innerHTML = "Person " + payButton.value + " Pay";
+            document.getElementById("payButtonClick").innerHTML = "Payment " + payButton.value;
             document.getElementById("payButtonValue").value = payButton.value
+            document.getElementById("totalPrice").innerHTML = `Subtotal: $${newCost.toLocaleString()}`;
         }
         // Change the modal back to normal
         else {
             sendOrderToDB(2);
-            alert("Thank you for your purchase.");
             clearItemsInCart();
         }
     }
@@ -596,7 +622,7 @@
             carts = JSON.parse(localStorage.getItem('cart'));
             addCartToHTML();
         }
-        navBarUl.onclick = filterItems;
+        navBarUl.onclick = attemptFilter;
         document.getElementById("checkoutBtn").onclick = getCheckoutItems;
 
         // Get the modal and elements inside it
@@ -673,13 +699,13 @@
                 const itemElement = document.createElement('div');
                 itemElement.innerHTML = `
                 <span>${product.name}</span>
-                <span>$${product.price} x ${cart.quantity}</span>
-            `;
+                <span>$${product.price} x ${cart.quantity}</span>`;
                 zebraListContainer.appendChild(itemElement);
             });
+            document.getElementById("cartFoodList").innerHTML = zebraListContainer.innerHTML;
 
             // Update total price in the modal
-            totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+            totalPriceElement.textContent = `$${totalPrice.toFixed(2).toLocaleString()}`;
             document.getElementById('totalItemsCheckout').textContent = totalQuantity;
         }
 
@@ -754,6 +780,7 @@
         // Starts at 1 because there's no "person 0"
         let currentPerson = 1;
         //keeps track of if everyone has paid
+        let roundedCost = (Math.round((getTotalPrice() * 100) / 100)/selectionBoxVal).toFixed(2);
         let buildString =
             '<div class="modal-checkout-content"> ' +
                 '<span id="closeModal" class="close-modal">&times;</span>' +
@@ -763,10 +790,10 @@
         for(let i = 0; i < selectionBoxVal; i++) {
             buildString += '<div>'+
                                 '<span>' +
-                                    'Person ' + Number(i + 1) +
+                                    'Payment ' + Number(i + 1) +
                                 '</span>' +
                                 '<span>' +
-                                    'Cost' + ': $' + (getTotalPrice() / selectionBoxVal).toLocaleString() +
+                                    'Cost' + ': $' + roundedCost +
                                 '</span>' +
                            '</div>';
         }
@@ -779,7 +806,7 @@
                 '<div class="modal-footer">' +
                     '<input id="payButtonValue" type="hidden" value="' + currentPerson + '"/>' +
                     '<input id="totalNumberOfPayments" type="hidden" value="' + selectionBoxVal + '"/>' +
-                    '<button id="payButtonClick" class="pay-now">Person ' + currentPerson + ' Pay</button>' +
+                    '<button id="payButtonClick" class="pay-now">Payment ' + currentPerson + '</button>' +
                 '</div>' +
             '</div>';
 
@@ -790,7 +817,7 @@
             checkoutModal.style.display = 'none';
             document.body.classList.remove('no-scroll'); // Re-enable scroll on body
         });
-        document.getElementById("totalPrice").innerHTML = `$${getTotalPrice().toLocaleString()}`;
+        document.getElementById("totalPrice").innerHTML = `Subtotal: $${getTotalPrice().toFixed(2).toLocaleString()}`;
         let tempItems = 0;
         for (let i = 0; i < carts.length; i++) {
             tempItems += carts[i].quantity;
