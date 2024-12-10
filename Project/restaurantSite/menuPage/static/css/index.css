@@ -1017,6 +1017,14 @@ overflow: hidden;
     .listProduct .item .addCart {
         font-size: 14px;
     }
+
+    .modal-footer button{
+        display: inline-block;
+        width: calc(33.33% - 10px);
+        text-align: center;
+        padding: 10px;
+        box-sizing: border-box;
+    }
 }
 
 @media (max-width: 424px){
