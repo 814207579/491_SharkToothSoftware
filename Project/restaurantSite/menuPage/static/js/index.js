@@ -341,7 +341,9 @@
     function clearItemsInCart() {
         carts = [];
         addCartToHTML();
-        addCartToMemory()
+        addCartToMemory();
+        // Add the scroll back
+        document.body.classList.remove('no-scroll');
     }
 
     function getCheckoutItems(event) {
@@ -596,17 +598,16 @@
         let payButton = document.getElementById("payButtonValue");
         let currentCost = document.getElementById("totalPrice").innerHTML.replace('Subtotal: $', '');
         let newCost = (totalPayments - payButton.value) * (Math.round((getTotalPrice() * 100) / 100)/totalPayments).toFixed(2);
-        alert("Thank you for paying Person " + payButton.value);
+        alert("Thank you for making payment " + payButton.value);
         if (payButton.value < totalPayments) {
             payButton.value = Number(payButton.value) + 1;
-            document.getElementById("payButtonClick").innerHTML = "Person " + payButton.value + " Pay";
+            document.getElementById("payButtonClick").innerHTML = "Payment " + payButton.value;
             document.getElementById("payButtonValue").value = payButton.value
             document.getElementById("totalPrice").innerHTML = `Subtotal: $${newCost.toLocaleString()}`;
         }
         // Change the modal back to normal
         else {
             sendOrderToDB(2);
-            alert("Thank you for your purchase.");
             clearItemsInCart();
         }
     }
@@ -789,7 +790,7 @@
         for(let i = 0; i < selectionBoxVal; i++) {
             buildString += '<div>'+
                                 '<span>' +
-                                    'Person ' + Number(i + 1) +
+                                    'Payment ' + Number(i + 1) +
                                 '</span>' +
                                 '<span>' +
                                     'Cost' + ': $' + roundedCost +
@@ -805,7 +806,7 @@
                 '<div class="modal-footer">' +
                     '<input id="payButtonValue" type="hidden" value="' + currentPerson + '"/>' +
                     '<input id="totalNumberOfPayments" type="hidden" value="' + selectionBoxVal + '"/>' +
-                    '<button id="payButtonClick" class="pay-now">Person ' + currentPerson + ' Pay</button>' +
+                    '<button id="payButtonClick" class="pay-now">Payment ' + currentPerson + '</button>' +
                 '</div>' +
             '</div>';
 
