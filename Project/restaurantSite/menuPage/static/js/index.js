@@ -754,6 +754,8 @@
         // Starts at 1 because there's no "person 0"
         let currentPerson = 1;
         //keeps track of if everyone has paid
+        let cost = (getTotalPrice() / selectionBoxVal).toLocaleString();
+        let roundedCost = (Math.round(cost * 100) / 100).toFixed(2);
         let buildString =
             '<div class="modal-checkout-content"> ' +
                 '<span id="closeModal" class="close-modal">&times;</span>' +
@@ -766,7 +768,7 @@
                                     'Person ' + Number(i + 1) +
                                 '</span>' +
                                 '<span>' +
-                                    'Cost' + ': $' + (getTotalPrice() / selectionBoxVal).toLocaleString() +
+                                    'Cost' + ': $' + roundedCost +
                                 '</span>' +
                            '</div>';
         }
