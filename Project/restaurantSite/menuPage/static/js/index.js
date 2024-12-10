@@ -9,7 +9,7 @@
     let checkOut = document.querySelector('.checkOut');
     let checkoutModal = document.getElementById('checkoutModal');
     // Modal Elements
-    const zebraListContainer = document.querySelector('.zebra-list');
+    const zebraListContainer = document.getElementById('cartFoodList');
     const totalPriceElement = document.getElementById('totalPrice');
     //Navbar underline
     const navLinks = document.querySelectorAll('.navbar ul li a.navBarSort');
@@ -226,7 +226,7 @@
                     <div class="quantity">
                         ${quantityControlsHTML}
                     </div>
-                    <div class="totalPrice">$${itemTotalPrice.toLocaleString()}</div>
+                    <div class="totalPrice">$${itemTotalPrice.toFixed(2).toLocaleString()}</div>
                 `;
 
                 listCartHTML.appendChild(newCart);
@@ -241,7 +241,7 @@
             });
         })
 
-        document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toLocaleString()}`;
+        document.querySelector('.totalPriceAllItems').textContent = `Total: $${totalPrice.toFixed(2).toLocaleString()}`;
         document.querySelector('.totalQuantityAllItems').textContent = `Items: ${totalQuantity}`;
     }
 
@@ -351,6 +351,7 @@
         for(let i = 0; i < carts.length; i++) {
             carts[i].total = carts[i].quantity * getProductByID(carts[i].product_id).price;
         }
+
     }
 
     function clearFoodItemsFiler() {
@@ -572,11 +573,14 @@
     function updateSplitPayButtonText(event) {
         let totalPayments = document.getElementById("totalNumberOfPayments").value;
         let payButton = document.getElementById("payButtonValue");
+        let currentCost = document.getElementById("totalPrice").innerHTML.replace('Subtotal: $', '');
+        let newCost = (totalPayments - payButton.value) * (Math.round((getTotalPrice() * 100) / 100)/totalPayments).toFixed(2);
         alert("Thank you for paying Person " + payButton.value);
         if (payButton.value < totalPayments) {
             payButton.value = Number(payButton.value) + 1;
             document.getElementById("payButtonClick").innerHTML = "Person " + payButton.value + " Pay";
             document.getElementById("payButtonValue").value = payButton.value
+            document.getElementById("totalPrice").innerHTML = `Subtotal: $${newCost.toLocaleString()}`;
         }
         // Change the modal back to normal
         else {
@@ -673,13 +677,13 @@
                 const itemElement = document.createElement('div');
                 itemElement.innerHTML = `
                 <span>${product.name}</span>
-                <span>$${product.price} x ${cart.quantity}</span>
-            `;
+                <span>$${product.price} x ${cart.quantity}</span>`;
                 zebraListContainer.appendChild(itemElement);
             });
+            document.getElementById("cartFoodList").innerHTML = zebraListContainer.innerHTML;
 
             // Update total price in the modal
-            totalPriceElement.textContent = `$${totalPrice.toLocaleString()}`;
+            totalPriceElement.textContent = `$${totalPrice.toFixed(2).toLocaleString()}`;
             document.getElementById('totalItemsCheckout').textContent = totalQuantity;
         }
 
@@ -754,8 +758,7 @@
         // Starts at 1 because there's no "person 0"
         let currentPerson = 1;
         //keeps track of if everyone has paid
-        let cost = (getTotalPrice() / selectionBoxVal).toLocaleString();
-        let roundedCost = (Math.round(cost * 100) / 100).toFixed(2);
+        let roundedCost = (Math.round((getTotalPrice() * 100) / 100)/selectionBoxVal).toFixed(2);
         let buildString =
             '<div class="modal-checkout-content"> ' +
                 '<span id="closeModal" class="close-modal">&times;</span>' +
@@ -792,7 +795,7 @@
             checkoutModal.style.display = 'none';
             document.body.classList.remove('no-scroll'); // Re-enable scroll on body
         });
-        document.getElementById("totalPrice").innerHTML = `$${getTotalPrice().toLocaleString()}`;
+        document.getElementById("totalPrice").innerHTML = `Subtotal: $${getTotalPrice().toFixed(2).toLocaleString()}`;
         let tempItems = 0;
         for (let i = 0; i < carts.length; i++) {
             tempItems += carts[i].quantity;
