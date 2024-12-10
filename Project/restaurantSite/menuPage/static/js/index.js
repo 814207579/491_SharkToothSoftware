@@ -341,7 +341,9 @@
     function clearItemsInCart() {
         carts = [];
         addCartToHTML();
-        addCartToMemory()
+        addCartToMemory();
+        // Add the scroll back
+        document.body.classList.remove('no-scroll');
     }
 
     function getCheckoutItems(event) {
@@ -366,20 +368,50 @@
 
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            // 1. Remove 'active' class from all links
-            navLinks.forEach(l => l.classList.remove('active'));
+            // Check if the clicked link is already active
+            if (this.classList.contains('active')) {
+                // Remove the 'active' class and reset the underline
+                this.classList.remove('active');
+                underline.style.left = '0';
+                underline.style.width = '0';
+                showAllFoodItems();
+            } else {
+                // 1. Remove 'active' class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
 
-            // 2. Add 'active' class to the clicked link
-            this.classList.add('active');
+                // 2. Add 'active' class to the clicked link
+                this.classList.add('active');
 
-            // 3. Position underline
-            const linkRect = this.getBoundingClientRect();
-            underline.style.left = linkRect.left + 'px';
-            underline.style.width = linkRect.width + 'px';
-
-            filterItems(event);
+                // 3. Position underline
+                const linkRect = this.getBoundingClientRect();
+                underline.style.left = linkRect.left + 'px';
+                underline.style.width = linkRect.width + 'px';
+            }
         });
     });
+
+    function attemptFilter(event) {
+        if($(event.target).hasClass("currentFilter")) {
+            showAllFoodItems(event);
+            $(event.target).removeClass("currentFilter");
+        }
+        else {
+            // Remove the active filters from the other ones
+            navLinks.forEach(link => {
+                $(link).removeClass("currentFilter")
+            });
+            $(event.target).addClass("currentFilter");
+            filterItems(event);
+        }
+    }
+
+    function showAllFoodItems(event) {
+        let foodList = $(".listProduct").find("div.item");
+        for (let i = 0; i < foodList.length; i++) {
+            let foodType = $(foodList[i]).find('.foodType').val().trim()
+            $(foodList[i]).show()
+        }
+    }
 
     function filterItems(event) {
         // prevent default behavior of the anchor tag
@@ -390,8 +422,6 @@
         }
         //Get clicked item
         let clickedItem = $(event.target).text();
-        //Navbar sort items
-        let navBarSortItems = $(".navBarSort");
         //If the clickedItem ends with s we need to remove it
         if (clickedItem.toLowerCase().endsWith("s")) {
             clickedItem = clickedItem.slice(0, -1)
@@ -401,13 +431,6 @@
 
         //Var to know if we need to show or hide them
         let show = false;
-        //Fix the show
-        if ($(event.target).hasClass("Selected")) {
-            show = true;
-            // Remove all selected
-            navBarSortItems.removeClass("Selected")
-            navBarSortItems.attr('style', '');
-        }
 
         //Functionality of showing/hiding
         for (let i = 0; i < foodList.length; i++) {
@@ -575,17 +598,16 @@
         let payButton = document.getElementById("payButtonValue");
         let currentCost = document.getElementById("totalPrice").innerHTML.replace('Subtotal: $', '');
         let newCost = (totalPayments - payButton.value) * (Math.round((getTotalPrice() * 100) / 100)/totalPayments).toFixed(2);
-        alert("Thank you for paying Person " + payButton.value);
+        alert("Thank you for making payment " + payButton.value);
         if (payButton.value < totalPayments) {
             payButton.value = Number(payButton.value) + 1;
-            document.getElementById("payButtonClick").innerHTML = "Person " + payButton.value + " Pay";
+            document.getElementById("payButtonClick").innerHTML = "Payment " + payButton.value;
             document.getElementById("payButtonValue").value = payButton.value
             document.getElementById("totalPrice").innerHTML = `Subtotal: $${newCost.toLocaleString()}`;
         }
         // Change the modal back to normal
         else {
             sendOrderToDB(2);
-            alert("Thank you for your purchase.");
             clearItemsInCart();
         }
     }
@@ -600,7 +622,7 @@
             carts = JSON.parse(localStorage.getItem('cart'));
             addCartToHTML();
         }
-        navBarUl.onclick = filterItems;
+        navBarUl.onclick = attemptFilter;
         document.getElementById("checkoutBtn").onclick = getCheckoutItems;
 
         // Get the modal and elements inside it
@@ -768,7 +790,7 @@
         for(let i = 0; i < selectionBoxVal; i++) {
             buildString += '<div>'+
                                 '<span>' +
-                                    'Person ' + Number(i + 1) +
+                                    'Payment ' + Number(i + 1) +
                                 '</span>' +
                                 '<span>' +
                                     'Cost' + ': $' + roundedCost +
@@ -784,7 +806,7 @@
                 '<div class="modal-footer">' +
                     '<input id="payButtonValue" type="hidden" value="' + currentPerson + '"/>' +
                     '<input id="totalNumberOfPayments" type="hidden" value="' + selectionBoxVal + '"/>' +
-                    '<button id="payButtonClick" class="pay-now">Person ' + currentPerson + ' Pay</button>' +
+                    '<button id="payButtonClick" class="pay-now">Payment ' + currentPerson + '</button>' +
                 '</div>' +
             '</div>';
 
